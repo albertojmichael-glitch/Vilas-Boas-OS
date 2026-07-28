@@ -7,8 +7,13 @@
 }
 
 body {
-    /* Papel de parede clássico do Vista (Aurora) */
-    background: url('https://upload.wikimedia.org/wikipedia/en/e/e5/Windows_Vista_Aurora.png') no-repeat center center fixed;
+    background: 
+        /* 1. O Brilho Central do Vista */
+        radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+        /* 2. A Colina Verde do XP (Bliss) na parte de baixo */
+        radial-gradient(ellipse 120% 40% at 50% 100%, #30b33d 0%, #1a7a24 45%, transparent 46%),
+        /* 3. O Fundo Aurora Teal/Azul do Vista */
+        linear-gradient(135deg, #026670 0%, #009688 50%, #004d40 100%);
     background-size: cover;
     height: 100vh;
     overflow: hidden;
@@ -119,7 +124,6 @@ body {
     cursor: pointer;
     transition: filter 0.2s;
     
-    /* Alinha a imagem do Windows bem no centro do botão */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -130,12 +134,35 @@ body {
     box-shadow: 0 0 10px #5cb8e6;
 }
 
+/* A BANDEIRA DO WINDOWS FEITA SÓ COM CSS */
 .start-logo {
-    width: 22px; /* Tamanho exato para encaixar no botão */
-    height: 22px;
-    /* Coloca uma leve sombra atrás do logo para dar profundidade de vidro */
-    filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.6)); 
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px; /* Espaço entre os quadrados */
+    width: 20px;
+    height: 20px;
+    /* Efeito de perspectiva para dar a "ondulada" clássica */
+    transform: perspective(30px) rotateY(-15deg) skewY(-10deg);
+    filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.8)); 
 }
+
+/* Criando as 4 cores do Windows */
+.start-logo::before, .start-logo::after,
+.start-logo span::before, .start-logo span::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    border-radius: 1px;
+}
+
+/* Laranja/Vermelho (Cima-Esquerda) */
+.start-logo::before { background-color: #f05023; }
+/* Verde (Cima-Direita) */
+.start-logo::after { background-color: #80c326; }
+/* Azul (Baixo-Esquerda) */
+.start-logo span::before { background-color: #00a4e4; display: block; }
+/* Amarelo (Baixo-Direita) */
+.start-logo span::after { background-color: #fabb15; display: block; margin-top: 1px;}
 
 #open-windows {
     flex: 1;
