@@ -66,6 +66,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const camera = document.getElementById("camera-window");
     if (camera) tornarArrastavel(camera);
 
+    const iconNotepad = document.getElementById("icon-notepad");
+    if (iconNotepad) tornarArrastavel(iconNotepad);
+
+    const iconCameras = document.getElementById("icon-cameras");
+    if (iconCameras) tornarArrastavel(iconCameras);
+
 });
 
 function tornarArrastavel(elmnt) {
