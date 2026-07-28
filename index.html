@@ -51,6 +51,23 @@
                 <button class="win-btn-close" onclick="fecharJanela('notepad-window')">X</button>
             </div>
         </div>
+
+    <div class="window hidden" id="camera-window" onmousedown="trazerParaFrente('camera-window')">
+        <div class="window-header" style="background: linear-gradient(to bottom, #555, #222); color: white; border-bottom: 1px solid #111;">
+            <span class="window-title">Sistema de Segurança - VILAS BOAS</span>
+            <div class="window-controls">
+                <button class="win-btn-close" onclick="fecharJanela('camera-window')">X</button>
+            </div>
+        </div>
+        <div class="window-content" style="background-color: #000; position: relative; height: 350px;">
+            <div class="camera-feed">
+                <div class="static-noise"></div>
+                <span class="camera-text">CAM 03 - SALA DOS FUNDOS<br><br>[ SINAL PERDIDO ]</span>
+            </div>
+        </div>
+    </div>
+
+    
         <div class="window-content">
             <textarea readonly>
 Acho que alguém andou mexendo no meu computador.
@@ -60,6 +77,11 @@ Eles não param de olhar.
             </textarea>
         </div>
     </div>
+
+    <div class="desktop-icon" ondblclick="abrirJanela('camera-window')">
+            <div class="icon-img icon-exe"></div>
+            <span>Câmeras.exe</span>
+        </div>
 
 </body>
 </html>

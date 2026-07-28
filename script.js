@@ -60,9 +60,12 @@ function trazerParaFrente(id) {
 
 document.addEventListener("DOMContentLoaded", () => {
     const notepad = document.getElementById("notepad-window");
-    if (notepad) {
-        tornarArrastavel(notepad);
-    }
+    if (notepad) tornarArrastavel(notepad);
+
+    
+    const camera = document.getElementById("camera-window");
+    if (camera) tornarArrastavel(camera);
+
 });
 
 function tornarArrastavel(elmnt) {
