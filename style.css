@@ -175,3 +175,109 @@ body {
     text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
     padding: 0 10px;
 }
+
+/* =========================================
+   ÍCONES DA ÁREA DE TRABALHO
+   ========================================= */
+.desktop-icon {
+    width: 75px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+    font-size: 0.85rem;
+    cursor: pointer;
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid transparent;
+}
+
+.desktop-icon:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px dotted rgba(255, 255, 255, 0.5);
+}
+
+/* Desenhando um arquivo .txt em CSS puro */
+.icon-txt {
+    width: 32px;
+    height: 40px;
+    background: white;
+    border: 1px solid #ccc;
+    position: relative;
+    margin-bottom: 5px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+}
+.icon-txt::before {
+    content: "";
+    position: absolute;
+    top: 6px; left: 4px; right: 4px; bottom: 6px;
+    border-top: 2px solid #555;
+    box-shadow: 0 6px 0 #555, 0 12px 0 #555, 0 18px 0 #555;
+}
+
+/* =========================================
+   JANELAS (AERO GLASS) E BLOCO DE NOTAS
+   ========================================= */
+.window {
+    position: absolute;
+    top: 20%; left: 30%;
+    width: 450px;
+    background: #f0f0f0;
+    /* Borda translúcida de vidro do Vista */
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4), 0 0 0 6px rgba(255, 255, 255, 0.3);
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+}
+
+.hidden { display: none !important; }
+
+.window-header {
+    background: linear-gradient(to bottom, #dbeaf9, #91b8e8);
+    padding: 6px 10px;
+    border-radius: 6px 6px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: grab; /* Indica que pode arrastar */
+    border-bottom: 1px solid #777;
+}
+
+.window-header:active { cursor: grabbing; }
+
+.window-title { 
+    font-weight: bold; 
+    font-size: 0.9rem; 
+    text-shadow: 1px 1px 3px white;
+}
+
+.window-controls .win-btn-close {
+    background: #e04343;
+    color: white;
+    border: 1px solid #777;
+    border-radius: 3px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0 6px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+}
+.window-controls .win-btn-close:hover { background: #ff5555; }
+
+.window-content {
+    padding: 0;
+    height: 300px;
+    display: flex;
+}
+
+.window-content textarea {
+    flex: 1;
+    resize: none;
+    border: none;
+    padding: 10px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 1rem;
+    outline: none;
+}

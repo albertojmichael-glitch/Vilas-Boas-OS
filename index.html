@@ -36,5 +36,30 @@
     </footer>
 
     <script src="script.js"></script>
+
+    <main id="desktop">
+        <div class="desktop-icon" ondblclick="abrirJanela('notepad-window')">
+            <div class="icon-img icon-txt"></div>
+            <span>LEIA-ME.txt</span>
+        </div>
+    </main>
+
+    <div class="window hidden" id="notepad-window" onmousedown="trazerParaFrente('notepad-window')">
+        <div class="window-header">
+            <span class="window-title">LEIA-ME.txt - Bloco de Notas</span>
+            <div class="window-controls">
+                <button class="win-btn-close" onclick="fecharJanela('notepad-window')">X</button>
+            </div>
+        </div>
+        <div class="window-content">
+            <textarea readonly>
+Acho que alguém andou mexendo no meu computador.
+As câmeras da sala 03 foram desligadas de novo.
+
+Eles não param de olhar.
+            </textarea>
+        </div>
+    </div>
+
 </body>
 </html>
