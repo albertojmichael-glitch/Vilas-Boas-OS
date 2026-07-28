@@ -57,10 +57,13 @@ function trazerParaFrente(id) {
     document.getElementById(id).style.zIndex = zIndexCounter;
 }
 
-// ==========================================
-// FÍSICA DE ARRASTAR (DRAG & DROP)
-// ==========================================
-tornarArrastavel(document.getElementById("notepad-window"));
+
+document.addEventListener("DOMContentLoaded", () => {
+    const notepad = document.getElementById("notepad-window");
+    if (notepad) {
+        tornarArrastavel(notepad);
+    }
+});
 
 function tornarArrastavel(elmnt) {
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
