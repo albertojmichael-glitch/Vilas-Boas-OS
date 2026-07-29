@@ -39,22 +39,99 @@ updateClock();
 setInterval(updateClock, 1000);
 
 // ==========================================
-// GERENCIADOR DE JANELAS E Z-INDEX
+// GERENCIADOR DE JANELAS E BARRA DE TAREFAS
 // ==========================================
 let zIndexCounter = 10;
 
+// Mapeia qual ícone pertence a qual janela
+const windowIcons = {
+    'notepad-window': 'icon-txt',
+    'camera-window': 'icon-exe',
+    'cat-window': 'icon-cat',
+    'arquivos-window': 'icon-folder',
+    'rede-window': 'icon-network'
+};
+
 function abrirJanela(id) {
-    document.getElementById(id).classList.remove('hidden');
+    const win = document.getElementById(id);
+    win.classList.remove('hidden');
     trazerParaFrente(id);
+    
+    // Verifica se a aba já existe na barra de tarefas
+    let taskbarItem = document.getElementById('taskbar-' + id);
+    
+    // Se não existir, cria uma aba nova
+    if (!taskbarItem) {
+        const openWindowsDiv = document.getElementById('open-windows');
+        
+        // Pega o título da janela (ex: "Cat Helper v1.2")
+        const titleText = win.querySelector('.window-title').innerText;
+        
+        // Descobre qual é a classe do ícone correto
+        const iconClass = windowIcons[id] || 'icon-txt'; 
+
+        // Cria o botão em HTML
+        taskbarItem = document.createElement('div');
+        taskbarItem.id = 'taskbar-' + id;
+        taskbarItem.className = 'taskbar-item active';
+        taskbarItem.innerHTML = `<div class="icon-img ${iconClass}"></div> <span>${titleText}</span>`;
+        
+        // Adiciona a função de clique na aba (minimizar/restaurar)
+        taskbarItem.onclick = () => alternarMinimizar(id);
+        
+        openWindowsDiv.appendChild(taskbarItem);
+    }
 }
 
 function fecharJanela(id) {
+    // Esconde a janela
     document.getElementById(id).classList.add('hidden');
+    
+    // Remove a aba da barra de tarefas e destrói o botão
+    const taskbarItem = document.getElementById('taskbar-' + id);
+    if (taskbarItem) {
+        taskbarItem.remove();
+    }
+}
+
+function alternarMinimizar(id) {
+    const win = document.getElementById(id);
+    
+    if (win.classList.contains('hidden')) {
+        // Se estava escondida (minimizada), traz de volta pra tela
+        win.classList.remove('hidden');
+        trazerParaFrente(id);
+    } else {
+        // Se já está na tela, precisamos saber se ela é a janela do topo
+        if (win.style.zIndex == zIndexCounter) {
+            // Se ela já está por cima de tudo, nós minimizamos
+            win.classList.add('hidden');
+            atualizarAbasAtivas(null); // Tira o brilho do botão
+        } else {
+            // Se ela está atrás de outra janela, nós trazemos ela pra frente
+            trazerParaFrente(id);
+        }
+    }
 }
 
 function trazerParaFrente(id) {
     zIndexCounter++;
-    document.getElementById(id).style.zIndex = zIndexCounter;
+    const win = document.getElementById(id);
+    if (win) {
+        win.style.zIndex = zIndexCounter;
+        atualizarAbasAtivas(id); // Dá o brilho no botão da barra de tarefas
+    }
+}
+
+function atualizarAbasAtivas(idAtivo) {
+    const items = document.querySelectorAll('.taskbar-item');
+    items.forEach(item => {
+        if (item.id === 'taskbar-' + idAtivo) {
+            item.classList.add('active'); // Acende a aba
+        } else {
+            item.classList.remove('active'); // Apaga as outras
+        }
+    });
 }
 
 // ==========================================
