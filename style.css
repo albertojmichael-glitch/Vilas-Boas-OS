@@ -401,10 +401,56 @@ body {
     overflow: hidden;
 }
 
-/* Avatar de Girassol improvisado em CSS */
 .flower-avatar {
-    width: 100%; height: 100%;
-    background: radial-gradient(circle at center, #573300 15%, #ff9900 20%, #ffcc00 60%);
+    width: 100%;
+    height: 100%;
+    /* Fundo verde suave (folhas/grama de fundo) */
+    background: radial-gradient(circle at 80% 20%, #7db930 0%, #3a6b12 100%);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Camada 1: Pétalas Douradas Irradiando em Ângulos */
+.flower-avatar::before {
+    content: "";
+    position: absolute;
+    width: 130%;
+    height: 130%;
+    /* Desenha dezenas de pétalas alternando tons de amarelo, ouro e laranja */
+    background: repeating-conic-gradient(
+        from 0deg,
+        #ffea3d 0deg 8deg,
+        #ffb700 8deg 15deg,
+        #ff9400 15deg 22deg,
+        #ffd11a 22deg 30deg
+    );
+    
+    filter: drop-shadow(0 0 3px rgba(0,0,0,0.6));
+    border-radius: 50%;
+}
+
+
+.flower-avatar::after {
+    content: "";
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    
+    background: 
+        /* Ponto de brilho de luz natural */
+        radial-gradient(circle at 35% 35%, rgba(255,255,255,0.35) 0%, transparent 45%),
+        /* Anéis de textura do miolo de girassol */
+        repeating-radial-gradient(circle at center, #3a1d00 0px, #211000 2px, #4e2900 4px, #1a0b00 6px);
+    border: 1px solid #1f0a00;
+    /* Sombra projetada + Sombra interna para profundidade 3D */
+    box-shadow: 
+        0 0 8px rgba(0, 0, 0, 0.8),
+        inset 0 0 6px rgba(0, 0, 0, 0.9),
+        0 0 0 2px rgba(255, 175, 0, 0.7);
 }
 
 .start-menu-inner {
