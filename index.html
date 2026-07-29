@@ -84,14 +84,14 @@ Eles não param de olhar.
         </div>
         <div class="window-content cat-helper-bg">
             <div class="cat-container">
-                <div class="cat-avatar">
-                    <div class="guard-hat">SECURITY</div>
+                <div class="cat-avatar" id="cat-avatar-img">
+                    <div class="guard-hat" id="cat-hat">SECURITY</div>
                     🐱
                 </div>
-                <div class="cat-speech">
+                <div class="cat-speech" id="cat-text">
                     <p><strong>Miau! Olá, novo vigia!</strong></p>
-                    <p>Eu sou o Cat Helper! Estou aqui para te ajudar no seu primeiro dia.</p>
-                    <p>Abra o <em>Câmera Sistema</em> na Área de Trabalho para monitorar as salas. Fique de olho na energia, não queremos que as luzes se apaguem... Miau!</p>
+                    <p>Abra o <em>Câmera Sistema</em> para monitorar as salas. Fique de olho na energia, não queremos que as luzes se apaguem...</p>
+                    <button onclick="glitchCatHelper()" style="margin-top: 10px; cursor: pointer;">Avançar Dica ▶</button>
                 </div>
             </div>
         </div>
@@ -108,19 +108,23 @@ Eles não param de olhar.
             <div class="explorer-sidebar">
                 <ul>
                     <li>📁 Documentos</li>
+                    <li>📁 Movimentos_Detecção</li>
                     <li>🖼️ Imagens</li>
                     <li>💽 Disco Local (C:)</li>
-                    <li>🗑️ Lixeira</li>
                 </ul>
             </div>
             <div class="explorer-main">
-                <div class="file-item" ondblclick="abrirJanela('notepad-window')">
+                <div class="file-item" ondblclick="abrirTexto('Email_Rogerio', 'Para: Rogério Vinhedo\nAssunto: Primeira noite\n\nPrimeira noite sendo empregada se passou... me avisaram que o limpador faltou e terei que limpar a área de jantar. Vi algo se mexendo atrás das cortinas. Te amo amor.')">
                     <div class="icon-img icon-txt small"></div>
-                    <span>LEIA-ME.txt</span>
+                    <span>Email_Rogerio.txt</span>
                 </div>
-                <div class="file-item">
+                <div class="file-item" ondblclick="abrirTexto('Memo_Admin', 'Memorando - Administração\nDe: Renato\n\nO local permanece ativo para reduzir custo de reparo dos animatrônicos. Evitar menção a incidentes anteriores. Se a funcionária quiser desistir, ofereça bônus.')">
                     <div class="icon-img icon-txt small"></div>
-                    <span>Regras.txt</span>
+                    <span>Memo_Admin.txt</span>
+                </div>
+                <div class="file-item" ondblclick="alert('ERRO DE SISTEMA: Acesso Remoto (ADMIN) negado.')">
+                    <div class="icon-img icon-folder small"></div>
+                    <span>Movimentos_Detecção</span>
                 </div>
             </div>
         </div>

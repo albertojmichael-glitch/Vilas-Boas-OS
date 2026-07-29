@@ -765,3 +765,25 @@ body {
     box-shadow: none;
     border-radius: 2px;
 }
+
+/* =========================================
+   CAT HELPER GLITCH (LORE)
+   ========================================= */
+.cat-avatar.glitched {
+    background: #000 !important; /* Gato fica preto */
+    border-color: #4a0082 !important;
+    color: white;
+}
+
+.guard-hat.glitched-hat {
+    background: #4a0082 !important; /* Chapéu roxo escuro */
+    color: #ff0000 !important;
+    border-color: #111 !important;
+}
+
+.glitched-text {
+    font-family: 'Courier New', Courier, monospace !important;
+    color: #cc0000 !important;
+    background: #000 !important;
+    border-color: #cc0000 !important;
+}

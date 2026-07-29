@@ -242,3 +242,57 @@ function tornarArrastavel(elmnt) {
         document.onmousemove = null;
     }
 }
+
+// ==========================================
+// SISTEMA DE LORE: ABRIR TEXTOS DINÂMICOS
+// ==========================================
+function abrirTexto(titulo, conteudo) {
+    const notepad = document.getElementById('notepad-window');
+    
+    // Altera o título da janela
+    notepad.querySelector('.window-title').innerText = titulo + ' - Bloco de Notas';
+    
+    // Insere o texto da história no textarea
+    notepad.querySelector('textarea').value = conteudo;
+    
+    // Abre a janela usando o sistema que já criamos
+    abrirJanela('notepad-window');
+}
+
+// ==========================================
+// EVENTO: GLITCH DO CAT HELPER (NOITE 1)
+// ==========================================
+function glitchCatHelper() {
+    const catAvatar = document.getElementById('cat-avatar-img');
+    const catHat = document.getElementById('cat-hat');
+    const catTextContainer = document.getElementById('cat-text');
+    
+    // Aplica o visual macabro
+    catAvatar.classList.add('glitched');
+    catHat.classList.add('glitched-hat');
+    catTextContainer.classList.add('glitched-text');
+    
+    // Troca o texto para a mensagem criptografada
+    catTextContainer.innerHTML = `
+        <p style="font-weight: bold;">Se ver alguém... [ERRO]</p>
+        <p style="animation: text-blink 0.5s infinite;">Apenas para invitados.</p>
+        <p>Acesso de Manutenção Requerido.</p>
+    `;
+    
+    // Simula a janela fechando sozinha após 4 segundos
+    setTimeout(() => {
+        fecharJanela('cat-window');
+        
+        // Restaura o gato para o normal para a próxima vez que abrir
+        setTimeout(() => {
+            catAvatar.classList.remove('glitched');
+            catHat.classList.remove('glitched-hat');
+            catTextContainer.classList.remove('glitched-text');
+            catTextContainer.innerHTML = `
+                <p><strong>Miau! Sistema recuperado.</strong></p>
+                <p>Onde estávamos? Ah, a ventilação! Mantenha a sala em 20°C para não ter alucinações. Miau!</p>
+            `;
+        }, 1000);
+        
+    }, 4000);
+}
