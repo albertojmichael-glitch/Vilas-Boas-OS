@@ -61,30 +61,60 @@ Eles não param de olhar.
     </div> 
 
     <div id="start-menu" class="hidden">
-    <div class="start-menu-content">
-        <div class="start-left">
-            <div class="start-item" onclick="abrirJanela('notepad-window')">
-                <div class="icon-img icon-txt small"></div>
-                <span>Bloco de Notas</span>
-            </div>
-            <div class="start-item" onclick="abrirJanela('camera-window')">
-                <div class="icon-img icon-exe small"></div>
-                <span>Câmeras de Segurança</span>
-            </div>
-            <div class="start-divider"></div>
-            <div class="start-item greyed">
-                <span>Todos os Programas</span>
-            </div>
+        <div class="user-profile-img">
+            <div class="flower-avatar"></div>
         </div>
 
-        <div class="start-right">
-            <div class="user-profile-img"></div>
-            <div class="right-item">Documentos</div>
-            <div class="right-item">Imagens</div>
-            <div class="right-item">Música</div>
-            <div class="start-divider"></div>
-            <div class="right-item">Painel de Controle</div>
-            <div class="right-item">Ajuda e Suporte</div>
+        <div class="start-menu-inner">
+            <div class="start-left">
+                <div class="start-programs">
+                    <div class="start-item" onclick="abrirJanela('notepad-window')">
+                        <div class="icon-img icon-txt small"></div>
+                        <div class="item-text">
+                            <strong>Bloco de Notas</strong>
+                            <span>Editor de Texto</span>
+                        </div>
+                    </div>
+                    <div class="start-item" onclick="abrirJanela('camera-window')">
+                        <div class="icon-img icon-exe small"></div>
+                        <div class="item-text">
+                            <strong>Câmeras.exe</strong>
+                            <span>Sistema de Segurança</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="all-programs-wrapper">
+                    <div class="all-programs">
+                        <strong>Todos os Programas</strong>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="search-box">
+                        <input type="text" placeholder="Iniciar Pesquisa">
+                        <span class="search-icon">⌕</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="start-right">
+                <div class="right-user-name">Rogério</div>
+                <div class="start-divider"></div>
+                <div class="right-item">Documentos</div>
+                <div class="right-item">Imagens</div>
+                <div class="right-item">Música</div>
+                <div class="start-divider"></div>
+                <div class="right-item">Computador</div>
+                <div class="right-item">Rede</div>
+                <div class="start-divider"></div>
+                <div class="right-item">Painel de Controle</div>
+                <div class="right-item">Ajuda e Suporte</div>
+                
+                <div class="power-controls">
+                    <button class="power-btn power-off" onclick="window.location.reload()" title="Desligar">⏻</button>
+                    <button class="power-btn lock" title="Bloquear">🔒</button>
+                    <button class="power-btn arrow-btn">▶</button>
+                </div>
+            </div>
         </div>
     </div>
     
