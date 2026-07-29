@@ -57,12 +57,14 @@ function trazerParaFrente(id) {
     document.getElementById(id).style.zIndex = zIndexCounter;
 }
 
-
+// ==========================================
+// INICIALIZAÇÃO E EVENTOS AO CARREGAR A TELA
+// ==========================================
 document.addEventListener("DOMContentLoaded", () => {
+    // 1. Física das Janelas e Ícones
     const notepad = document.getElementById("notepad-window");
     if (notepad) tornarArrastavel(notepad);
 
-    
     const camera = document.getElementById("camera-window");
     if (camera) tornarArrastavel(camera);
 
@@ -72,8 +74,40 @@ document.addEventListener("DOMContentLoaded", () => {
     const iconCameras = document.getElementById("icon-cameras");
     if (iconCameras) tornarArrastavel(iconCameras);
 
+    // 2. Eventos do Menu Iniciar
+    const startOrb = document.getElementById('start-orb');
+    if (startOrb) {
+        startOrb.onclick = (e) => {
+            e.stopPropagation(); // Impede que o clique chegue no desktop
+            toggleStartMenu();
+        };
+    }
 });
 
+// ==========================================
+// MENU INICIAR
+// ==========================================
+function toggleStartMenu() {
+    const menu = document.getElementById('start-menu');
+    if (menu) {
+        menu.classList.toggle('hidden');
+    }
+}
+
+// Fecha o menu se clicar no fundo (desktop)
+const desktop = document.getElementById('desktop');
+if (desktop) {
+    desktop.addEventListener('mousedown', () => {
+        const menu = document.getElementById('start-menu');
+        if (menu && !menu.classList.contains('hidden')) {
+            menu.classList.add('hidden');
+        }
+    });
+}
+
+// ==========================================
+// FÍSICA DE ARRASTAR
+// ==========================================
 function tornarArrastavel(elmnt) {
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     const header = elmnt.querySelector(".window-header");

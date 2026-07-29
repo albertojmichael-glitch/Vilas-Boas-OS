@@ -7,13 +7,7 @@
 }
 
 body {
-    background: 
-        /* 1. O Brilho Central do Vista */
-        radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
-        /* 2. A Colina Verde do XP (Bliss) na parte de baixo */
-        radial-gradient(ellipse 120% 40% at 50% 100%, #30b33d 0%, #1a7a24 45%, transparent 46%),
-        /* 3. O Fundo Aurora Teal/Azul do Vista */
-        linear-gradient(135deg, #026670 0%, #009688 50%, #004d40 100%);
+    background: url(https://images.hdqwalls.com/wallpapers/windows-vista-aurora-greeny-in.jpg) no-repeat center center fixed;
     background-size: cover;
     height: 100vh;
     overflow: hidden;
@@ -29,11 +23,11 @@ body {
     top: 0; left: 0; width: 100vw; height: 100vh;
     background-color: #000;
     color: #fff;
-    z-index: 9999; /* Fica por cima de tudo */
+    z-index: 10001; 
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: opacity 1s ease-out; /* Transição suave na hora de sumir */
+    transition: opacity 1s ease-out; 
 }
 
 .boot-content {
@@ -370,3 +364,115 @@ body {
     90% { transform: translate(-10%, 10%); }
     100% { transform: translate(0, 0); }
 }
+
+/* =========================================
+   ESTILO MENU INICIAR (VISTA GLASS)
+   ========================================= */
+#start-menu {
+    position: absolute;
+    bottom: 45px; /* Fica logo acima da barra */
+    left: 10px;
+    width: 380px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px 5px 0 0;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.start-menu-content {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    padding: 10px;
+    height: 400px;
+}
+
+/* Coluna da Esquerda */
+.start-left {
+    background: white;
+    border-radius: 3px;
+    padding: 10px 5px;
+}
+
+.start-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 3px;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.start-item:hover {
+    background: linear-gradient(to bottom, #dbeaf9, #91b8e8);
+}
+
+.start-item.small .icon-img { transform: scale(0.7); }
+
+/* Coluna da Direita */
+.start-right {
+    padding: 10px;
+    color: white;
+    font-size: 0.85rem;
+}
+
+.user-profile-img {
+    width: 60px; height: 60px;
+    background: #555;
+    border: 2px solid white;
+    box-shadow: 0 0 5px black;
+    margin: 0 auto 20px auto;
+}
+
+.right-item {
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background 0.2s;
+}
+
+.right-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.start-divider {
+    height: 1px;
+    background: rgba(0,0,0,0.1);
+    margin: 5px 0;
+}
+
+.start-right .start-divider {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Rodapé do Menu */
+.start-footer {
+    height: 45px;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 15px;
+}
+
+.shutdown-btn {
+    background: linear-gradient(to bottom, #e04343, #8a1a1a);
+    border: 1px solid #333;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8rem;
+}
+
+.shutdown-btn:hover { filter: brightness(1.2); }
