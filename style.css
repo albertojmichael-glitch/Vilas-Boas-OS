@@ -366,91 +366,206 @@ body {
 }
 
 /* =========================================
-   ESTILO MENU INICIAR (VISTA GLASS)
+   ESTILO MENU INICIAR (VISTA EXATO)
    ========================================= */
 #start-menu {
     position: absolute;
-    bottom: 45px; /* Fica logo acima da barra */
-    left: 10px;
-    width: 380px;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 5px 5px 0 0;
-    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+    bottom: 40px; /* Grudado na barra de tarefas */
+    left: 0;
+    width: 420px;
+    background: rgba(10, 10, 10, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px 5px 5px 0;
+    box-shadow: inset 0 0 2px rgba(255,255,255,0.5), 0 5px 15px rgba(0,0,0,0.8);
     z-index: 10000;
+    /* A foto de perfil fica vazando pra fora, então não podemos usar overflow hidden no container principal */
+}
+
+/* A foto de perfil no topo direito */
+.user-profile-img {
+    position: absolute;
+    top: -25px;
+    right: 15px;
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #eee, #aaa);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.6), inset 0 0 5px rgba(0,0,0,0.5);
+    z-index: 10001;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
 }
 
-.start-menu-content {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    padding: 10px;
-    height: 400px;
+/* Avatar de Girassol improvisado em CSS */
+.flower-avatar {
+    width: 100%; height: 100%;
+    background: radial-gradient(circle at center, #573300 15%, #ff9900 20%, #ffcc00 60%);
 }
 
-/* Coluna da Esquerda */
+.start-menu-inner {
+    display: flex;
+    padding: 8px;
+    height: 480px;
+}
+
+/* --- COLUNA DA ESQUERDA (Branca) --- */
 .start-left {
-    background: white;
+    flex: 1.3;
+    background: #ffffff;
+    border: 1px solid #999;
     border-radius: 3px;
-    padding: 10px 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.start-programs {
+    padding: 5px;
+    overflow-y: auto;
 }
 
 .start-item {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 8px;
+    padding: 6px;
     cursor: pointer;
     border-radius: 3px;
-    color: #333;
-    font-size: 0.9rem;
+    border: 1px solid transparent;
 }
 
 .start-item:hover {
-    background: linear-gradient(to bottom, #dbeaf9, #91b8e8);
+    background: linear-gradient(to bottom, #e5f1fb, #cce4f7);
+    border: 1px solid #a3c9ea;
 }
 
-.start-item.small .icon-img { transform: scale(0.7); }
+.start-item.small .icon-img { 
+    transform: scale(0.8); 
+    margin-bottom: 0; 
+}
 
-/* Coluna da Direita */
+.item-text {
+    display: flex;
+    flex-direction: column;
+    color: #000;
+}
+.item-text strong { font-size: 0.9rem; font-weight: bold; }
+.item-text span { font-size: 0.75rem; color: #666; }
+
+/* Base da Coluna Esquerda (Todos os Programas e Pesquisa) */
+.all-programs-wrapper {
+    border-top: 1px solid #d9d9d9;
+    padding: 8px;
+    background: linear-gradient(to bottom, #fff, #f0f0f0);
+    border-radius: 0 0 3px 3px;
+}
+
+.all-programs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #333;
+    font-size: 0.85rem;
+    padding: 5px;
+    cursor: pointer;
+    margin-bottom: 8px;
+}
+.all-programs:hover { color: #0066cc; }
+.all-programs .arrow { font-size: 0.6rem; color: #444; }
+
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.search-box input {
+    width: 100%;
+    padding: 4px 25px 4px 8px;
+    border: 1px solid #a0a0a0;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    color: #333;
+    background: #fff;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    outline: none;
+}
+.search-box input::placeholder { font-style: italic; color: #888; }
+.search-icon {
+    position: absolute;
+    right: 8px;
+    color: #666;
+    font-size: 1rem;
+    transform: rotate(-45deg);
+}
+
+/* --- COLUNA DA DIREITA (Vidro Escuro) --- */
 .start-right {
-    padding: 10px;
-    color: white;
+    flex: 1;
+    padding: 30px 10px 10px 15px; /* Espaço extra no topo para a foto não cobrir o texto */
+    display: flex;
+    flex-direction: column;
+    color: #fff;
     font-size: 0.85rem;
 }
 
-.user-profile-img {
-    width: 60px; height: 60px;
-    background: #555;
-    border: 2px solid white;
-    box-shadow: 0 0 5px black;
-    margin: 0 auto 20px auto;
+.right-user-name {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 5px;
+    text-shadow: 1px 1px 2px #000;
 }
 
 .right-item {
-    padding: 8px;
+    padding: 6px 8px;
     cursor: pointer;
     border-radius: 3px;
-    transition: background 0.2s;
+    text-shadow: 1px 1px 2px #000;
+    margin-bottom: 2px;
+    border: 1px solid transparent;
 }
-
 .right-item:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: inset 0 0 5px rgba(255,255,255,0.2);
 }
 
 .start-divider {
     height: 1px;
-    background: rgba(0,0,0,0.1);
-    margin: 5px 0;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 4px 0;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.5);
 }
 
-.start-right .start-divider {
-    background: rgba(255, 255, 255, 0.1);
+/* Botões de Energia no fundo à direita */
+.power-controls {
+    margin-top: auto; /* Joga os botões lá pro fundo */
+    display: flex;
+    justify-content: flex-end;
+    gap: 2px;
 }
+
+.power-btn {
+    height: 24px;
+    background: linear-gradient(to bottom, #555, #222);
+    border: 1px solid #111;
+    color: white;
+    cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 2px rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.power-btn:hover { filter: brightness(1.3); }
+
+.power-off { width: 35px; border-radius: 3px 0 0 3px; color: #ff5555; }
+.lock { width: 30px; color: #ffcc00; font-size: 0.7rem; }
+.arrow-btn { width: 18px; border-radius: 0 3px 3px 0; font-size: 0.6rem; }
+
 
 /* Rodapé do Menu */
 .start-footer {
