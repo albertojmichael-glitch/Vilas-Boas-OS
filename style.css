@@ -294,22 +294,29 @@ body {
     outline: none;
 }
 
-/* Ícone de Aplicativo Genérico (.exe) */
+/* =========================================
+   ÍCONE DAS CÂMERAS (IMAGEM REAL)
+   ========================================= */
 .icon-exe {
-    width: 32px; height: 32px;
-    background: linear-gradient(135deg, #aaa, #555);
-    border: 2px solid #ddd;
-    border-radius: 4px;
+    width: 32px; 
+    height: 32px;
+    /* Coloque o link ou o caminho da imagem da câmera aqui */
+    background-image: url('https://chatgpt.com/backend-api/estuary/content?id=file_00000000c358820ea8af1238211a5dea&ts=495927&p=fs&cid=1&sig=187086c4caa597ad1711f4f709d0f594eb3b120f7b17319d5a709c80602335ef&v=0'); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    
     margin-bottom: 5px;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
     position: relative;
+    border-radius: 4px;
+    background-color: transparent; /* Remove o fundo cinza antigo */
+    border: none; /* Remove a borda antiga para a imagem ficar limpa */
 }
+
+/* Desliga a "telinha azul" que criamos antes com CSS puro */
 .icon-exe::after {
-    content: "";
-    position: absolute;
-    top: 8px; left: 8px; right: 8px; bottom: 8px;
-    background: #00a4e4;
-    border-radius: 2px;
+    display: none;
 }
 
 /* =========================================
@@ -401,56 +408,23 @@ body {
     overflow: hidden;
 }
 
+/* =========================================
+   AVATAR DO MENU INICIAR (IMAGEM REAL)
+   ========================================= */
 .flower-avatar {
     width: 100%;
     height: 100%;
-    /* Fundo verde suave (folhas/grama de fundo) */
-    background: radial-gradient(circle at 80% 20%, #7db930 0%, #3a6b12 100%);
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+    /* Coloque o link ou caminho da imagem do perfil aqui */
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7Yc3zZl0OxHwrPEQCX3MbiOToGWJcUFQ5HTn7PL3GVA&s=10');
+    background-size: cover; /* 'cover' garante que a foto preencha o quadrado todo sem distorcer */
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
-/* Camada 1: Pétalas Douradas Irradiando em Ângulos */
-.flower-avatar::before {
-    content: "";
-    position: absolute;
-    width: 130%;
-    height: 130%;
-    /* Desenha dezenas de pétalas alternando tons de amarelo, ouro e laranja */
-    background: repeating-conic-gradient(
-        from 0deg,
-        #ffea3d 0deg 8deg,
-        #ffb700 8deg 15deg,
-        #ff9400 15deg 22deg,
-        #ffd11a 22deg 30deg
-    );
-    
-    filter: drop-shadow(0 0 3px rgba(0,0,0,0.6));
-    border-radius: 50%;
-}
-
-
+/* Desliga as pétalas e o miolo antigos de CSS puro para não sujarem a foto */
+.flower-avatar::before,
 .flower-avatar::after {
-    content: "";
-    position: absolute;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    
-    background: 
-        /* Ponto de brilho de luz natural */
-        radial-gradient(circle at 35% 35%, rgba(255,255,255,0.35) 0%, transparent 45%),
-        /* Anéis de textura do miolo de girassol */
-        repeating-radial-gradient(circle at center, #3a1d00 0px, #211000 2px, #4e2900 4px, #1a0b00 6px);
-    border: 1px solid #1f0a00;
-    /* Sombra projetada + Sombra interna para profundidade 3D */
-    box-shadow: 
-        0 0 8px rgba(0, 0, 0, 0.8),
-        inset 0 0 6px rgba(0, 0, 0, 0.9),
-        0 0 0 2px rgba(255, 175, 0, 0.7);
+    display: none;
 }
 
 .start-menu-inner {
@@ -647,34 +621,38 @@ body {
 
 /* Ícone de Gatinho */
 .icon-cat {
-    width: 32px; height: 32px;
-    background: #ff9900;
-    border-radius: 50%;
-    border: 2px solid #fff;
+    width: 32px; 
+    height: 32px;
+    
+    background-image: url("https://chatgpt.com/backend-api/estuary/content?id=file_000000000ff4820e9ad6f7af35b3a883&ts=495927&p=fs&cid=1&sig=ca9e72bb823484d43d297197b80967f343e0b9372bd599e39d3998147b5e52a6&v=0"); 
+    background-size: contain; 
+    background-repeat: no-repeat;
+    background-position: center;
+    
+    
     box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    border-radius: 4px; 
 }
-/* Ícone de Pasta */
+
+/* Ícone de Pasta (Arquivos) */
 .icon-folder {
-    width: 36px; height: 28px;
-    background: #f3d775;
-    border-radius: 3px;
-    border: 1px solid #c9a62a;
+    width: 32px; 
+    height: 32px;
+    background-image: url('https://chatgpt.com/backend-api/estuary/content?id=file_000000004d34820e9d4b5ad61bef9088&ts=495927&p=fs&cid=1&sig=21505c611faf5aa368b5a54a15354967efe27689c94794714da154aba75f9071&v=0');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-    position: relative;
-    margin-top: 4px;
 }
-.icon-folder::before {
-    content: ""; position: absolute;
-    top: -6px; left: -1px; width: 14px; height: 6px;
-    background: #f3d775; border: 1px solid #c9a62a; border-bottom: none;
-    border-radius: 3px 3px 0 0;
-}
+
 /* Ícone de Rede */
 .icon-network {
-    width: 32px; height: 32px;
-    background: radial-gradient(circle, #5cb8e6, #005082);
-    border-radius: 4px;
-    border: 2px solid #ddd;
+    width: 32px; 
+    height: 32px;
+    background-image: url('https://chatgpt.com/backend-api/estuary/content?id=file_000000002198820ea84f72c2ba8b2879&ts=495927&p=fs&cid=1&sig=ffbc82d532be1c77536f9deb090491b5f649336d18103ff8a32f29e2624c950c&v=0');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
 }
 
