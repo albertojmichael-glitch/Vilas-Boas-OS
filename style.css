@@ -624,7 +624,7 @@ body {
     width: 32px; 
     height: 32px;
     
-    background-image: url("https://chatgpt.com/backend-api/estuary/content?id=file_000000000ff4820e9ad6f7af35b3a883&ts=495927&p=fs&cid=1&sig=ca9e72bb823484d43d297197b80967f343e0b9372bd599e39d3998147b5e52a6&v=0"); 
+    background-image: url("https://i.imgur.com/GLwGxxZ.png"); 
     background-size: contain; 
     background-repeat: no-repeat;
     background-position: center;
@@ -638,7 +638,7 @@ body {
 .icon-folder {
     width: 32px; 
     height: 32px;
-    background-image: url('https://chatgpt.com/backend-api/estuary/content?id=file_000000004d34820e9d4b5ad61bef9088&ts=495927&p=fs&cid=1&sig=21505c611faf5aa368b5a54a15354967efe27689c94794714da154aba75f9071&v=0');
+    background-image: url('https://i.imgur.com/LSLFGtQ.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -649,7 +649,7 @@ body {
 .icon-network {
     width: 32px; 
     height: 32px;
-    background-image: url('https://chatgpt.com/backend-api/estuary/content?id=file_000000002198820ea84f72c2ba8b2879&ts=495927&p=fs&cid=1&sig=ffbc82d532be1c77536f9deb090491b5f649336d18103ff8a32f29e2624c950c&v=0');
+    background-image: url('https://i.imgur.com/09f4s13.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
