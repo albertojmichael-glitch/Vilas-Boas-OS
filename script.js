@@ -74,6 +74,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const iconCameras = document.getElementById("icon-cameras");
     if (iconCameras) tornarArrastavel(iconCameras);
 
+    const catWindow = document.getElementById("cat-window");
+    if (catWindow) tornarArrastavel(catWindow);
+    const iconCat = document.getElementById("icon-cat");
+    if (iconCat) tornarArrastavel(iconCat);
+
+    const arquivosWindow = document.getElementById("arquivos-window");
+    if (arquivosWindow) tornarArrastavel(arquivosWindow);
+    const iconArquivos = document.getElementById("icon-arquivos");
+    if (iconArquivos) tornarArrastavel(iconArquivos);
+
+    const redeWindow = document.getElementById("rede-window");
+    if (redeWindow) tornarArrastavel(redeWindow);
+    const iconRede = document.getElementById("icon-rede");
+    if (iconRede) tornarArrastavel(iconRede);
+
     // 2. Eventos do Menu Iniciar
     const startOrb = document.getElementById('start-orb');
     if (startOrb) {

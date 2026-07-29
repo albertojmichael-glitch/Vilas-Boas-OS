@@ -637,3 +637,101 @@ body {
 }
 
 .shutdown-btn:hover { filter: brightness(1.2); }
+
+/* =========================================
+   POSIÇÕES DOS NOVOS ÍCONES
+   ========================================= */
+#icon-cat { top: 20px; left: 110px; }
+#icon-arquivos { top: 110px; left: 110px; }
+#icon-rede { top: 200px; left: 110px; }
+
+/* Ícone de Gatinho */
+.icon-cat {
+    width: 32px; height: 32px;
+    background: #ff9900;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+}
+/* Ícone de Pasta */
+.icon-folder {
+    width: 36px; height: 28px;
+    background: #f3d775;
+    border-radius: 3px;
+    border: 1px solid #c9a62a;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    position: relative;
+    margin-top: 4px;
+}
+.icon-folder::before {
+    content: ""; position: absolute;
+    top: -6px; left: -1px; width: 14px; height: 6px;
+    background: #f3d775; border: 1px solid #c9a62a; border-bottom: none;
+    border-radius: 3px 3px 0 0;
+}
+/* Ícone de Rede */
+.icon-network {
+    width: 32px; height: 32px;
+    background: radial-gradient(circle, #5cb8e6, #005082);
+    border-radius: 4px;
+    border: 2px solid #ddd;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+}
+
+/* =========================================
+   INTERFACES DOS APLICATIVOS
+   ========================================= */
+/* Janela: Cat Helper */
+.cat-helper-bg { background: #fffdf2; display: flex; padding: 20px; }
+.cat-container { display: flex; gap: 20px; align-items: flex-start; }
+.cat-avatar {
+    font-size: 3rem; 
+    position: relative;
+    background: #ffaa00;
+    border-radius: 50%;
+    width: 70px; height: 70px;
+    display: flex; justify-content: center; align-items: center;
+    border: 3px solid #333;
+}
+.guard-hat {
+    position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+    background: #111; color: #ffcc00; font-size: 0.4rem; font-family: sans-serif;
+    padding: 2px 8px; border-radius: 4px 4px 0 0; font-weight: bold;
+    border: 2px solid #333; border-bottom: none;
+}
+.cat-speech {
+    background: #fff; padding: 15px; border-radius: 8px;
+    border: 2px solid #ddd; position: relative; font-family: 'Segoe UI', Tahoma, sans-serif;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1); flex: 1;
+}
+.cat-speech p { margin-bottom: 8px; font-size: 0.95rem; color: #333; }
+
+/* Janela: Arquivos (File Explorer) */
+.file-explorer { display: flex; height: 350px !important; padding: 0 !important; background: #fff;}
+.explorer-sidebar {
+    width: 150px; background: #f0f0f0; border-right: 1px solid #ccc;
+    padding: 10px; overflow-y: auto;
+}
+.explorer-sidebar ul { list-style: none; padding: 0; margin: 0; }
+.explorer-sidebar li {
+    padding: 6px; cursor: pointer; color: #333; font-size: 0.85rem;
+    border-radius: 3px; margin-bottom: 2px;
+}
+.explorer-sidebar li:hover { background: #dbeaf9; }
+.explorer-main {
+    flex: 1; padding: 15px; display: flex; gap: 15px;
+    align-content: flex-start; flex-wrap: wrap;
+}
+.file-item {
+    display: flex; flex-direction: column; align-items: center;
+    width: 70px; text-align: center; cursor: pointer;
+    padding: 5px; border: 1px solid transparent; border-radius: 3px;
+}
+.file-item:hover { background: #e5f1fb; border: 1px solid #a3c9ea; }
+.file-item span { font-size: 0.8rem; color: #000; margin-top: 5px; }
+
+/* Janela: Rede */
+.network-bg {
+    background: #000; font-family: 'Courier New', Courier, monospace;
+    padding: 20px !important; font-weight: bold;
+}

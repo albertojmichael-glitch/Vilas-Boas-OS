@@ -28,6 +28,21 @@
             <span>Câmeras.exe</span>
         </div> 
 
+        <div class="desktop-icon" id="icon-cat" ondblclick="abrirJanela('cat-window')">
+            <div class="icon-img icon-cat"></div>
+            <span>Cat Helper</span>
+        </div>
+
+        <div class="desktop-icon" id="icon-arquivos" ondblclick="abrirJanela('arquivos-window')">
+            <div class="icon-img icon-folder"></div>
+            <span>Arquivos</span>
+        </div>
+
+        <div class="desktop-icon" id="icon-rede" ondblclick="abrirJanela('rede-window')">
+            <div class="icon-img icon-network"></div>
+            <span>Rede</span>
+        </div>
+
     </main>
 
     <div class="window hidden" id="notepad-window" onmousedown="trazerParaFrente('notepad-window')">
@@ -58,7 +73,73 @@ Eles não param de olhar.
                 <span class="camera-text">CAM 03 - SALA DOS FUNDOS<br><br>[ SINAL PERDIDO ]</span>
             </div>
         </div>
-    </div> 
+    </div>
+    
+    <div class="window hidden" id="cat-window" onmousedown="trazerParaFrente('cat-window')">
+        <div class="window-header">
+            <span class="window-title">Cat Helper v1.2</span>
+            <div class="window-controls">
+                <button class="win-btn-close" onclick="fecharJanela('cat-window')">X</button>
+            </div>
+        </div>
+        <div class="window-content cat-helper-bg">
+            <div class="cat-container">
+                <div class="cat-avatar">
+                    <div class="guard-hat">SECURITY</div>
+                    🐱
+                </div>
+                <div class="cat-speech">
+                    <p><strong>Miau! Olá, novo vigia!</strong></p>
+                    <p>Eu sou o Cat Helper! Estou aqui para te ajudar no seu primeiro dia.</p>
+                    <p>Abra o <em>Câmera Sistema</em> na Área de Trabalho para monitorar as salas. Fique de olho na energia, não queremos que as luzes se apaguem... Miau!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="window hidden" id="arquivos-window" style="width: 550px;" onmousedown="trazerParaFrente('arquivos-window')">
+        <div class="window-header">
+            <span class="window-title">Arquivos - C:\Usuários\Guarda</span>
+            <div class="window-controls">
+                <button class="win-btn-close" onclick="fecharJanela('arquivos-window')">X</button>
+            </div>
+        </div>
+        <div class="window-content file-explorer">
+            <div class="explorer-sidebar">
+                <ul>
+                    <li>📁 Documentos</li>
+                    <li>🖼️ Imagens</li>
+                    <li>💽 Disco Local (C:)</li>
+                    <li>🗑️ Lixeira</li>
+                </ul>
+            </div>
+            <div class="explorer-main">
+                <div class="file-item" ondblclick="abrirJanela('notepad-window')">
+                    <div class="icon-img icon-txt small"></div>
+                    <span>LEIA-ME.txt</span>
+                </div>
+                <div class="file-item">
+                    <div class="icon-img icon-txt small"></div>
+                    <span>Regras.txt</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="window hidden" id="rede-window" onmousedown="trazerParaFrente('rede-window')">
+        <div class="window-header" style="background: linear-gradient(to bottom, #222, #000); color: white;">
+            <span class="window-title">Monitor de Rede</span>
+            <div class="window-controls">
+                <button class="win-btn-close" onclick="fecharJanela('rede-window')">X</button>
+            </div>
+        </div>
+        <div class="window-content network-bg">
+            <p style="color: #4aff4a;">> PING: 999ms</p>
+            <p style="color: #4aff4a;">> STATUS: <span style="color: red; animation: text-blink 1s infinite;">SINAL COMPROMETIDO</span></p>
+            <p style="color: #4aff4a;">> RASTREANDO PACOTES...</p>
+            <p style="color: #ffda33; margin-top: 20px;">AVISO: Conexão externa detectada na Sala 03. Eles estão na rede.</p>
+        </div>
+    </div>
 
     <div id="start-menu" class="hidden">
         <div class="user-profile-img">
