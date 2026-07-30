@@ -25,7 +25,7 @@
             <span>LEIA-ME.txt</span>
         </div> <div class="desktop-icon" id="icon-cameras" ondblclick="abrirJanela('camera-window')">
             <div class="icon-img icon-exe"></div>
-            <span>Sistema Camêra</span>
+            <span>sistema camera</span>
         </div> 
 
         <div class="desktop-icon" id="icon-cat" ondblclick="abrirJanela('cat-window')">
@@ -49,7 +49,9 @@
         <div class="window-header">
             <span class="window-title">LEIA-ME.txt - Bloco de Notas</span>
             <div class="window-controls">
-                <button class="win-btn-close" onclick="fecharJanela('notepad-window')">X</button>
+                <button class="win-btn win-btn-min" onclick="minimizarJanela('notepad-window')" title="Minimizar">🗕</button>
+                <button class="win-btn win-btn-max" onclick="maximizarJanela('notepad-window')" title="Maximizar">🗖</button>
+                <button class="win-btn win-btn-close" onclick="fecharJanela('notepad-window')" title="Fechar">✕</button>
             </div>
         </div>
         <div class="window-content">
@@ -64,7 +66,9 @@ Eles não param de olhar.
         <div class="window-header" style="background: linear-gradient(to bottom, #555, #222); color: white; border-bottom: 1px solid #111;">
             <span class="window-title">Sistema de Segurança - VILAS BOAS</span>
             <div class="window-controls">
-                <button class="win-btn-close" onclick="fecharJanela('camera-window')">X</button>
+                <button class="win-btn win-btn-min" onclick="minimizarJanela('camera-window')" title="Minimizar">🗕</button>
+                <button class="win-btn win-btn-max" onclick="maximizarJanela('camera-window')" title="Maximizar">🗖</button>
+                <button class="win-btn win-btn-close" onclick="fecharJanela('camera-window')" title="Fechar">✕</button>
             </div>
         </div>
         <div class="window-content" style="background-color: #000; position: relative; height: 350px;">
@@ -79,7 +83,9 @@ Eles não param de olhar.
         <div class="window-header">
             <span class="window-title">Cat Helper v1.2</span>
             <div class="window-controls">
-                <button class="win-btn-close" onclick="fecharJanela('cat-window')">X</button>
+                <button class="win-btn win-btn-min" onclick="minimizarJanela('cat-window')" title="Minimizar">🗕</button>
+                <button class="win-btn win-btn-max" onclick="maximizarJanela('cat-window')" title="Maximizar">🗖</button>
+                <button class="win-btn win-btn-close" onclick="fecharJanela('cat-window')" title="Fechar">✕</button>
             </div>
         </div>
         <div class="window-content cat-helper-bg">
@@ -101,7 +107,9 @@ Eles não param de olhar.
         <div class="window-header">
             <span class="window-title">Arquivos - C:\Usuários\Guarda</span>
             <div class="window-controls">
-                <button class="win-btn-close" onclick="fecharJanela('arquivos-window')">X</button>
+                <button class="win-btn win-btn-min" onclick="minimizarJanela('arquivos-window')" title="Minimizar">🗕</button>
+                <button class="win-btn win-btn-max" onclick="maximizarJanela('arquivos-window')" title="Maximizar">🗖</button>
+                <button class="win-btn win-btn-close" onclick="fecharJanela('arquivos-window')" title="Fechar">✕</button>
             </div>
         </div>
         <div class="window-content file-explorer">

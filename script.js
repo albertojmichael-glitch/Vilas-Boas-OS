@@ -39,10 +39,9 @@ updateClock();
 setInterval(updateClock, 1000);
 
 // ==========================================
-// GERENCIADOR DE JANELAS E BARRA DE TAREFAS
+// GERENCIADOR DE JANELAS (MINIMIZAR/MAXIMIZAR)
 // ==========================================
 let zIndexCounter = 10;
-
 
 const windowIcons = {
     'notepad-window': 'icon-txt',
@@ -54,61 +53,67 @@ const windowIcons = {
 
 function abrirJanela(id) {
     const win = document.getElementById(id);
+    if (!win) return;
+    
     win.classList.remove('hidden');
     trazerParaFrente(id);
     
-    
     let taskbarItem = document.getElementById('taskbar-' + id);
-    
-    
     if (!taskbarItem) {
         const openWindowsDiv = document.getElementById('open-windows');
-        
-        
         const titleText = win.querySelector('.window-title').innerText;
-        
-        
         const iconClass = windowIcons[id] || 'icon-txt'; 
 
-        
         taskbarItem = document.createElement('div');
         taskbarItem.id = 'taskbar-' + id;
         taskbarItem.className = 'taskbar-item active';
         taskbarItem.innerHTML = `<div class="icon-img ${iconClass}"></div> <span>${titleText}</span>`;
         
-        
         taskbarItem.onclick = () => alternarMinimizar(id);
-        
         openWindowsDiv.appendChild(taskbarItem);
     }
 }
 
+// FUNÇÃO: MINIMIZAR JANELA
+function minimizarJanela(id) {
+    const win = document.getElementById(id);
+    if (win) {
+        win.classList.add('hidden');
+        atualizarAbasAtivas(null);
+    }
+}
+
+// FUNÇÃO: MAXIMIZAR / RESTAURAR JANELA
+function maximizarJanela(id) {
+    const win = document.getElementById(id);
+    if (win) {
+        win.classList.toggle('maximized');
+        trazerParaFrente(id);
+    }
+}
+
+// FUNÇÃO: FECHAR JANELA
 function fecharJanela(id) {
-    
-    document.getElementById(id).classList.add('hidden');
-    
-    
-    const taskbarItem = document.getElementById('taskbar-' + id);
-    if (taskbarItem) {
-        taskbarItem.remove();
+    const win = document.getElementById(id);
+    if (win) {
+        win.classList.add('hidden');
+        win.classList.remove('maximized'); // Reseta a tela cheia ao fechar
+        
+        const taskbarItem = document.getElementById('taskbar-' + id);
+        if (taskbarItem) taskbarItem.remove();
     }
 }
 
 function alternarMinimizar(id) {
     const win = document.getElementById(id);
-    
     if (win.classList.contains('hidden')) {
-        
         win.classList.remove('hidden');
         trazerParaFrente(id);
     } else {
-        
         if (win.style.zIndex == zIndexCounter) {
-            
             win.classList.add('hidden');
-            atualizarAbasAtivas(null); 
+            atualizarAbasAtivas(null);
         } else {
-            
             trazerParaFrente(id);
         }
     }
@@ -119,7 +124,7 @@ function trazerParaFrente(id) {
     const win = document.getElementById(id);
     if (win) {
         win.style.zIndex = zIndexCounter;
-        atualizarAbasAtivas(id); 
+        atualizarAbasAtivas(id);
     }
 }
 
@@ -127,9 +132,9 @@ function atualizarAbasAtivas(idAtivo) {
     const items = document.querySelectorAll('.taskbar-item');
     items.forEach(item => {
         if (item.id === 'taskbar-' + idAtivo) {
-            item.classList.add('active'); 
+            item.classList.add('active');
         } else {
-            item.classList.remove('active'); 
+            item.classList.remove('active');
         }
     });
 }
