@@ -7,13 +7,16 @@
 }
 
 body {
-    background: url(https://images.hdqwalls.com/wallpapers/windows-vista-aurora-greeny-in.jpg) no-repeat center center fixed;
-    background-size: cover;
-    height: 100vh;
+    background: url('https://images.hdqwalls.com/wallpapers/windows-vista-aurora-greeny-in.jpg') no-repeat center center fixed;
+    background-size: cover !important; 
+    height: 100vh; 
+    width: 100vw;
+    margin: 0;
     overflow: hidden;
     display: flex;
     flex-direction: column;
 }
+
 
 /* =========================================
    TELA DE BOOT
@@ -85,12 +88,11 @@ body {
    ÁREA DE TRABALHO E BARRA DE TAREFAS
    ========================================= */
 #desktop {
-    flex: 1;
+    flex: 1; 
     position: relative;
-    padding: 10px;
 }
 
-/* Efeito Aero Glass */
+
 #taskbar {
     height: 40px;
     background: rgba(0, 0, 0, 0.4); 
@@ -210,22 +212,18 @@ body {
     left: 20px;
 }
 
-/* Desenhando um arquivo .txt em CSS puro */
 .icon-txt {
-    width: 32px;
-    height: 40px;
+    width: 32px; 
+    height: 32px;
     background: white;
-    border: 1px solid #ccc;
-    position: relative;
-    margin-bottom: 5px;
+    border: 2px solid #ccc;
+    border-radius: 3px;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    position: relative;
 }
-.icon-txt::before {
-    content: "";
-    position: absolute;
-    top: 6px; left: 4px; right: 4px; bottom: 6px;
-    border-top: 2px solid #555;
-    box-shadow: 0 6px 0 #555, 0 12px 0 #555, 0 18px 0 #555;
+
+.icon-txt::after, .icon-txt::before {
+    display: none !important; 
 }
 
 /* =========================================
