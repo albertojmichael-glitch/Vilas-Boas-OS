@@ -176,6 +176,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const computadorWindow = document.getElementById("computador-window");
     if (computadorWindow) tornarArrastavel(computadorWindow);
 
+    const iconLixeira = document.getElementById("icon-lixeira");
+    if (iconLixeira) tornarArrastavel(iconLixeira);
+
     
     const startOrb = document.getElementById('start-orb');
     if (startOrb) {

@@ -25,8 +25,13 @@
             <span>LEIA-ME.txt</span>
         </div> <div class="desktop-icon" id="icon-cameras" ondblclick="abrirJanela('camera-window')">
             <div class="icon-img icon-exe"></div>
-            <span>sistema camera</span>
-        </div> 
+            <span>camera sistema</span>
+        </div>
+        
+        <div class="desktop-icon" id="icon-lixeira" ondblclick="alert('A Lixeira está vazia.')">
+            <div class="icon-img icon-trash"></div>
+            <span>Lixeira</span>
+        </div>
 
         <div class="desktop-icon" id="icon-cat" ondblclick="abrirJanela('cat-window')">
             <div class="icon-img icon-cat"></div>
@@ -103,50 +108,64 @@ Eles não param de olhar.
         </div>
     </div>
 
-    <div class="window hidden" id="computador-window" style="width: 600px;" onmousedown="trazerParaFrente('computador-window')">
+    <div class="window-content cat-helper-bg">
+            </div>
+    </div> <div class="window hidden" id="arquivos-window" style="width: 550px;" onmousedown="trazerParaFrente('arquivos-window')">
         <div class="window-header">
-            <span class="window-title">Computador</span>
+            <span class="window-title">Arquivos - C:\Usuários\Guarda</span>
             <div class="window-controls">
-                <button class="win-btn win-btn-min" onclick="minimizarJanela('computador-window')" title="Minimizar">🗕</button>
-                <button class="win-btn win-btn-max" onclick="maximizarJanela('computador-window')" title="Maximizar">🗖</button>
-                <button class="win-btn win-btn-close" onclick="fecharJanela('computador-window')" title="Fechar">✕</button>
+                <button class="win-btn win-btn-min" onclick="minimizarJanela('arquivos-window')" title="Minimizar">🗕</button>
+                <button class="win-btn win-btn-max" onclick="maximizarJanela('arquivos-window')" title="Maximizar">🗖</button>
+                <button class="win-btn win-btn-close" onclick="fecharJanela('arquivos-window')" title="Fechar">✕</button>
             </div>
         </div>
         <div class="window-content file-explorer">
             <div class="explorer-sidebar">
                 <ul>
-                    <li onclick="abrirJanela('arquivos-window')">📁 Documentos</li>
-                    <li>🖼️ Imagens</li>
-                    <li style="background: #dbeaf9; font-weight: bold;">💻 Computador</li>
-                    <li onclick="abrirJanela('rede-window')">🌐 Rede</li>
+                    <li style="background: #dbeaf9; font-weight: bold;">📁 Arquivos</li>
+                    <li>🖼️ Fotos</li>
+                    <li>📊 Relatórios</li>
+                    <li>👥 Funcionários</li>
+                    <li>💾 Backup</li>
+                    <li>🔒 Confidencial</li>
                 </ul>
             </div>
+            
             <div class="explorer-main">
-                <h3 class="drive-title">Unidades de Disco Rígido (1)</h3>
+                <div class="file-item">
+                    <div class="icon-img icon-folder small"></div>
+                    <span>Fotos</span>
+                </div>
+                <div class="file-item">
+                    <div class="icon-img icon-folder small"></div>
+                    <span>Relatórios</span>
+                </div>
+                <div class="file-item">
+                    <div class="icon-img icon-folder small"></div>
+                    <span>Funcionários</span>
+                </div>
+                <div class="file-item">
+                    <div class="icon-img icon-folder small"></div>
+                    <span>Backup</span>
+                </div>
                 
-                <div class="drive-item" ondblclick="abrirJanela('arquivos-window')">
-                    <div class="drive-icon">💽</div>
-                    <div class="drive-info">
-                        <strong>Disco Local (C:)</strong>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 82%;"></div>
-                        </div>
-                        <span>10.5 GB livres de 60.0 GB</span>
-                    </div>
+                <div class="file-item" ondblclick="alert('ERRO DE SISTEMA: Acesso Remoto (ADMIN) exigido. Permissão negada.')">
+                    <div class="icon-img icon-folder small" style="filter: hue-rotate(150deg);"></div>
+                    <span style="color: #c42b2b; font-weight: bold;">Confidencial</span>
                 </div>
 
-                <h3 class="drive-title" style="margin-top: 20px;">Dispositivos com Armazenamento Removível (1)</h3>
-                
-                <div class="drive-item">
-                    <div class="drive-icon">💾</div>
-                    <div class="drive-info">
-                        <strong>Unidade de Disquete (A:)</strong>
-                        <span style="margin-top: 5px;">VILLASBOAS</span>
-                    </div>
+                <div class="file-item" ondblclick="abrirTexto('Email_Rogerio', 'Para: Rogério Vinhedo\nAssunto: Primeira noite\n\nPrimeira noite sendo empregada se passou... me avisaram que o limpador faltou e terei que limpar a área de jantar. Vi algo se mexendo atrás das cortinas. Te amo amor.')">
+                    <div class="icon-img icon-txt small"></div>
+                    <span>Email_Rogerio.txt</span>
+                </div>
+                <div class="file-item" ondblclick="abrirTexto('Memo_Admin', 'Memorando - Administração\nDe: Renato\n\nO local permanece ativo para reduzir custo de reparo dos animatrônicos. Evitar menção a incidentes anteriores. Se a funcionária quiser desistir, ofereça bônus.')">
+                    <div class="icon-img icon-txt small"></div>
+                    <span>Memo_Admin.txt</span>
                 </div>
             </div>
         </div>
     </div>
+    
 
     <div class="window hidden" id="rede-window" onmousedown="trazerParaFrente('rede-window')">
         <div class="window-header" style="background: linear-gradient(to bottom, #222, #000); color: white;">
@@ -235,14 +254,6 @@ Eles não param de olhar.
         </div>
     </div>
 
-   
-    
-        <div class="start-footer">
-            <button class="shutdown-btn" onclick="window.location.reload()">
-                ⏻ <span>Desligar</span>
-            </button>
-        </div>
-    </div>
         
 
     <footer id="taskbar">
