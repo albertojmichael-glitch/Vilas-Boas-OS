@@ -173,43 +173,40 @@ Eles não param de olhar.
         <div class="start-menu-inner">
             <div class="start-left">
                 <div class="start-programs">
-                    <div class="start-item" onclick="abrirJanela('notepad-window')">
+                    <div class="start-item" onclick="abrirJanela('notepad-window'); toggleStartMenu();">
                         <div class="icon-img icon-txt small"></div>
                         <div class="item-text">
                             <strong>Bloco de Notas</strong>
                             <span>Editor de Texto</span>
                         </div>
                     </div>
-                    <div class="start-item" onclick="abrirJanela('camera-window')">
+                    <div class="start-item" onclick="abrirJanela('camera-window'); toggleStartMenu();">
                         <div class="icon-img icon-exe small"></div>
                         <div class="item-text">
-                            <strong>Câmeras.exe</strong>
+                            <strong>Câmera Sistema</strong>
                             <span>Sistema de Segurança</span>
                         </div>
                     </div>
-                </div>
-                
-                <div class="all-programs-wrapper">
-                    <div class="all-programs">
-                        <strong>Todos os Programas</strong>
-                        <span class="arrow">▶</span>
-                    </div>
-                    <div class="search-box">
-                        <input type="text" placeholder="Iniciar Pesquisa">
-                        <span class="search-icon">⌕</span>
+                    <div class="start-item" onclick="abrirJanela('cat-window'); toggleStartMenu();">
+                        <div class="icon-img icon-cat small"></div>
+                        <div class="item-text">
+                            <strong>Cat Helper</strong>
+                            <span>Assistente Virtual</span>
+                        </div>
                     </div>
                 </div>
-            </div>
+                ```
 
+```html
             <div class="start-right">
                 <div class="right-user-name">Caroline</div>
                 <div class="start-divider"></div>
-                <div class="right-item">Documentos</div>
+                <div class="right-item" onclick="abrirJanela('arquivos-window'); toggleStartMenu();">Documentos</div>
                 <div class="right-item">Imagens</div>
                 <div class="right-item">Música</div>
                 <div class="start-divider"></div>
-                <div class="right-item">Computador</div>
-                <div class="right-item">Rede</div>
+                <div class="right-item" onclick="abrirJanela('computador-window'); toggleStartMenu();">Computador</div>
+                <div class="right-item" onclick="abrirJanela('rede-window'); toggleStartMenu();">Rede</div>
                 <div class="start-divider"></div>
                 <div class="right-item">Painel de Controle</div>
                 <div class="right-item">Ajuda e Suporte</div>
