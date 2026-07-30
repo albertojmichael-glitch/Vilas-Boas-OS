@@ -48,7 +48,8 @@ const windowIcons = {
     'camera-window': 'icon-exe',
     'cat-window': 'icon-cat',
     'arquivos-window': 'icon-folder',
-    'rede-window': 'icon-network'
+    'rede-window': 'icon-network',
+    'computador-window': 'icon-computer'
 };
 
 function abrirJanela(id) {
@@ -168,8 +169,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const redeWindow = document.getElementById("rede-window");
     if (redeWindow) tornarArrastavel(redeWindow);
+
     const iconRede = document.getElementById("icon-rede");
     if (iconRede) tornarArrastavel(iconRede);
+
+    const computadorWindow = document.getElementById("computador-window");
+    if (computadorWindow) tornarArrastavel(computadorWindow);
 
     
     const startOrb = document.getElementById('start-orb');
