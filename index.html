@@ -166,11 +166,13 @@ Eles não param de olhar.
     </div>
 
     <div id="start-menu" class="hidden">
+        
         <div class="user-profile-img">
             <div class="flower-avatar"></div>
         </div>
 
         <div class="start-menu-inner">
+            
             <div class="start-left">
                 <div class="start-programs">
                     <div class="start-item" onclick="abrirJanela('notepad-window'); toggleStartMenu();">
@@ -195,9 +197,19 @@ Eles não param de olhar.
                         </div>
                     </div>
                 </div>
-                ```
+                
+                <div class="all-programs-wrapper">
+                    <div class="all-programs">
+                        <strong>Todos os Programas</strong>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="search-box">
+                        <input type="text" placeholder="Iniciar Pesquisa">
+                        <span class="search-icon">⌕</span>
+                    </div>
+                </div>
+            </div>
 
-```html
             <div class="start-right">
                 <div class="right-user-name">Caroline</div>
                 <div class="start-divider"></div>
@@ -205,8 +217,10 @@ Eles não param de olhar.
                 <div class="right-item">Imagens</div>
                 <div class="right-item">Música</div>
                 <div class="start-divider"></div>
+                
                 <div class="right-item" onclick="abrirJanela('computador-window'); toggleStartMenu();">Computador</div>
                 <div class="right-item" onclick="abrirJanela('rede-window'); toggleStartMenu();">Rede</div>
+                
                 <div class="start-divider"></div>
                 <div class="right-item">Painel de Controle</div>
                 <div class="right-item">Ajuda e Suporte</div>
@@ -217,8 +231,11 @@ Eles não param de olhar.
                     <button class="power-btn arrow-btn">▶</button>
                 </div>
             </div>
+            
         </div>
     </div>
+
+   
     
         <div class="start-footer">
             <button class="shutdown-btn" onclick="window.location.reload()">
