@@ -622,7 +622,7 @@ body {
     width: 32px; 
     height: 32px;
     
-    background-image: url("https://i.imgur.com/GLwGxxZ.png"); 
+    background-image: url("assets/icons/cathelper.png"); 
     background-size: contain; 
     background-repeat: no-repeat;
     background-position: center;
@@ -636,7 +636,7 @@ body {
 .icon-folder {
     width: 32px; 
     height: 32px;
-    background-image: url('https://i.imgur.com/LSLFGtQ.png');
+    background-image: url('assets/icons/pasta.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -647,7 +647,7 @@ body {
 .icon-network {
     width: 32px; 
     height: 32px;
-    background-image: url('https://i.imgur.com/09f4s13.png');
+    background-image: url('assets/icons/computer.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -936,7 +936,7 @@ body {
 .icon-trash {
     width: 32px; 
     height: 32px;
-    background-image: url('https://i.imgur.com/upkc6jS.png');
+    background-image: url('assets/icons/lixeravazia.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -950,7 +950,7 @@ body {
 
 .icon-trash.full {
     
-    background-image: url('https://i.imgur.com/iO2OPdG.png');
+    background-image: url('assets/icons/lixeracheia.png');
 }
 
 
