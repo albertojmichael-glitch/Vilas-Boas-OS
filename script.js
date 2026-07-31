@@ -360,10 +360,39 @@ function salvarNotepad() {
     const texto = document.getElementById("notepad-textarea").value;
     localStorage.setItem("vilasBoasNotepad", texto);
     // Um leve efeito de feedback pro jogador
-    alert("Arquivo salvo com sucesso!");
+    mostrarAlerta("Arquivo salvo com sucesso no Disco Local (C:)", "Bloco de Notas");
 }
 
 function limparNotepad() {
     document.getElementById("notepad-textarea").value = "";
 }
 
+// ==========================================
+// SISTEMA DE ALERTAS CUSTOMIZADO
+// ==========================================
+function mostrarAlerta(mensagem, titulo = 'Aviso') {
+    document.getElementById('alert-title').innerText = titulo;
+    document.getElementById('alert-message').innerText = mensagem;
+    
+    const alerta = document.getElementById('custom-alert');
+    alerta.classList.remove('hidden');
+}
+
+function fecharAlerta() {
+    document.getElementById('custom-alert').classList.add('hidden');
+}
+
+// ==========================================
+// INTERAÇÃO COM A LIXEIRA
+// ==========================================
+function abrirLixeira() {
+    const lixeira = document.getElementById('icon-lixeira');
+    const imgLixeira = lixeira.querySelector('.icon-trash');
+    
+    // Verifica se a lixeira tem a classe "full" (cheia)
+    if (imgLixeira && imgLixeira.classList.contains('full')) {
+        mostrarAlerta("Arquivos confidenciais destruídos. Não há como restaurá-los.", "Lixeira (Cheia)");
+    } else {
+        mostrarAlerta("A Lixeira está vazia.", "Lixeira");
+    }
+}

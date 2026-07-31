@@ -29,7 +29,7 @@
             <span>Câmera Sistema</span>
         </div>
         
-        <div class="desktop-icon" id="icon-lixeira" ondblclick="alert('A Lixeira está vazia.')">
+        <div class="desktop-icon" id="icon-lixeira" ondblclick="abrirLixeira()">
             <div class="icon-img icon-trash"></div>
             <span>Lixeira</span>
         </div>
@@ -49,6 +49,19 @@
             <span>Rede</span>
         </div>
     </main>
+
+    <div class="window hidden" id="custom-alert" style="width: 350px; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 99999; box-shadow: 0 0 15px rgba(0,0,0,0.8);">
+        <div class="window-header">
+            <span class="window-title" id="alert-title">Aviso</span>
+            <div class="window-controls">
+                <button class="win-btn win-btn-close" onclick="fecharAlerta()" title="Fechar">✕</button>
+            </div>
+        </div>
+        <div class="window-content" style="background: white; padding: 20px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 15px;">
+            <span id="alert-message" style="font-size: 14px; color: #333;">Aqui vai o texto do alerta.</span>
+            <button onclick="fecharAlerta()" style="padding: 4px 20px; cursor: pointer; border: 1px solid #999; border-radius: 3px; background: #e0e0e0; font-family: Tahoma;">OK</button>
+        </div>
+    </div>
 
     <div class="window hidden" id="notepad-window" onmousedown="trazerParaFrente('notepad-window')">
         <div class="window-header">
@@ -148,7 +161,7 @@
                     <span>Backup</span>
                 </div>
                 
-                <div class="file-item" ondblclick="alert('ERRO DE SISTEMA: Acesso Remoto (ADMIN) exigido. Permissão negada.')">
+                <div class="file-item" ondblclick="mostrarAlerta('ERRO DE SISTEMA: Acesso Remoto (ADMIN) exigido. Permissão negada.', 'Acesso Negado')">
                     <div class="icon-img icon-folder small" style="filter: hue-rotate(150deg);"></div>
                     <span style="color: #c42b2b; font-weight: bold;">Confidencial</span>
                 </div>
