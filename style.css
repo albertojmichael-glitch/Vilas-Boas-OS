@@ -21,7 +21,7 @@ html, body {
     height: 100vh;
     overflow: hidden; /* Impede a barra de rolagem de aparecer */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: url('https://images7.alphacoders.com/281/281033.jpg') no-repeat center center fixed;
+    background: url('assets/wallpapers/wallpaper.png') no-repeat center center fixed;
     background-size: cover !important;
 }
 
