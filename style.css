@@ -6,23 +6,64 @@
     font-family: 'Segoe UI', 'Tahoma', sans-serif; /* Fonte padrão do Vista */
 }
 
-body {
-    background: url('assets/wallpapers/wallpaper.png') no-repeat center center fixed;
-    background-size: cover !important; 
-    height: 100vh; 
-    width: 100vw;
-    margin: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+
+/* =========================================
+   BASE DO SISTEMA (TELA CHEIA BLINDADA)
+   ========================================= */
+* {
+    box-sizing: border-box;
 }
 
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; /* Impede a barra de rolagem de aparecer */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('https://images7.alphacoders.com/281/281033.jpg') no-repeat center center fixed;
+    background-size: cover !important;
+}
+
+/* O Desktop ocupa a tela toda, menos os 40px da barra de tarefas */
+#desktop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 40px);
+    z-index: 1;
+}
+
+/* Força as janelas a flutuarem para não quebrarem a tela */
+.window {
+    position: absolute !important;
+}
+
+/* Oculta de verdade os elementos escondidos */
 .hidden {
     display: none !important;
 }
 
-.window {
-    position: absolute;
+/* =========================================
+   BARRA DE TAREFAS (FIXADA NO FUNDO)
+   ========================================= */
+#taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 40px;
+    z-index: 9999;
+    
+    /* Mantenha as cores e efeitos da sua barra aqui: */
+    background: linear-gradient(to bottom, #444, #111);
+    border-top: 1px solid #555;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
 }
 
 
@@ -92,33 +133,6 @@ body {
     font-size: 0.8rem;
 }
 
-/* =========================================
-   ÁREA DE TRABALHO E BARRA DE TAREFAS
-   ========================================= */
-#desktop {
-    flex: 1; 
-    position: relative;
-}
-
-
-#taskbar {
-    height: 40px;
-    background: rgba(0, 0, 0, 0.4); 
-    backdrop-filter: blur(8px); 
-    -webkit-backdrop-filter: blur(8px);
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
-    
-    
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 9999; 
-}
 
 /* Orb do Iniciar (Botão redondo) */
 #start-orb {
