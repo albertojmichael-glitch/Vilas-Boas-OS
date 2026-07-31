@@ -17,6 +17,14 @@ body {
     flex-direction: column;
 }
 
+.hidden {
+    display: none !important;
+}
+
+.window {
+    position: absolute;
+}
+
 
 /* =========================================
    TELA DE BOOT
@@ -943,8 +951,8 @@ body {
     
     box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
     border-radius: 4px;
-    background-color: transparent; 
-    border: none; 
+    background-color: transparent;
+    border: none;
 }
 
 

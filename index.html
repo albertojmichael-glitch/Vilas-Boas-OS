@@ -19,13 +19,14 @@
     </div>
 
     <main id="desktop">
-        
         <div class="desktop-icon" id="icon-notepad" ondblclick="abrirJanela('notepad-window')">
             <div class="icon-img icon-txt"></div>
             <span>LEIA-ME.txt</span>
-        </div> <div class="desktop-icon" id="icon-cameras" ondblclick="abrirJanela('camera-window')">
+        </div>
+
+        <div class="desktop-icon" id="icon-cameras" ondblclick="abrirJanela('camera-window')">
             <div class="icon-img icon-exe"></div>
-            <span>camera sistema</span>
+            <span>Câmera Sistema</span>
         </div>
         
         <div class="desktop-icon" id="icon-lixeira" ondblclick="alert('A Lixeira está vazia.')">
@@ -47,7 +48,6 @@
             <div class="icon-img icon-network"></div>
             <span>Rede</span>
         </div>
-
     </main>
 
     <div class="window hidden" id="notepad-window" onmousedown="trazerParaFrente('notepad-window')">
@@ -67,7 +67,9 @@ As câmeras da sala 03 foram desligadas de novo.
 Eles não param de olhar.
             </textarea>
         </div>
-    </div> <div class="window hidden" id="camera-window" onmousedown="trazerParaFrente('camera-window')">
+    </div>
+
+    <div class="window hidden" id="camera-window" onmousedown="trazerParaFrente('camera-window')">
         <div class="window-header" style="background: linear-gradient(to bottom, #555, #222); color: white; border-bottom: 1px solid #111;">
             <span class="window-title">Sistema de Segurança - VILAS BOAS</span>
             <div class="window-controls">
@@ -83,7 +85,7 @@ Eles não param de olhar.
             </div>
         </div>
     </div>
-    
+
     <div class="window hidden" id="cat-window" onmousedown="trazerParaFrente('cat-window')">
         <div class="window-header">
             <span class="window-title">Cat Helper v1.2</span>
@@ -108,9 +110,7 @@ Eles não param de olhar.
         </div>
     </div>
 
-    <div class="window-content cat-helper-bg">
-            </div>
-    </div> <div class="window hidden" id="arquivos-window" style="width: 550px;" onmousedown="trazerParaFrente('arquivos-window')">
+    <div class="window hidden" id="arquivos-window" style="width: 550px;" onmousedown="trazerParaFrente('arquivos-window')">
         <div class="window-header">
             <span class="window-title">Arquivos - C:\Usuários\Guarda</span>
             <div class="window-controls">
@@ -162,8 +162,54 @@ Eles não param de olhar.
                     <div class="icon-img icon-txt small"></div>
                     <span>Memo_Admin.txt</span>
                 </div>
-            </div> </div> </div> ```
-    
+            </div>
+        </div>
+    </div>
+
+    <div class="window hidden" id="computador-window" style="width: 600px;" onmousedown="trazerParaFrente('computador-window')">
+        <div class="window-header">
+            <span class="window-title">Computador</span>
+            <div class="window-controls">
+                <button class="win-btn win-btn-min" onclick="minimizarJanela('computador-window')" title="Minimizar">🗕</button>
+                <button class="win-btn win-btn-max" onclick="maximizarJanela('computador-window')" title="Maximizar">🗖</button>
+                <button class="win-btn win-btn-close" onclick="fecharJanela('computador-window')" title="Fechar">✕</button>
+            </div>
+        </div>
+        <div class="window-content file-explorer">
+            <div class="explorer-sidebar">
+                <ul>
+                    <li onclick="abrirJanela('arquivos-window')">📁 Documentos</li>
+                    <li>🖼️ Imagens</li>
+                    <li style="background: #dbeaf9; font-weight: bold;">💻 Computador</li>
+                    <li onclick="abrirJanela('rede-window')">🌐 Rede</li>
+                </ul>
+            </div>
+            <div class="explorer-main">
+                <h3 class="drive-title">Unidades de Disco Rígido (1)</h3>
+                
+                <div class="drive-item" ondblclick="abrirJanela('arquivos-window')">
+                    <div class="drive-icon">💽</div>
+                    <div class="drive-info">
+                        <strong>Disco Local (C:)</strong>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 82%;"></div>
+                        </div>
+                        <span>10.5 GB livres de 60.0 GB</span>
+                    </div>
+                </div>
+
+                <h3 class="drive-title" style="margin-top: 20px;">Dispositivos com Armazenamento Removível (1)</h3>
+                
+                <div class="drive-item">
+                    <div class="drive-icon">💾</div>
+                    <div class="drive-info">
+                        <strong>Unidade de Disquete (A:)</strong>
+                        <span style="margin-top: 5px;">VILLASBOAS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="window hidden" id="rede-window" onmousedown="trazerParaFrente('rede-window')">
         <div class="window-header" style="background: linear-gradient(to bottom, #222, #000); color: white;">
@@ -183,13 +229,11 @@ Eles não param de olhar.
     </div>
 
     <div id="start-menu" class="hidden">
-        
         <div class="user-profile-img">
             <div class="flower-avatar"></div>
         </div>
 
         <div class="start-menu-inner">
-            
             <div class="start-left">
                 <div class="start-programs">
                     <div class="start-item" onclick="abrirJanela('notepad-window'); toggleStartMenu();">
@@ -248,11 +292,8 @@ Eles não param de olhar.
                     <button class="power-btn arrow-btn">▶</button>
                 </div>
             </div>
-            
         </div>
     </div>
-
-        
 
     <footer id="taskbar">
         <button id="start-orb" aria-label="Menu Iniciar">
@@ -269,7 +310,6 @@ Eles não param de olhar.
     </footer>
 
     <script src="script.js"></script>
-
 
 </body>
 </html>
