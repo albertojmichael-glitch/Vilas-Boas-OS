@@ -59,13 +59,12 @@
                 <button class="win-btn win-btn-close" onclick="fecharJanela('notepad-window')" title="Fechar">✕</button>
             </div>
         </div>
-        <div class="window-content">
-            <textarea readonly>
-Acho que alguém andou mexendo no meu computador.
-As câmeras da sala 03 foram desligadas de novo.
-
-Eles não param de olhar.
-            </textarea>
+        <div class="window-content notepad-content">
+            <div class="notepad-menu">
+                <button onclick="salvarNotepad()">Salvar</button>
+                <button onclick="limparNotepad()">Limpar</button>
+            </div>
+            <textarea id="notepad-textarea"></textarea>
         </div>
     </div>
 

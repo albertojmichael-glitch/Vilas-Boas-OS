@@ -212,51 +212,76 @@ if (desktop) {
 }
 
 // ==========================================
-// FÍSICA DE ARRASTAR
+// FÍSICA DE ARRASTAR E LIXEIRA FUNCIONAL
 // ==========================================
 function tornarArrastavel(elmnt) {
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-    const header = elmnt.querySelector(".window-header");
     
     
+    const header = elmnt.querySelector('.window-header');
     if (header) {
-        header.onmousedown = arrastarMouseDown;
+        header.onmousedown = dragMouseDown;
     } else {
-        elmnt.onmousedown = arrastarMouseDown;
+        elmnt.onmousedown = dragMouseDown;
     }
 
-    function arrastarMouseDown(e) {
+    function dragMouseDown(e) {
         e = e || window.event;
         e.preventDefault();
-        
         pos3 = e.clientX;
         pos4 = e.clientY;
-        document.onmouseup = fecharArrastar;
-        
-        document.onmousemove = arrastarElemento;
-        trazerParaFrente(elmnt.id);
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
     }
 
-    function arrastarElemento(e) {
+    function elementDrag(e) {
         e = e || window.event;
         e.preventDefault();
-        
         pos1 = pos3 - e.clientX;
         pos2 = pos4 - e.clientY;
         pos3 = e.clientX;
         pos4 = e.clientY;
-        
         elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
         elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
     }
 
-    function fecharArrastar() {
-        
+    function closeDragElement() {
         document.onmouseup = null;
         document.onmousemove = null;
+        
+        
+        verificarLixeira(elmnt);
     }
 }
 
+function verificarLixeira(elementoArrastado) {
+    
+    if (!elementoArrastado.classList.contains('desktop-icon')) return;
+    if (elementoArrastado.id === 'icon-lixeira') return;
+
+    const lixeira = document.getElementById('icon-lixeira');
+    
+    
+    const rectLixeira = lixeira.getBoundingClientRect();
+    const rectItem = elementoArrastado.getBoundingClientRect();
+
+    
+    const colidiu = !(rectLixeira.right < rectItem.left || 
+                      rectLixeira.left > rectItem.right || 
+                      rectLixeira.bottom < rectItem.top || 
+                      rectLixeira.top > rectItem.bottom);
+
+    if (colidiu) {
+        
+        elementoArrastado.style.display = 'none';
+        
+        
+        const imgTrash = lixeira.querySelector('.icon-trash');
+        if (imgTrash) {
+            imgTrash.classList.add('full');
+        }
+    }
+}
 // ==========================================
 // SISTEMA DE LORE: ABRIR TEXTOS DINÂMICOS
 // ==========================================
@@ -309,5 +334,36 @@ function glitchCatHelper() {
         }, 1000);
         
     }, 4000);
+}
+
+// ==========================================
+// BLOCO DE NOTAS FUNCIONAL (SALVAR/LIMPAR)
+// ==========================================
+const creepyText = "Acho que alguém andou mexendo no meu computador.\nAs câmeras da sala 03 foram desligadas de novo.\n\nEles não param de olhar.";
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Se for a primeira vez abrindo o sistema, coloca o texto de terror lá
+    if (!localStorage.getItem("vilasBoasNotepad_init")) {
+        localStorage.setItem("vilasBoasNotepad", creepyText);
+        localStorage.setItem("vilasBoasNotepad_init", "true");
+    }
+    
+    // Puxa o texto salvo e joga na tela
+    const txtSalvo = localStorage.getItem("vilasBoasNotepad");
+    const textarea = document.getElementById("notepad-textarea");
+    if (textarea && txtSalvo !== null) {
+        textarea.value = txtSalvo;
+    }
+});
+
+function salvarNotepad() {
+    const texto = document.getElementById("notepad-textarea").value;
+    localStorage.setItem("vilasBoasNotepad", texto);
+    // Um leve efeito de feedback pro jogador
+    alert("Arquivo salvo com sucesso!");
+}
+
+function limparNotepad() {
+    document.getElementById("notepad-textarea").value = "";
 }
 
