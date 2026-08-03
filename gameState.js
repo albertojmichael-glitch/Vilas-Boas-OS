@@ -103,10 +103,9 @@ export const GameState = {
         clearInterval(this.intervaloEnergia);
         console.log("[GameState] A energia acabou. Blackout.");
         
-        // Simula o ecrã a desligar
-        document.body.innerHTML = '<div style="background: black; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; color: white; font-family: monospace; font-size: 24px;">SISTEMA DESLIGADO.<br>ENERGIA ESGOTADA.</div>';
         
-        // Aqui mais tarde chamamos o Jumpscare!
+        const blackout = document.getElementById('blackout-overlay');
+        if (blackout) blackout.classList.remove('hidden');
     },
 
     vencerNoite() {

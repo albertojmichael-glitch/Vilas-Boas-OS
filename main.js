@@ -28,8 +28,6 @@ const App = {
             }
         });
 
-        // 3. Inicia a Lógica do Jogo (NightManager)
-        GameState.iniciarNoite(); // <- NOVA LINHA
     }
 };
 
@@ -70,3 +68,11 @@ window.abrirLixeira = () => {
 
 
 document.addEventListener("DOMContentLoaded", () => App.init());
+
+window.iniciarJogo = () => {
+    const startScreen = document.getElementById('start-screen');
+    if(startScreen) {
+        startScreen.classList.add('hidden'); // Esconde a tela de início
+    }
+    GameState.iniciarNoite(); // Só começa a gastar bateria agora!
+}

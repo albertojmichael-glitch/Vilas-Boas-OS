@@ -55,7 +55,8 @@ export const WindowManager = {
             win.classList.remove('hidden');
             this.trazerParaFrente(id);
         } else {
-            if (win.style.zIndex == this.zIndexCounter) {
+           
+            if (Number(win.style.zIndex) === this.zIndexCounter) {
                 win.classList.add('hidden');
                 this.atualizarAbasAtivas(null);
             } else {
@@ -99,7 +100,6 @@ export const WindowManager = {
         });
     },
 
-    // Física de arrastar (agora genérica e defensiva)
     tornarArrastavel(elmnt, uiCallbacks) {
         if (!elmnt) return;
         
@@ -113,10 +113,11 @@ export const WindowManager = {
             e.preventDefault();
             pos3 = e.clientX;
             pos4 = e.clientY;
-            document.onmouseup = closeDragElement;
-            document.onmousemove = elementDrag;
             
-            // Traz janela pra frente se for clicada pelo header
+            // CORREÇÃO: Usando addEventListener ao invés de sobrescrever document.onmouseup
+            document.addEventListener('mouseup', closeDragElement);
+            document.addEventListener('mousemove', elementDrag);
+            
             if (elmnt.classList.contains('window')) {
                 WindowManager.trazerParaFrente(elmnt.id);
             }
@@ -133,8 +134,10 @@ export const WindowManager = {
         }
 
         function closeDragElement() {
-            document.onmouseup = null;
-            document.onmousemove = null;
+            // CORREÇÃO: Removendo os listeners limpos sem sujar o resto da aplicação
+            document.removeEventListener('mouseup', closeDragElement);
+            document.removeEventListener('mousemove', elementDrag);
+            
             if (uiCallbacks && uiCallbacks.onDragEnd) {
                 uiCallbacks.onDragEnd(elmnt);
             }

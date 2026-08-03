@@ -18,6 +18,21 @@
         </div>
     </div>
 
+    <div id="start-screen" class="game-overlay">
+        <div class="start-box">
+            <h2>Vilas Boas OS</h2>
+            <p>Usuário: Caroline_F</p>
+            <p style="color: #aaa; font-size: 14px; margin-bottom: 20px;">Sobreviva até as 6:00 AM. Fique de olho na energia.</p>
+            <button onclick="iniciarJogo()" class="start-btn">Iniciar Turno (12:00 AM)</button>
+        </div>
+    </div>
+
+    <div id="blackout-overlay" class="game-overlay hidden">
+        <div class="blackout-text">
+            SISTEMA DESLIGADO.<br>ENERGIA ESGOTADA.
+        </div>
+    </div>
+
     <main id="desktop">
         <div class="desktop-icon" id="icon-notepad" ondblclick="abrirJanela('notepad-window')">
             <div class="icon-img icon-txt"></div>
