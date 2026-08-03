@@ -8,12 +8,12 @@ const App = {
     init() {
         console.log("Inicializando Vilas Boas OS...");
         
-        // 1. Inicializa o Storage
+        
         Storage.init();
         const textarea = document.getElementById("notepad-textarea");
         Storage.carregarNotepad(textarea);
 
-        // 2. Aplica a física
+        
         const desktopIcons = document.querySelectorAll('.desktop-icon');
         desktopIcons.forEach(icon => {
             WindowManager.tornarArrastavel(icon, {
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => App.init());
 window.iniciarJogo = () => {
     const startScreen = document.getElementById('start-screen');
     if(startScreen) {
-        startScreen.classList.add('hidden'); // Esconde a tela de início
+        startScreen.classList.add('hidden'); 
     }
-    GameState.iniciarNoite(); // Só começa a gastar bateria agora!
+    GameState.iniciarNoite(); 
 }
