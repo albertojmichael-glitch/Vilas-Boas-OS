@@ -48,5 +48,59 @@ export const UI = {
             const imgTrash = lixeira.querySelector('.icon-trash');
             if (imgTrash) imgTrash.classList.add('full');
         }
+    },
+
+    iniciarTelaBoot() {
+        setTimeout(() => {
+            const bootScreen = document.getElementById('boot-screen');
+            if (bootScreen) {
+                bootScreen.style.opacity = '0';
+                setTimeout(() => bootScreen.remove(), 1000);
+            }
+        }, 3500); 
+    },
+
+    iniciarRelogio() {
+        const updateClock = () => {
+            const clockElement = document.getElementById('clock');
+            if (!clockElement) return;
+
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            
+            hours = hours % 12;
+            hours = hours ? hours : 12; 
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            
+            clockElement.textContent = `${hours}:${minutes} ${ampm}`;
+        };
+
+        updateClock(); // Chama a primeira vez
+        setInterval(updateClock, 1000); // Atualiza a cada segundo
+    },
+
+    configurarMenuIniciar() {
+        const startOrb = document.getElementById('start-orb');
+        const startMenu = document.getElementById('start-menu');
+        const desktop = document.getElementById('desktop');
+
+        // Alterna o menu ao clicar no botão iniciar
+        if (startOrb) {
+            startOrb.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (startMenu) startMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Fecha o menu se clicar fora dele (no desktop)
+        if (desktop) {
+            desktop.addEventListener('mousedown', () => {
+                if (startMenu && !startMenu.classList.contains('hidden')) {
+                    startMenu.classList.add('hidden');
+                }
+            });
+        }
     }
 };

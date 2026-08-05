@@ -87,7 +87,23 @@ export const WindowManager = {
             taskbarItem = document.createElement('div');
             taskbarItem.id = 'taskbar-' + id;
             taskbarItem.className = 'taskbar-item active';
-            taskbarItem.innerHTML = `<div class="icon-img ${iconClass}"></div> <span>${titleText}</span>`;
+            
+            // Nova estrutura rica com Hover Preview embutido
+            taskbarItem.innerHTML = `
+                <div class="item-content">
+                    <div class="icon-img ${iconClass}"></div> 
+                    <span>${titleText}</span>
+                </div>
+                <div class="taskbar-preview">
+                    <div class="preview-header">
+                        <div class="icon-img ${iconClass}" style="width: 12px; height: 12px; margin: 0; box-shadow: none;"></div>
+                        <span class="preview-title">${titleText}</span>
+                    </div>
+                    <div class="preview-thumbnail">
+                        <div class="icon-img ${iconClass}" style="width: 32px; height: 32px; opacity: 0.2; box-shadow: none;"></div>
+                    </div>
+                </div>
+            `;
             
             taskbarItem.onclick = () => this.alternarMinimizar(id);
             openWindowsDiv.appendChild(taskbarItem);
@@ -100,47 +116,76 @@ export const WindowManager = {
         });
     },
 
+    
     tornarArrastavel(elmnt, uiCallbacks) {
         if (!elmnt) return;
         
         let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-        const header = elmnt.querySelector('.window-header');
-        
-        const target = header ? header : elmnt;
-        target.onmousedown = dragMouseDown;
+        let rafId = null;
 
-        function dragMouseDown(e) {
-            e.preventDefault();
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-            
-            // CORREÇÃO: Usando addEventListener ao invés de sobrescrever document.onmouseup
-            document.addEventListener('mouseup', closeDragElement);
-            document.addEventListener('mousemove', elementDrag);
+        const header = elmnt.querySelector('.window-header');
+        const target = header ? header : elmnt;
+        
+        // Unifica os eventos de Mouse e Toque (Mobile)
+        target.addEventListener('mousedown', dragStart);
+        target.addEventListener('touchstart', dragStart, { passive: false });
+
+        function dragStart(e) {
+            // Se for toque de tela, pega a coordenada do primeiro dedo
+            if (e.type === 'touchstart') {
+                pos3 = e.touches[0].clientX;
+                pos4 = e.touches[0].clientY;
+            } else {
+                e.preventDefault(); // Previne seleção de texto no mouse
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+            }
+
+            document.addEventListener('mouseup', dragEnd);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('touchend', dragEnd);
+            document.addEventListener('touchmove', drag, { passive: false });
             
             if (elmnt.classList.contains('window')) {
                 WindowManager.trazerParaFrente(elmnt.id);
             }
         }
 
-        function elementDrag(e) {
+        function drag(e) {
             e.preventDefault();
-            pos1 = pos3 - e.clientX;
-            pos2 = pos4 - e.clientY;
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+            
+            let clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+            let clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+
+            pos1 = pos3 - clientX;
+            pos2 = pos4 - clientY;
+            pos3 = clientX;
+            pos4 = clientY;
+
+            let newTop = elmnt.offsetTop - pos2;
+            let newLeft = elmnt.offsetLeft - pos1;
+
+            // Clamping (evita sumir com a janela)
+            if (newTop < 0) newTop = 0;
+            if (newTop > window.innerHeight - 70) newTop = window.innerHeight - 70;
+
+            // Aceleração de GPU e Throttle via RAF
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(() => {
+                elmnt.style.top = newTop + "px";
+                elmnt.style.left = newLeft + "px";
+            });
         }
 
-        function closeDragElement() {
-            // CORREÇÃO: Removendo os listeners limpos sem sujar o resto da aplicação
-            document.removeEventListener('mouseup', closeDragElement);
-            document.removeEventListener('mousemove', elementDrag);
+        function dragEnd() {
+            document.removeEventListener('mouseup', dragEnd);
+            document.removeEventListener('mousemove', drag);
+            document.removeEventListener('touchend', dragEnd);
+            document.removeEventListener('touchmove', drag);
             
-            if (uiCallbacks && uiCallbacks.onDragEnd) {
-                uiCallbacks.onDragEnd(elmnt);
-            }
+            if (rafId) cancelAnimationFrame(rafId);
+            if (uiCallbacks && uiCallbacks.onDragEnd) uiCallbacks.onDragEnd(elmnt);
         }
     }
+    
 };

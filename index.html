@@ -34,10 +34,18 @@
     </div>
 
     <main id="desktop">
-        <div class="desktop-icon" id="icon-notepad" ondblclick="abrirJanela('notepad-window')">
+        
+        <div class="desktop-icon" id="icon-notepad" data-action="open-window" data-target="notepad-window">
             <div class="icon-img icon-txt"></div>
             <span>LEIA-ME.txt</span>
         </div>
+
+
+        <div class="desktop-icon" id="icon-settings" ondblclick="abrirJanela('settings-window')">
+            <div class="icon-img" style="background-image: url('https://cdn-icons-png.flaticon.com/512/3132/3132084.png'); width: 32px; height: 32px; background-size: cover;"></div>
+            <span>Configurações</span>
+        </div>
+
 
         <div class="desktop-icon" id="icon-cameras" ondblclick="abrirJanela('camera-window')">
             <div class="icon-img icon-exe"></div>
@@ -125,6 +133,49 @@
             </div>
         </div>
     </div>
+
+    <div class="window hidden" id="settings-window" style="width: 500px;" onmousedown="trazerParaFrente('settings-window')">
+        <div class="window-header">
+            <span class="window-title">Painel de Controle - Personalização</span>
+            <div class="window-controls">
+                <button class="win-btn win-btn-min" onclick="minimizarJanela('settings-window')" title="Minimizar">🗕</button>
+                <button class="win-btn win-btn-max" onclick="maximizarJanela('settings-window')" title="Maximizar">🗖</button>
+                <button class="win-btn win-btn-close" onclick="fecharJanela('settings-window')" title="Fechar">✕</button>
+            </div>
+        </div>
+        <div class="window-content settings-layout">
+            <div class="settings-sidebar">
+                <ul>
+                    <li class="active">Plano de Fundo</li>
+                    <li>Sons do Sistema</li>
+                    <li>Acessibilidade</li>
+                </ul>
+            </div>
+            <div class="settings-main">
+                <h3>Escolha seu Papel de Parede</h3>
+                <div class="wallpaper-grid">
+                    <!-- Opção 1: O Padrão do Vista -->
+                    <div class="wallpaper-thumb" onclick="mudarPapelDeParede('assets/wallpapers/wallpaper.png')" style="background-image: url('assets/wallpapers/wallpaper.png');"></div>
+                    <!-- Opção 2: Um visual mais noturno/escuro -->
+                    <div class="wallpaper-thumb" onclick="mudarPapelDeParede('https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=1000&auto=format&fit=crop')" style="background-image: url('https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=1000&auto=format&fit=crop');"></div>
+                    <!-- Opção 3: Estática / Assustador -->
+                    <div class="wallpaper-thumb" onclick="mudarPapelDeParede('https://images.unsplash.com/photo-1605806616949-1e87b487cb2a?q=80&w=1000&auto=format&fit=crop')" style="background-image: url('https://images.unsplash.com/photo-1605806616949-1e87b487cb2a?q=80&w=1000&auto=format&fit=crop');"></div>
+
+                    <!-- Dentro da janela settings-window, abaixo dos papéis de parede -->
+                    <h3 style="margin-top: 25px;">Acessibilidade Visual</h3>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <button onclick="toggleAltoContraste()" style="padding: 8px 15px; background: #333; color: white; border: 1px solid #777; cursor: pointer; border-radius: 4px;">
+                            Alternar Modo de Alto Contraste
+                        </button>
+                        <span style="font-size: 0.85rem; color: #555;">Melhora a legibilidade desativando transparências.</span>
+                    </div>
+
+                </div>
+                <p style="margin-top: 15px; font-size: 0.8rem; color: #666;">Clique em uma imagem para aplicar imediatamente à sua Área de Trabalho.</p>
+            </div>
+        </div>
+    </div>
+
 
     <div class="window hidden" id="cat-window" onmousedown="trazerParaFrente('cat-window')">
         <div class="window-header">
