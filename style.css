@@ -1399,3 +1399,120 @@ body.high-contrast .win-btn:focus {
     outline: 2px dashed #00ff00 !important;
     outline-offset: 4px;
 }
+
+/* =========================================
+   TELA DE LOGIN (VISTA)
+   ========================================= */
+.login-overlay {
+    background: url('assets/wallpapers/wallpaper.png') no-repeat center center fixed;
+    background-size: cover;
+    z-index: 100000;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 1s ease-out;
+}
+
+.user-avatar-login {
+    width: 120px;
+    height: 120px;
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7Yc3zZl0OxHwrPEQCX3MbiOToGWJcUFQ5HTn7PL3GVA&s=10');
+    background-size: cover;
+    border-radius: 5px;
+    border: 3px solid rgba(255,255,255,0.8);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    margin-bottom: 10px;
+}
+
+.user-name-login {
+    color: white;
+    font-size: 2rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    font-weight: normal;
+}
+
+.password-box {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.password-box input {
+    padding: 6px 10px;
+    border: 1px solid #777;
+    border-radius: 3px;
+    width: 180px;
+    font-size: 1rem;
+    outline: none;
+    background: rgba(255,255,255,0.9);
+}
+
+.login-submit-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #24d830;
+    color: white;
+    border: 2px solid white;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.login-submit-btn:hover, .login-submit-btn:focus {
+    filter: brightness(1.2);
+    transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================
+   POST-IT (TUTORIAL)
+   ========================================= */
+.post-it {
+    width: 260px;
+    background: #fdf590 !important; /* Amarelo clássico */
+    border: none !important;
+    border-bottom-right-radius: 20px 5px !important;
+    box-shadow: 4px 4px 15px rgba(0,0,0,0.3) !important;
+    transform: rotate(3deg); /* Levemente torto */
+    padding: 0 !important;
+    backdrop-filter: none !important; /* Tira o efeito de vidro */
+}
+
+.post-it-header {
+    background: transparent !important;
+    border: none !important;
+    justify-content: flex-end !important;
+}
+
+.post-it-content {
+    background: transparent !important;
+    border: none !important;
+    height: auto !important;
+    padding: 10px 15px 25px 15px;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', cursive; /* Fonte de anotação */
+    color: #333;
+    display: block !important;
+}
+
+.post-it-content h3 {
+    font-size: 1.1rem;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.post-it-content ul { padding-left: 20px; margin-bottom: 15px; }
+.post-it-content li { margin-bottom: 8px; font-size: 0.9rem; }
+.post-it-content p { font-size: 0.9rem; font-style: italic; }

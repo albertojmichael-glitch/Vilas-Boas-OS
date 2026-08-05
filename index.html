@@ -18,12 +18,18 @@
         </div>
     </div>
 
-    <div id="start-screen" class="game-overlay">
-        <div class="start-box">
-            <h2>Vilas Boas OS</h2>
-            <p>Usuário: Caroline_F</p>
-            <p style="color: #aaa; font-size: 14px; margin-bottom: 20px;">Sobreviva até as 6:00 AM. Fique de olho na energia.</p>
-            <button onclick="iniciarJogo()" class="start-btn">Iniciar Turno (12:00 AM)</button>
+    <!-- TELA DE LOGIN VISTA -->
+    <div id="start-screen" class="game-overlay login-overlay">
+        <div class="login-container">
+            <div class="user-avatar-login"></div>
+            <h2 class="user-name-login">Caroline_F</h2>
+            <p style="color: #ccc; margin-bottom: 15px;">Segurança (Turno Noturno)</p>
+            
+            <div class="password-box">
+                <!-- Senha falsa apenas para estética -->
+                <input type="password" placeholder="Senha" value="12345" readonly>
+                <button class="login-submit-btn" onclick="fazerLogin()" tabindex="0" title="Fazer Logon">➔</button>
+            </div>
         </div>
     </div>
 
@@ -34,10 +40,28 @@
     </div>
 
     <main id="desktop">
-        
+
         <div class="desktop-icon" id="icon-notepad" data-action="open-window" data-target="notepad-window">
             <div class="icon-img icon-txt"></div>
             <span>LEIA-ME.txt</span>
+        </div>
+
+        
+        <div class="window hidden post-it" id="tutorial-note" style="top: 15%; left: 65%;">
+            <div class="window-header post-it-header">
+                <div class="window-controls">
+                    <button class="win-btn win-btn-close" data-action="close-window" data-target="tutorial-note">✕</button>
+                </div>
+            </div>
+            <div class="window-content post-it-content">
+                <h3>Instruções do Turno:</h3>
+                <ul>
+                    <li>Fique de olho no <b>Câmera Sistema</b>.</li>
+                    <li>NÃO deixe a energia 🔋 chegar a 0%.</li>
+                    <li>As câmeras ativas drenam o <b>dobro</b> de energia. Feche-as quando não estiver usando.</li>
+                </ul>
+                <p>Sobreviva até as 6:00 AM.<br>- A Gerência</p>
+            </div>
         </div>
 
 
@@ -220,6 +244,30 @@
                     <li>💾 Backup</li>
                     <li>🔒 Confidencial</li>
                 </ul>
+            </div>
+
+            <div class="explorer-sidebar">
+                <!-- Tag Details cria uma árvore expansível nativa do HTML -->
+                <details open>
+                    <summary style="font-weight: bold; cursor: pointer; padding: 5px; background: #dbeaf9; border-radius: 3px;">📁 C:\Usuários</summary>
+                    <ul style="margin-left: 15px; padding-top: 5px;">
+                        <li>🖼️ Fotos da Pizzaria</li>
+                        <li>📊 Relatórios (vazio)</li>
+                        <li>👥 Funcionários</li>
+                        
+                        <details style="margin-top: 5px;">
+                            <summary style="cursor: pointer; padding: 2px;">💾 Sistema</summary>
+                            <ul style="margin-left: 15px;">
+                                <li>Logs de Erro</li>
+                                <li>Backup Automático</li>
+                            </ul>
+                        </details>
+                    </ul>
+                </details>
+                
+                <div style="color: #c42b2b; font-weight: bold; padding: 8px 5px; margin-top: 10px; cursor: pointer; border-top: 1px solid #ccc;" ondblclick="mostrarAlerta('Acesso Negado: Criptografia Ativa.', 'Alerta de Segurança')">
+                    🔒 Disco Restrito (Z:)
+                </div>
             </div>
             
             <div class="explorer-main">

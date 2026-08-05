@@ -5,7 +5,8 @@ export const AudioManager = {
         click: new Audio('assets/sounds/click.mp3'),       
         error: new Audio('assets/sounds/error.mp3'),       
         ambient: new Audio('assets/sounds/ambient.mp3'),   
-        camera: new Audio('assets/sounds/camera_bip.mp3')  
+        camera: new Audio('assets/sounds/camera_bip.mp3'),
+        startup: new Audio('assets/sounds/startup.mp3'),  
     },
 
     init() {
