@@ -2,6 +2,7 @@ import { Storage } from './storage.js';
 import { WindowManager } from './windowManager.js';
 import { UI } from './ui.js';
 import { GameState } from './gameState.js';
+import { Cameras } from './cameras.js';
 
 
 const App = {

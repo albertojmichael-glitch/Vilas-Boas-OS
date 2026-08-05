@@ -96,7 +96,7 @@
         </div>
     </div>
 
-    <div class="window hidden" id="camera-window" onmousedown="trazerParaFrente('camera-window')">
+    <div class="window hidden" id="camera-window" style="width: 600px;" onmousedown="trazerParaFrente('camera-window')">
         <div class="window-header" style="background: linear-gradient(to bottom, #555, #222); color: white; border-bottom: 1px solid #111;">
             <span class="window-title">Sistema de Segurança - VILAS BOAS</span>
             <div class="window-controls">
@@ -105,10 +105,23 @@
                 <button class="win-btn win-btn-close" onclick="fecharJanela('camera-window')" title="Fechar">✕</button>
             </div>
         </div>
-        <div class="window-content" style="background-color: #000; position: relative; height: 350px;">
-            <div class="camera-feed">
-                <div class="static-noise"></div>
-                <span class="camera-text">CAM 03 - SALA DOS FUNDOS<br><br>[ SINAL PERDIDO ]</span>
+        <div class="window-content camera-app-layout">
+            <!-- Tela de Vídeo (Canvas) -->
+            <div class="camera-view">
+                <!-- Resolução interna do canvas menor para dar aspecto retrô pixelado -->
+                <canvas id="camera-canvas" width="300" height="250" style="width: 100%; height: 100%;"></canvas>
+                <div class="camera-overlay">
+                    <span id="cam-name" class="cam-text">CAM 01 - PALCO PRINCIPAL</span>
+                    <span class="cam-rec">● REC</span>
+                </div>
+            </div>
+            
+            <!-- Painel de Botões -->
+            <div class="camera-sidebar">
+                <button class="cam-btn active" onclick="trocarCamera(1)">CAM 01<br><small>Palco Principal</small></button>
+                <button class="cam-btn" onclick="trocarCamera(2)">CAM 02<br><small>Corredor Leste</small></button>
+                <button class="cam-btn" onclick="trocarCamera(3)">CAM 03<br><small>Sala dos Fundos</small></button>
+                <button class="cam-btn" onclick="trocarCamera(4)">CAM 04<br><small>Cozinha</small></button>
             </div>
         </div>
     </div>

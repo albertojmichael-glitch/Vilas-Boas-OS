@@ -1,4 +1,3 @@
-// ui.js
 export const UI = {
     mostrarAlerta(mensagem, titulo = 'Aviso') {
         const titleEl = document.getElementById('alert-title');
