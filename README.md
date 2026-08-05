@@ -1,4 +1,4 @@
-# 🖥️ Vilas Boas OS & Noturno
+# 🖥️ Vilas Boas OS
 
 Uma simulação imersiva de sistema operacional (inspirada no Windows Vista) combinada com uma experiência de *survival horror* e gerenciamento de turnos noturnos. 
 
