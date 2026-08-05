@@ -46,6 +46,24 @@ html, body {
 }
 
 /* =========================================
+   VARIÁVEIS GLOBAIS DE TEMA (CSS VARIABLES)
+   ========================================= */
+:root {
+    /* Cores Base do Sistema */
+    --sys-taskbar-bg: linear-gradient(to bottom, #444, #111);
+    --sys-taskbar-border: #555;
+    
+    /* Aero Glass (Vidro Fosco) */
+    --aero-bg: rgba(20, 30, 40, 0.45);
+    --aero-border: rgba(255, 255, 255, 0.4);
+    --aero-header: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 45%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.2) 100%);
+    
+    /* Acessibilidade */
+    --hc-bg: #000;
+    --hc-text: #00ff00;
+}
+
+/* =========================================
    BARRA DE TAREFAS (FIXADA NO FUNDO)
    ========================================= */
 #taskbar {

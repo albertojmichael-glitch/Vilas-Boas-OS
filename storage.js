@@ -45,5 +45,25 @@ export const Storage = {
     salvarWallpaper(url) {
         localStorage.setItem("vilasBoasWallpaper", url);
         document.body.style.backgroundImage = `url('${url}')`;
+    },
+
+    salvarEstadoJanela(id, top, left, isOpen) {
+        // Puxa o estado atual de todas as janelas (ou cria um objeto vazio)
+        const state = JSON.parse(localStorage.getItem('vilasBoasWindows') || '{}');
+        
+        // Garante que a janela existe no objeto
+        if (!state[id]) state[id] = {};
+        
+        // Atualiza apenas os valores que foram passados
+        if (top !== undefined) state[id].top = top;
+        if (left !== undefined) state[id].left = left;
+        if (isOpen !== undefined) state[id].isOpen = isOpen;
+        
+        localStorage.setItem('vilasBoasWindows', JSON.stringify(state));
+    },
+
+    carregarEstadoJanelas() {
+        return JSON.parse(localStorage.getItem('vilasBoasWindows') || '{}');
     }
+
 };

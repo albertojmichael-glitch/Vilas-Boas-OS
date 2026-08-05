@@ -1,4 +1,6 @@
-// windowManager.js
+import { Storage } from './storage.js'; 
+
+
 export const WindowManager = {
     zIndexCounter: 10,
     windowIcons: {
@@ -29,6 +31,24 @@ export const WindowManager = {
         
         const taskbarItem = document.getElementById('taskbar-' + id);
         if (taskbarItem) taskbarItem.remove();
+    },
+
+    restaurarJanelas() {
+        const state = Storage.carregarEstadoJanelas();
+        
+        Object.keys(state).forEach(id => {
+            const win = document.getElementById(id);
+            if (win) {
+                // Restaura posição
+                if (state[id].top !== undefined) win.style.top = state[id].top;
+                if (state[id].left !== undefined) win.style.left = state[id].left;
+                
+                // Restaura se estava aberta
+                if (state[id].isOpen) {
+                    this.abrir(id);
+                }
+            }
+        });
     },
 
     minimizar(id) {
@@ -184,6 +204,11 @@ export const WindowManager = {
             document.removeEventListener('touchmove', drag);
             
             if (rafId) cancelAnimationFrame(rafId);
+
+            if (elmnt.classList.contains('window')) {
+                Storage.salvarEstadoJanela(elmnt.id, elmnt.style.top, elmnt.style.left, true);
+            }
+
             if (uiCallbacks && uiCallbacks.onDragEnd) uiCallbacks.onDragEnd(elmnt);
         }
     }
