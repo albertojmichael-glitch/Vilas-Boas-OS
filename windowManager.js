@@ -1,4 +1,5 @@
-import { Storage } from './storage.js'; 
+import { Storage } from './storage.js';
+import { GameState } from './gameState.js';
 
 
 export const WindowManager = {
@@ -20,6 +21,10 @@ export const WindowManager = {
         this.trazerParaFrente(id);
         
         this.criarAbaTaskbar(id, win);
+
+        if (id === 'camera-window' && window.GameState) {
+            GameState.setCameraAberta(true);
+        }
     },
 
     fechar(id) {
@@ -31,6 +36,10 @@ export const WindowManager = {
         
         const taskbarItem = document.getElementById('taskbar-' + id);
         if (taskbarItem) taskbarItem.remove();
+
+        if (id === 'camera-window' && window.GameState) {
+            GameState.setCameraAberta(false);
+        }
     },
 
     restaurarJanelas() {

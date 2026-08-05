@@ -1,99 +1,78 @@
-import { UI } from './ui.js';
-
+// gameState.js
 export const GameState = {
-    horaAtual: 0, // 0 = 12:00 AM
+    horaAtual: 0,
     energia: 100,
     noiteAtiva: false,
+    cameraAberta: false, // O estado interno substitui a checagem do DOM
     intervaloRelogio: null,
     intervaloEnergia: null,
+    duracaoHoraMinutos: 0.5, 
+    consumoBase: 1,
 
-    // Configurações da noite
-    duracaoHoraMinutos: 0.5, // Cada hora do jogo dura 30 segundos reais
-    consumoBase: 1, // Quanto perde de energia a cada tick
+    // ==========================================
+    // EVENT EMITTER (O "Megafone" do Jogo)
+    // ==========================================
+    emitir(nomeEvento, dados = {}) {
+        const evento = new CustomEvent(nomeEvento, { detail: dados });
+        document.dispatchEvent(evento);
+    },
 
     iniciarNoite() {
-        console.log("[GameState] A Noite 1 começou...");
+        console.log("[GameState] A Noite começou.");
         this.noiteAtiva = true;
-        this.atualizarInterface();
+        this.energia = 100;
+        this.horaAtual = 0;
 
-        // Relógio do jogo (Avança 1 hora a cada X milissegundos)
+        // Dispara os eventos iniciais para a UI se configurar
+        this.emitir('game:start');
+        this.emitir('game:powerUpdate', { energia: this.energia });
+        this.emitir('game:timeUpdate', { hora: this.horaAtual });
+
         const tempoPorHora = this.duracaoHoraMinutos * 60 * 1000;
         this.intervaloRelogio = setInterval(() => this.avancarHora(), tempoPorHora);
-
-        // Dreno de energia (Cai a cada 2 segundos reais)
         this.intervaloEnergia = setInterval(() => this.consumirEnergia(), 2000);
+    },
+
+    // A UI vai chamar isso quando o jogador abrir/fechar a câmera
+    setCameraAberta(isOpen) {
+        this.cameraAberta = isOpen;
+    },
+
+    consumirEnergia() {
+        if (!this.noiteAtiva) return;
+
+        let consumoAtual = this.consumoBase;
+        if (this.cameraAberta) {
+            consumoAtual += 2; // Câmeras gastam muita energia
+        }
+
+        this.energia -= consumoAtual;
+        
+        if (this.energia <= 0) {
+            this.energia = 0;
+            this.apagarTudo();
+        }
+        
+        // Avisa o mundo que a energia mudou
+        this.emitir('game:powerUpdate', { energia: this.energia });
     },
 
     avancarHora() {
         if (!this.noiteAtiva) return;
         
         this.horaAtual++;
-        this.atualizarInterface();
-        this.verificarEventos(this.horaAtual); // Verifica se há sustos programados
+        this.emitir('game:timeUpdate', { hora: this.horaAtual });
+        this.verificarEventos(this.horaAtual);
 
         if (this.horaAtual >= 6) {
             this.vencerNoite();
         }
     },
 
-    consumirEnergia() {
-        if (!this.noiteAtiva) return;
-
-        // O consumo aumenta se houver janelas pesadas abertas (ex: Câmeras)
-        let consumoAtual = this.consumoBase;
-        const cameraAberta = !document.getElementById('camera-window').classList.contains('hidden');
-        
-        if (cameraAberta) {
-            consumoAtual += 2; // Câmeras gastam muita energia!
-        }
-
-        this.energia -= consumoAtual;
-        if (this.energia <= 0) {
-            this.energia = 0;
-            this.apagarTudo();
-        }
-        
-        this.atualizarInterface();
-    },
-
-    atualizarInterface() {
-        // Atualiza o Relógio
-        const clockEl = document.getElementById('clock');
-        if (clockEl) {
-            let horaMostrar = this.horaAtual === 0 ? 12 : this.horaAtual;
-            clockEl.innerText = `${horaMostrar}:00 AM`;
-        }
-
-        // Atualiza a Bateria
-        const powerEl = document.getElementById('power-text');
-        const powerMeter = document.getElementById('power-meter');
-        if (powerEl && powerMeter) {
-            powerEl.innerText = `${this.energia}%`;
-            
-            // Muda de cor quando a energia fica baixa (Tensão!)
-            if (this.energia <= 20) {
-                powerMeter.style.color = '#ff4a4a'; // Vermelho
-                powerMeter.style.animation = 'text-blink 1s infinite';
-            } else if (this.energia <= 50) {
-                powerMeter.style.color = '#ffda33'; // Amarelo
-                powerMeter.style.animation = 'none';
-            } else {
-                powerMeter.style.color = '#4aff4a'; // Verde
-                powerMeter.style.animation = 'none';
-            }
-        }
-    },
-
     verificarEventos(hora) {
-        // Aqui colocamos a "História" baseada no tempo
         if (hora === 2) {
-            console.log("[Evento] 2 AM - O Cat Helper avariou!");
-            const catWin = document.getElementById('cat-window');
-            if (catWin && catWin.classList.contains('hidden')) {
-                // Força o assistente a abrir sozinho e dar um glitch
-                window.abrirJanela('cat-window');
-                if (window.glitchCatHelper) window.glitchCatHelper();
-            }
+            // Em vez de manipular a janela do gato, emitimos um evento de Lore
+            this.emitir('game:event', { tipo: 'cat_glitch' });
         }
     },
 
@@ -101,17 +80,15 @@ export const GameState = {
         this.noiteAtiva = false;
         clearInterval(this.intervaloRelogio);
         clearInterval(this.intervaloEnergia);
-        console.log("[GameState] A energia acabou. Blackout.");
         
-        
-        const blackout = document.getElementById('blackout-overlay');
-        if (blackout) blackout.classList.remove('hidden');
+        this.emitir('game:blackout');
     },
 
     vencerNoite() {
         this.noiteAtiva = false;
         clearInterval(this.intervaloRelogio);
         clearInterval(this.intervaloEnergia);
-        UI.mostrarAlerta("Turno concluído com sucesso. Bom trabalho, segurança.", "6:00 AM - Fim do Turno");
+        
+        this.emitir('game:win');
     }
 };

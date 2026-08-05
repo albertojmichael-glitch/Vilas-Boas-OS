@@ -102,5 +102,60 @@ export const UI = {
                 }
             });
         }
+    },
+
+    configurarOuvintesDoJogo() {
+        // Escuta a atualização do relógio do jogo
+        document.addEventListener('game:timeUpdate', (e) => {
+            const clockEl = document.getElementById('clock');
+            if (clockEl) {
+                let horaMostrar = e.detail.hora === 0 ? 12 : e.detail.hora;
+                clockEl.innerText = `${horaMostrar}:00 AM`;
+            }
+        });
+
+        // Escuta a atualização de bateria e muda as cores
+        document.addEventListener('game:powerUpdate', (e) => {
+            const powerEl = document.getElementById('power-text');
+            const powerMeter = document.getElementById('power-meter');
+            const energia = e.detail.energia;
+            
+            if (powerEl && powerMeter) {
+                powerEl.innerText = `${energia}%`;
+                
+                if (energia <= 20) {
+                    powerMeter.style.color = '#ff4a4a';
+                    powerMeter.style.animation = 'text-blink 1s infinite';
+                } else if (energia <= 50) {
+                    powerMeter.style.color = '#ffda33';
+                    powerMeter.style.animation = 'none';
+                } else {
+                    powerMeter.style.color = '#4aff4a';
+                    powerMeter.style.animation = 'none';
+                }
+            }
+        });
+
+        // Escuta a morte por energia
+        document.addEventListener('game:blackout', () => {
+            const blackout = document.getElementById('blackout-overlay');
+            if (blackout) blackout.classList.remove('hidden');
+            // Opcional: Se tiver AudioManager implementado -> AudioManager.pararAmbiente();
+        });
+
+        // Escuta a vitória às 6 AM
+        document.addEventListener('game:win', () => {
+            this.mostrarAlerta("Turno concluído com sucesso. Bom trabalho, segurança.", "6:00 AM - Fim do Turno");
+        });
+
+        // Escuta Eventos de História (Lore)
+        document.addEventListener('game:event', (e) => {
+            if (e.detail.tipo === 'cat_glitch') {
+                if (window.abrirJanela && window.glitchCatHelper) {
+                    window.abrirJanela('cat-window');
+                    window.glitchCatHelper();
+                }
+            }
+        });
     }
 };

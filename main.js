@@ -12,6 +12,7 @@ const App = {
         UI.iniciarTelaBoot();
         UI.iniciarRelogio();
         UI.configurarMenuIniciar();
+        UI.configurarOuvintesDoJogo();
         
         // 2. Inicia Módulos
         Storage.init();
