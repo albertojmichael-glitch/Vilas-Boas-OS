@@ -43,6 +43,8 @@ const App = {
         // 4. Restaura posições e janelas salvas anteriormente
         WindowManager.restaurarJanelas();
 
+        WindowManager.tornarArrastavel(document.getElementById("debug-window"));
+
         // 5. Configurações de Acessibilidade e Foco (DENTRO do init para garantir o DOM)
         this.configurarAcessibilidade();
 
@@ -97,6 +99,11 @@ const App = {
                     });
                     WindowManager.fechar(topmost.id);
                 }
+            }
+
+            if (e.ctrlKey && e.shiftKey && e.code === 'KeyD') {
+                e.preventDefault();
+                WindowManager.abrir('debug-window');
             }
 
             // Ctrl + Espaço -> Ciclar entre janelas
@@ -208,3 +215,56 @@ document.addEventListener('click', (e) => {
         WindowManager.minimizar(minBtn.getAttribute('data-target'));
     }
 });
+
+// ==========================================
+// DRAG & DROP: Explorador de Arquivos -> Bloco de Notas
+// ==========================================
+document.addEventListener('dragstart', (e) => {
+    // Quando começa a arrastar, guarda o texto e o título na "mochila" do evento
+    const dragItem = e.target.closest('.draggable-file');
+    if (dragItem) {
+        e.dataTransfer.setData('text/plain', dragItem.getAttribute('data-content'));
+        e.dataTransfer.setData('application/filename', dragItem.getAttribute('data-filename'));
+        e.dataTransfer.effectAllowed = 'copy';
+    }
+});
+
+// A área de texto do Bloco de Notas precisa permitir que coisas sejam soltas nela
+const notepadTextarea = document.getElementById('notepad-textarea');
+if (notepadTextarea) {
+    
+    // Previne o comportamento padrão (que é proibir soltar coisas)
+    notepadTextarea.addEventListener('dragover', (e) => {
+        e.preventDefault(); 
+        e.dataTransfer.dropEffect = 'copy';
+        notepadTextarea.style.background = '#e5f1fb'; // Muda a cor pra dar feedback visual
+    });
+
+    notepadTextarea.addEventListener('dragleave', (e) => {
+        notepadTextarea.style.background = 'white'; // Restaura a cor
+    });
+
+    // Quando o arquivo é solto no Bloco de Notas
+    notepadTextarea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        notepadTextarea.style.background = 'white';
+        
+        // Puxa o texto da "mochila"
+        const conteudo = e.dataTransfer.getData('text/plain');
+        const nomeArquivo = e.dataTransfer.getData('application/filename');
+        
+        if (conteudo) {
+            notepadTextarea.value = conteudo;
+            
+            // Atualiza o título da janela do Bloco de Notas
+            const notepadWin = document.getElementById('notepad-window');
+            if (notepadWin) {
+                const titleEl = notepadWin.querySelector('.window-title');
+                if (titleEl) titleEl.innerText = `${nomeArquivo} - Bloco de Notas`;
+            }
+            
+            // Toca som de sucesso (opcional)
+            if (window.AudioManager) AudioManager.play('click');
+        }
+    });
+}

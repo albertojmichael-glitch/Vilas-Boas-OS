@@ -158,6 +158,23 @@
         </div>
     </div>
 
+    <!-- PAINEL DE DEBUG (OCULTO) -->
+    <div class="window hidden" id="debug-window" style="width: 300px; z-index: 99999;" onmousedown="trazerParaFrente('debug-window')">
+        <div class="window-header" style="background: linear-gradient(to bottom, #660000, #330000); border-bottom: 1px solid #ff5555;">
+            <span class="window-title" style="color: #ffaaaa;">⚠️ DEV TOOLS</span>
+            <div class="window-controls">
+                <button class="win-btn win-btn-close" onclick="fecharJanela('debug-window')" title="Fechar">✕</button>
+            </div>
+        </div>
+        <div class="window-content" style="background: #111; color: #0f0; padding: 15px; display: flex; flex-direction: column; gap: 10px; font-family: monospace;">
+            <button onclick="GameState.horaAtual = 5; GameState.emitir('game:timeUpdate', { hora: 5 });" style="background: #333; color: #0f0; border: 1px solid #0f0; padding: 5px; cursor: pointer;">Pular para 5:00 AM</button>
+            
+            <button onclick="GameState.energia = 10; GameState.emitir('game:powerUpdate', { energia: 10 });" style="background: #333; color: #ff5555; border: 1px solid #ff5555; padding: 5px; cursor: pointer;">Drenar Energia (10%)</button>
+            
+            <button onclick="glitchCatHelper()" style="background: #333; color: #aaa; border: 1px solid #aaa; padding: 5px; cursor: pointer;">Forçar Glitch do Gato</button>
+        </div>
+    </div>
+
     <div class="window hidden" id="settings-window" style="width: 500px;" onmousedown="trazerParaFrente('settings-window')">
         <div class="window-header">
             <span class="window-title">Painel de Controle - Personalização</span>
@@ -302,13 +319,15 @@
                     <span style="color: #c42b2b; font-weight: bold;">Confidencial</span>
                 </div>
 
-                <div class="file-item" ondblclick="abrirTexto('Email_Rogerio', 'Para: Rogério Vinhedo\nAssunto: Primeira noite\n\nPrimeira noite sendo empregada se passou... me avisaram que o limpador faltou e terei que limpar a área de jantar. Vi algo se mexendo atrás das cortinas. Te amo amor.')">
-                    <div class="icon-img icon-txt small"></div>
-                    <span>Email_Rogerio.txt</span>
+                <!-- Arquivos de Texto Arrastáveis -->
+                <div class="file-item draggable-file" draggable="true" data-filename="Email_Rogerio.txt" data-content="Para: Rogério Vinhedo&#10;Assunto: Primeira noite&#10;&#10;Primeira noite sendo empregada se passou... me avisaram que o limpador faltou e terei que limpar a área de jantar. Vi algo se mexendo atrás das cortinas. Te amo amor.">
+                    <div class="icon-img icon-txt small" style="pointer-events: none;"></div>
+                    <span style="pointer-events: none;">Email_Rogerio.txt</span>
                 </div>
-                <div class="file-item" ondblclick="abrirTexto('Memo_Admin', 'Memorando - Administração\nDe: Renato\n\nO local permanece ativo para reduzir custo de reparo dos animatrônicos. Evitar menção a incidentes anteriores. Se a funcionária quiser desistir, ofereça bônus.')">
-                    <div class="icon-img icon-txt small"></div>
-                    <span>Memo_Admin.txt</span>
+                
+                <div class="file-item draggable-file" draggable="true" data-filename="Memo_Admin.txt" data-content="Memorando - Administração&#10;De: Renato&#10;&#10;O local permanece ativo para reduzir custo de reparo dos animatrônicos. Evitar menção a incidentes anteriores. Se a funcionária quiser desistir, ofereça bônus.">
+                    <div class="icon-img icon-txt small" style="pointer-events: none;"></div>
+                    <span style="pointer-events: none;">Memo_Admin.txt</span>
                 </div>
             </div>
         </div>
