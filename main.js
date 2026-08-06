@@ -17,6 +17,7 @@ const App = {
         // 2. Inicia Módulos
         Storage.init();
         Cameras.init();
+        WindowManager.initRede();
         
         const textarea = document.getElementById("notepad-textarea");
         Storage.carregarNotepad(textarea);
