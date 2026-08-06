@@ -3,6 +3,7 @@ import { WindowManager } from './windowManager.js';
 import { UI } from './ui.js';
 import { GameState } from './gameState.js';
 import { Cameras } from './cameras.js';
+import { I18n } from './i18nManager.js';
 
 const App = {
     init() {
@@ -18,6 +19,7 @@ const App = {
         Storage.init();
         Cameras.init();
         WindowManager.initRede();
+        I18n.traduzirDOM();
         
         const textarea = document.getElementById("notepad-textarea");
         Storage.carregarNotepad(textarea);
