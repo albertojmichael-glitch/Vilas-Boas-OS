@@ -6,5 +6,9 @@ export default {
     "DESKTOP_CAMERAS": "Câmera Sistema",
     "BATTERY": "Energia",
     "WARNING_TITLE": "Aviso",
-    "ERROR_ACCESS_DENIED": "ERRO DE SISTEMA: Acesso Remoto (ADMIN) exigido. Permissão negada."
+    "ERROR_ACCESS_DENIED": "ERRO DE SISTEMA: Acesso Remoto (ADMIN) exigido. Permissão negada.",
+    "SETTINGS": "Configurações",
+    "LIXERO": "Lixeira",
+    "FILES": "Arquivos",
+    "NET": "Rede"
 };
