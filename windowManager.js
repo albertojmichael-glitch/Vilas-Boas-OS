@@ -74,21 +74,23 @@ export const WindowManager = {
         });
     },
 
-    minimizar(id) {
-        const win = document.getElementById(id);
-        if (win) {
-            win.classList.add('hidden');
-            this.atualizarAbasAtivas(null);
-        }
-    },
-
     maximizar(id) {
         const win = document.getElementById(id);
         if (win) {
+            // Adiciona a classe que ativa a transição suave de tamanho
+            win.classList.add('animating-size');
+            
             win.classList.toggle('maximized');
             this.trazerParaFrente(id);
+
+            // Remove a classe de animação após terminar, para não travar o arraste (Drag)
+            setTimeout(() => {
+                win.classList.remove('animating-size');
+            }, 300);
         }
     },
+
+    
 
     alternarMinimizar(id) {
         const win = document.getElementById(id);
@@ -272,5 +274,69 @@ export const WindowManager = {
 
             if (uiCallbacks && uiCallbacks.onDragEnd) uiCallbacks.onDragEnd(elmnt);
         }
+    },    
+
+    
+    tornarRedimensionavel(elmnt) {
+        if (!elmnt) return;
+
+        // Injeta o HTML do puxador dinamicamente
+        const handle = document.createElement('div');
+        handle.className = 'resize-handle';
+        elmnt.appendChild(handle);
+
+        let originalWidth = 0;
+        let originalHeight = 0;
+        let originalMouseX = 0;
+        let originalMouseY = 0;
+        let rafId = null;
+
+        const startResize = (e) => {
+            e.preventDefault();
+            e.stopPropagation(); // Evita que o evento vaze e inicie um Drag sem querer
+
+            originalWidth = elmnt.offsetWidth;
+            originalHeight = elmnt.offsetHeight;
+            
+            // Suporte para touch e mouse
+            originalMouseX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+            originalMouseY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+
+            document.addEventListener('mousemove', resize);
+            document.addEventListener('mouseup', stopResize);
+            document.addEventListener('touchmove', resize, { passive: false });
+            document.addEventListener('touchend', stopResize);
+            
+            this.trazerParaFrente(elmnt.id);
+        };
+
+        const resize = (e) => {
+            e.preventDefault();
+            
+            const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+
+            if (rafId) cancelAnimationFrame(rafId);
+            
+            rafId = requestAnimationFrame(() => {
+                const width = originalWidth + (clientX - originalMouseX);
+                const height = originalHeight + (clientY - originalMouseY);
+                
+                // Clamping: Limites mínimos de tamanho da janela
+                if (width > 300) elmnt.style.width = width + 'px';
+                if (height > 200) elmnt.style.height = height + 'px';
+            });
+        };
+
+        const stopResize = () => {
+            document.removeEventListener('mousemove', resize);
+            document.removeEventListener('mouseup', stopResize);
+            document.removeEventListener('touchmove', resize);
+            document.removeEventListener('touchend', stopResize);
+            if (rafId) cancelAnimationFrame(rafId);
+        };
+
+        handle.addEventListener('mousedown', startResize);
+        handle.addEventListener('touchstart', startResize, { passive: false });
     }
 };

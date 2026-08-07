@@ -1516,3 +1516,38 @@ body.high-contrast .win-btn:focus {
 .post-it-content ul { padding-left: 20px; margin-bottom: 15px; }
 .post-it-content li { margin-bottom: 8px; font-size: 0.9rem; }
 .post-it-content p { font-size: 0.9rem; font-style: italic; }
+
+/* =========================================
+   RESIZE HANDLE (REDIMENSIONAMENTO)
+   ========================================= */
+.resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 16px;
+    height: 16px;
+    cursor: nwse-resize; /* Muda o cursor para a setinha diagonal */
+    z-index: 20;
+}
+
+/* Os "risquinhos" clássicos no canto da janela */
+.resize-handle::after {
+    content: '';
+    position: absolute;
+    bottom: 4px; 
+    right: 4px;
+    width: 8px; 
+    height: 8px;
+    border-right: 2px solid rgba(255, 255, 255, 0.6);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+}
+
+/* =========================================
+   ANIMAÇÃO DE MAXIMIZAR
+   ========================================= */
+/* Adicionamos uma classe específica para animar transições de tamanho APENAS ao maximizar/restaurar, 
+   para não causar lag (jank) enquanto o usuário arrasta livremente */
+.window.animating-size {
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}

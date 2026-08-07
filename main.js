@@ -36,6 +36,7 @@ const App = {
         windows.forEach(win => {
             if(win.id !== 'custom-alert') { 
                 WindowManager.tornarArrastavel(win);
+                WindowManager.tornarRedimensionavel(win);
             }
         });
 
