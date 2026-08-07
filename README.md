@@ -21,23 +21,3 @@ O objetivo do jogador é sobreviver ao turno de vigilância gerenciando a energi
 * **Aplicativos Integrados:** Bloco de Notas funcional com persistência, Explorador de Arquivos com árvore interativa e Painel de Controle para personalização (troca de papel de parede).
 
 ---
-
-## 📁 Estrutura de Arquivos
-
-O projeto foi construído utilizando **ES Modules** nativos, mantendo uma arquitetura limpa e separação de responsabilidades:
-
-```text
-/
-├── assets/
-│   ├── icons/          # Ícones do sistema (Bloco de notas, pastas, câmeras, etc.)
-│   ├── wallpapers/     # Planos de fundo da área de trabalho
-│   └── sounds/         # Efeitos sonoros e áudio ambiente (opcional)
-├── cameras.js          # Lógica de renderização do canvas e feed das câmeras
-├── gameState.js        # Motor de regras do jogo (tempo, energia, eventos)
-├── main.js             # Ponto de entrada único (Bootstrap da aplicação)
-├── storage.js          # Gerenciamento de dados persistentes (localStorage)
-├── style.js / style.css# Estilização completa baseada em temas e variáveis CSS
-├── ui.js               # Manipulação de elementos visuais e ouvintes de eventos
-├── windowManager.js    # Controle de foco, z-index, arrastar e estados das janelas
-├── index.html          # Documento HTML principal
-└── LICENSE             # Licença do projeto (MIT)
