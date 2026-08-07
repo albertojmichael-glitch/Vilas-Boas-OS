@@ -6,5 +6,9 @@ export default {
     "DESKTOP_CAMERAS": "Camera System",
     "BATTERY": "Power",
     "WARNING_TITLE": "Warning",
-    "ERROR_ACCESS_DENIED": "SYSTEM ERROR: Remote Access (ADMIN) required. Permission denied."
+    "ERROR_ACCESS_DENIED": "SYSTEM ERROR: Remote Access (ADMIN) required. Permission denied.",
+    "SETTINGS": "Settings",
+    "LIXERO": "Recicle Bin",
+    "FILES": "Files",
+    "NET": "Network"
 };
