@@ -80,29 +80,29 @@ export const Cameras = {
         this.ctx.fillRect(0, 0, w, h);
 
         // Linhas de perspectiva do cômodo (Placeholder geométrico caso não haja PNG ainda)
-        this.ctx.strokeStyle = "#19381f";
-        this.ctx.lineWidth = 2;
-        this.ctx.strokeRect(40, 30, w - 80, h - 60);
-        this.ctx.beginPath();
-        this.ctx.moveTo(0, 0); this.ctx.lineTo(40, 30);
-        this.ctx.moveTo(w, 0); this.ctx.lineTo(w - 40, 30);
-        this.ctx.moveTo(0, h); this.ctx.lineTo(40, h - 30);
-        this.ctx.moveTo(w, h); this.ctx.lineTo(w - 40, h - 30);
-        this.ctx.stroke();
+       // this.ctx.strokeStyle = "#19381f";
+       // this.ctx.lineWidth = 2;
+       // this.ctx.strokeRect(40, 30, w - 80, h - 60);
+       // this.ctx.beginPath();
+       // this.ctx.moveTo(0, 0); this.ctx.lineTo(40, 30);
+       // this.ctx.moveTo(w, 0); this.ctx.lineTo(w - 40, 30);
+       // this.ctx.moveTo(0, h); this.ctx.lineTo(40, h - 30);
+       // this.ctx.moveTo(w, h); this.ctx.lineTo(w - 40, h - 30);
+       // this.ctx.stroke();
 
         // Se a entidade estiver nesta câmera, desenha a silhueta e olhos brilhantes
-        if (temAnomalia) {
-            this.ctx.fillStyle = "#020402";
-            this.ctx.beginPath();
-            this.ctx.arc(w / 2, h / 2 - 10, 26, 0, Math.PI * 2);
-            this.ctx.fill();
-            this.ctx.fillRect(w / 2 - 32, h / 2 + 15, 64, 90);
+      //  if (temAnomalia) {
+     //       this.ctx.fillStyle = "#020402";
+     //       this.ctx.beginPath();
+     //       this.ctx.arc(w / 2, h / 2 - 10, 26, 0, Math.PI * 2);
+     //       this.ctx.fill();
+     //       this.ctx.fillRect(w / 2 - 32, h / 2 + 15, 64, 90);
 
-            // Olhos brilhantes
-            this.ctx.fillStyle = this.cameraAtual === 3 ? "#ff2222" : "#ffffff";
-            this.ctx.fillRect(w / 2 - 12, h / 2 - 14, 5, 5);
-            this.ctx.fillRect(w / 2 + 7, h / 2 - 14, 5, 5);
-        }
+     //       // Olhos brilhantes
+     //       this.ctx.fillStyle = this.cameraAtual === 3 ? "#ff2222" : "#ffffff";
+     //       this.ctx.fillRect(w / 2 - 12, h / 2 - 14, 5, 5);
+     //       this.ctx.fillRect(w / 2 + 7, h / 2 - 14, 5, 5);
+     //   }
 
         // Timestamp no rodapé
         this.ctx.fillStyle = "rgba(180, 255, 180, 0.5)";
