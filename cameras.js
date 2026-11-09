@@ -60,15 +60,15 @@ export const Cameras = {
     obterChaveImagem() {
         const posInimigo = GameState.posicaoEntidade || 1;
         if (this.cameraAtual === 1) {
-            return posInimigo === 1 ? "1_normal" : "1_vazio";
+            return posInimigo === 1 ? "1_alt" : "1";
         }
         if (this.cameraAtual === 2) {
-            return posInimigo === 2 ? "2_anomalia" : "2_normal";
+            return posInimigo === 2 ? "2_alt" : "2";
         }
         if (this.cameraAtual === 3) {
-            return posInimigo === 3 ? "3_anomalia" : "3_normal";
+            return "3";
         }
-        return "4_normal";
+        return "4";
     },
 
     desenharCenaFallback(w, h) {

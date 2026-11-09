@@ -181,6 +181,18 @@ export const WindowManager = {
         const clone = janelaOriginal.cloneNode(true);
         clone.removeAttribute('id');
         clone.classList.remove('hidden');
+
+        const canvasesOriginais = janelaOriginal.querySelectorAll('canvas');
+        const canvasesClonados = clone.querySelectorAll('canvas');
+        canvasesOriginais.forEach((canvas, index) => {
+            const canvasClonado = canvasesClonados[index];
+            if (!canvasClonado) return;
+
+            canvasClonado.width = canvas.width;
+            canvasClonado.height = canvas.height;
+            const contextoClonado = canvasClonado.getContext('2d');
+            if (contextoClonado) contextoClonado.drawImage(canvas, 0, 0);
+        });
         
         clone.style.position = 'absolute';
         clone.style.top = '0';
