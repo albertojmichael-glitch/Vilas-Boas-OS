@@ -26,17 +26,34 @@
             <p style="color: #ccc; margin-bottom: 15px;">Segurança (Turno Noturno)</p>
             
             <div class="password-box">
-                <!-- Senha falsa apenas para estética -->
                 <input type="password" placeholder="Senha" value="12345" readonly>
                 <button class="login-submit-btn" onclick="fazerLogin()" tabindex="0" title="Fazer Logon">➔</button>
             </div>
         </div>
     </div>
 
+    <!-- OVERLAY: FALTA DE ENERGIA -->
     <div id="blackout-overlay" class="game-overlay hidden">
         <div class="blackout-text">
-            SISTEMA DESLIGADO.<br>ENERGIA ESGOTADA.
+            SISTEMA DESLIGADO.<br>ENERGIA ESGOTADA.<br><br>
+            <button class="start-btn" onclick="window.location.reload()">Reiniciar Turno</button>
         </div>
+    </div>
+
+    <!-- OVERLAY: JUMPSCARE / GAME OVER -->
+    <div id="jumpscare-overlay" class="game-overlay hidden" style="background: #1a0000; flex-direction: column; gap: 20px;">
+        <h1 style="color: #ff2222; font-family: 'Courier New', monospace; font-size: 3rem; text-align: center; animation: text-blink 0.2s infinite;">
+            SINAL PERDIDO<br>ELE ENTROU NA SALA
+        </h1>
+        <p style="color: #ccc; font-family: monospace;">Você não reiniciou o Firewall da Sala 03 a tempo.</p>
+        <button class="start-btn" onclick="window.location.reload()">Tentar Novamente</button>
+    </div>
+
+    <!-- OVERLAY: VITÓRIA 6:00 AM -->
+    <div id="win-overlay" class="game-overlay hidden" style="background: rgba(0, 15, 0, 0.95); flex-direction: column; gap: 20px;">
+        <h1 style="color: #4aff4a; font-family: 'Courier New', monospace; font-size: 4rem;">06:00 AM</h1>
+        <p style="color: #fff; font-size: 1.2rem;">Turno concluído com sucesso. Bom trabalho, Caroline.</p>
+        <button class="start-btn" onclick="window.location.reload()">Jogar Novamente</button>
     </div>
 
     <main id="desktop">
@@ -46,38 +63,13 @@
             <span data-i18n="DESKTOP_NOTEPAD">LEIA-ME.txt</span>
         </div>
 
-        
-        <div class="window hidden post-it" id="tutorial-note" style="top: 15%; left: 65%;">
-            <div class="window-header post-it-header">
-                <div class="window-controls">
-                    <button class="win-btn win-btn-close" data-action="close-window" data-target="tutorial-note">✕</button>
-                </div>
-            </div>
-            <div class="window-content post-it-content">
-                <h3>Instruções do Turno:</h3>
-                <ul>
-                    <li>Fique de olho no <b>Câmera Sistema</b>.</li>
-                    <li>NÃO deixe a energia 🔋 chegar a 0%.</li>
-                    <li>As câmeras ativas drenam o <b>dobro</b> de energia. Feche-as quando não estiver usando.</li>
-                </ul>
-                <p>Sobreviva até as 6:00 AM.<br>- A Gerência</p>
-            </div>
-        </div>
-
-
-        <div class="desktop-icon" id="icon-settings" ondblclick="abrirJanela('settings-window')">
-            <div class="icon-img" style="background-image: url('https://cdn-icons-png.flaticon.com/512/3132/3132084.png'); width: 32px; height: 32px; background-size: cover;"></div>
-            <span>Configurações</span>
-        </div>
-
-
         <div class="desktop-icon" id="icon-cameras" ondblclick="abrirJanela('camera-window')">
             <div class="icon-img icon-exe"></div>
             <span data-i18n="DESKTOP_CAMERAS">Câmera Sistema</span>
         </div>
         
         <div class="desktop-icon" id="icon-lixeira" ondblclick="abrirLixeira()">
-            <div class="icon-img icon-trash"></div>,
+            <div class="icon-img icon-trash"></div>
             <span data-i18n="LIXERO">Lixeira</span>
         </div>
 
@@ -95,8 +87,38 @@
             <div class="icon-img icon-network"></div>
             <span data-i18n="NET">Rede</span>
         </div>
+
+        <div class="desktop-icon" id="icon-email" ondblclick="abrirJanela('email-window')">
+            <div class="icon-img icon-email"></div>
+            <span>VilasMail</span>
+        </div>
+
+        <div class="desktop-icon" id="icon-settings" ondblclick="abrirJanela('settings-window')">
+            <div class="icon-img icon-computer"></div>
+            <span>Configurações</span>
+        </div>
+
+        <!-- POST-IT DE TUTORIAL -->
+        <div class="window hidden post-it" id="tutorial-note" style="top: 15%; left: 65%;">
+            <div class="window-header post-it-header">
+                <div class="window-controls">
+                    <button class="win-btn win-btn-close" data-action="close-window" data-target="tutorial-note">✕</button>
+                </div>
+            </div>
+            <div class="window-content post-it-content">
+                <h3>Instruções do Turno:</h3>
+                <ul>
+                    <li>Vigie as salas pelo <b>Câmera Sistema</b>.</li>
+                    <li>Câmeras abertas gastam o <b>dobro</b> de bateria 🔋.</li>
+                    <li>Se a entidade chegar na <b>CAM 03</b>, abra a <b>Rede</b> e acione o <b>Pulso de Firewall</b>!</li>
+                </ul>
+                <p>Sobreviva até as 6:00 AM.<br>- A Gerência</p>
+            </div>
+        </div>
+
     </main>
 
+    <!-- ALERTA DO SISTEMA -->
     <div class="window hidden" id="custom-alert" style="width: 350px; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 99999; box-shadow: 0 0 15px rgba(0,0,0,0.8);">
         <div class="window-header">
             <span class="window-title" id="alert-title">Aviso</span>
@@ -104,12 +126,13 @@
                 <button class="win-btn win-btn-close" onclick="fecharAlerta()" title="Fechar">✕</button>
             </div>
         </div>
-        <div class="window-content" style="background: white; padding: 20px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 15px;">
+        <div class="window-content" style="background: white; padding: 20px; height: auto; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 15px;">
             <span id="alert-message" style="font-size: 14px; color: #333;">Aqui vai o texto do alerta.</span>
             <button onclick="fecharAlerta()" style="padding: 4px 20px; cursor: pointer; border: 1px solid #999; border-radius: 3px; background: #e0e0e0; font-family: Tahoma;">OK</button>
         </div>
     </div>
 
+    <!-- JANELA: BLOCO DE NOTAS -->
     <div class="window hidden" id="notepad-window" onmousedown="trazerParaFrente('notepad-window')">
         <div class="window-header">
             <span class="window-title">LEIA-ME.txt - Bloco de Notas</span>
@@ -128,6 +151,7 @@
         </div>
     </div>
 
+    <!-- JANELA: SISTEMA DE CÂMERAS -->
     <div class="window hidden" id="camera-window" style="width: 600px;" onmousedown="trazerParaFrente('camera-window')">
         <div class="window-header" style="background: linear-gradient(to bottom, #555, #222); color: white; border-bottom: 1px solid #111;">
             <span class="window-title">Sistema de Segurança - VILAS BOAS</span>
@@ -138,9 +162,7 @@
             </div>
         </div>
         <div class="window-content camera-app-layout">
-            <!-- Tela de Vídeo (Canvas) -->
             <div class="camera-view">
-                <!-- Resolução interna do canvas menor para dar aspecto retrô pixelado -->
                 <canvas id="camera-canvas" width="300" height="250" style="width: 100%; height: 100%;"></canvas>
                 <div class="camera-overlay">
                     <span id="cam-name" class="cam-text">CAM 01 - PALCO PRINCIPAL</span>
@@ -148,7 +170,6 @@
                 </div>
             </div>
             
-            <!-- Painel de Botões -->
             <div class="camera-sidebar">
                 <button class="cam-btn active" onclick="trocarCamera(1)">CAM 01<br><small>Palco Principal</small></button>
                 <button class="cam-btn" onclick="trocarCamera(2)">CAM 02<br><small>Corredor Leste</small></button>
@@ -158,7 +179,34 @@
         </div>
     </div>
 
-    <!-- PAINEL DE DEBUG (OCULTO) -->
+    <!-- JANELA: VILASMAIL (CLIENTE DE E-MAIL) -->
+    <div class="window hidden" id="email-window" style="width: 560px;" onmousedown="trazerParaFrente('email-window')">
+        <div class="window-header">
+            <span class="window-title">VilasMail - Caixa de Entrada (Caroline_F)</span>
+            <div class="window-controls">
+                <button class="win-btn win-btn-min" onclick="minimizarJanela('email-window')" title="Minimizar">🗕</button>
+                <button class="win-btn win-btn-max" onclick="maximizarJanela('email-window')" title="Maximizar">🗖</button>
+                <button class="win-btn win-btn-close" onclick="fecharJanela('email-window')" title="Fechar">✕</button>
+            </div>
+        </div>
+        <div class="window-content file-explorer">
+            <div class="explorer-sidebar" style="width: 190px;">
+                <ul id="email-list">
+                    <li onclick=" document.getElementById('email-body-view').innerHTML = '<h4>Bem-vinda ao Turno Noturno</h4><p><strong>De:</strong> Recursos Humanos</p><hr style=\'margin:10px 0;\'><p>Olá Caroline, seu turno vai da Meia-Noite às 06:00 AM. Mantenha o consumo de energia controlado e cheque o Monitor de Rede caso note interferências na Sala 03.</p>'; ">
+                        <strong>Recursos Humanos</strong><br><small>Bem-vinda ao Turno</small>
+                    </li>
+                </ul>
+            </div>
+            <div class="explorer-main" id="email-body-view" style="display: block; overflow-y: auto; color: #222; font-size: 0.9rem;">
+                <h4>Bem-vinda ao Turno Noturno</h4>
+                <p><strong>De:</strong> Recursos Humanos</p>
+                <hr style="margin: 10px 0;">
+                <p>Olá Caroline, seu turno vai da Meia-Noite às 06:00 AM. Mantenha o consumo de energia controlado e cheque o Monitor de Rede caso note interferências na Sala 03.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAINEL DE DEBUG (CTRL + SHIFT + D) -->
     <div class="window hidden" id="debug-window" style="width: 300px; z-index: 99999;" onmousedown="trazerParaFrente('debug-window')">
         <div class="window-header" style="background: linear-gradient(to bottom, #660000, #330000); border-bottom: 1px solid #ff5555;">
             <span class="window-title" style="color: #ffaaaa;">⚠️ DEV TOOLS</span>
@@ -166,16 +214,16 @@
                 <button class="win-btn win-btn-close" onclick="fecharJanela('debug-window')" title="Fechar">✕</button>
             </div>
         </div>
-        <div class="window-content" style="background: #111; color: #0f0; padding: 15px; display: flex; flex-direction: column; gap: 10px; font-family: monospace;">
-            <button onclick="GameState.horaAtual = 5; GameState.emitir('game:timeUpdate', { hora: 5 });" style="background: #333; color: #0f0; border: 1px solid #0f0; padding: 5px; cursor: pointer;">Pular para 5:00 AM</button>
-            
+        <div class="window-content" style="background: #111; color: #0f0; padding: 15px; height: auto; display: flex; flex-direction: column; gap: 10px; font-family: monospace;">
+            <button onclick="GameState.horaAtual = 5; GameState.avancarHora();" style="background: #333; color: #0f0; border: 1px solid #0f0; padding: 5px; cursor: pointer;">Vencer Turno (6:00 AM)</button>
+            <button onclick="GameState.posicaoEntidade = 3; GameState.emitir('game:entityMove', { posicao: 3 });" style="background: #333; color: #ffda33; border: 1px solid #ffda33; padding: 5px; cursor: pointer;">Mover Inimigo p/ Sala 03</button>
             <button onclick="GameState.energia = 10; GameState.emitir('game:powerUpdate', { energia: 10 });" style="background: #333; color: #ff5555; border: 1px solid #ff5555; padding: 5px; cursor: pointer;">Drenar Energia (10%)</button>
-            
             <button onclick="glitchCatHelper()" style="background: #333; color: #aaa; border: 1px solid #aaa; padding: 5px; cursor: pointer;">Forçar Glitch do Gato</button>
         </div>
     </div>
 
-    <div class="window hidden" id="settings-window" style="width: 500px;" onmousedown="trazerParaFrente('settings-window')">
+    <!-- JANELA: CONFIGURAÇÕES -->
+    <div class="window hidden" id="settings-window" style="width: 520px;" onmousedown="trazerParaFrente('settings-window')">
         <div class="window-header">
             <span class="window-title">Painel de Controle - Personalização</span>
             <div class="window-controls">
@@ -187,46 +235,40 @@
         <div class="window-content settings-layout">
             <div class="settings-sidebar">
                 <ul>
-                    <li class="active">Plano de Fundo</li>
-                    <li>Sons do Sistema</li>
-                    <li>Acessibilidade</li>
+                    <li class="active">Sistema & Tela</li>
+                    <li onclick="I18n.setIdioma('pt')">Idioma: Português</li>
+                    <li onclick="I18n.setIdioma('en')">Language: English</li>
                 </ul>
             </div>
             <div class="settings-main">
                 <h3>Escolha seu Papel de Parede</h3>
                 <div class="wallpaper-grid">
-                    <!-- Opção 1: O Padrão do Vista -->
                     <div class="wallpaper-thumb" onclick="mudarPapelDeParede('assets/wallpapers/wallpaper.png')" style="background-image: url('assets/wallpapers/wallpaper.png');"></div>
-                    <!-- Opção 2: Um visual mais noturno/escuro -->
                     <div class="wallpaper-thumb" onclick="mudarPapelDeParede('https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=1000&auto=format&fit=crop')" style="background-image: url('https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=1000&auto=format&fit=crop');"></div>
-                    <!-- Opção 3: Estática / Assustador -->
                     <div class="wallpaper-thumb" onclick="mudarPapelDeParede('https://images.unsplash.com/photo-1605806616949-1e87b487cb2a?q=80&w=1000&auto=format&fit=crop')" style="background-image: url('https://images.unsplash.com/photo-1605806616949-1e87b487cb2a?q=80&w=1000&auto=format&fit=crop');"></div>
-
-                    <!-- Dentro da janela settings-window, abaixo dos papéis de parede -->
-                    <h3 style="margin-top: 25px;">Acessibilidade Visual</h3>
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <button onclick="toggleAltoContraste()" style="padding: 8px 15px; background: #333; color: white; border: 1px solid #777; cursor: pointer; border-radius: 4px;">
-                            Alternar Modo de Alto Contraste
-                        </button>
-                        <span style="font-size: 0.85rem; color: #555;">Melhora a legibilidade desativando transparências.</span>
-                    </div>
-
-                    <h3 style="margin-top: 25px;">Múltiplos Monitores</h3>
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <!-- Este botão abre uma cópia exata do seu jogo em uma nova aba, rodando paralelamente! -->
-                        <button onclick="window.open(window.location.href, '_blank')" style="padding: 8px 15px; background: #003399; color: white; border: 1px solid #002266; cursor: pointer; border-radius: 4px;">
-                            Conectar Monitor Secundário
-                        </button>
-                        <span style="font-size: 0.85rem; color: #555;">Abre uma nova janela. Arraste arquivos para a borda direita da tela para enviá-los!</span>
-                    </div>
-
                 </div>
-                <p style="margin-top: 15px; font-size: 0.8rem; color: #666;">Clique em uma imagem para aplicar imediatamente à sua Área de Trabalho.</p>
+
+                <h3 style="margin-top: 20px;">Acessibilidade & Áudio</h3>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button onclick="toggleAltoContraste()" style="padding: 6px 12px; background: #333; color: white; border: 1px solid #777; cursor: pointer; border-radius: 4px;">
+                        Alto Contraste
+                    </button>
+                    <button onclick="AudioManager.toggleMute()" style="padding: 6px 12px; background: #444; color: white; border: 1px solid #777; cursor: pointer; border-radius: 4px;">
+                        Mutar / Ativar Sons
+                    </button>
+                </div>
+
+                <h3 style="margin-top: 20px;">Múltiplos Monitores</h3>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button onclick="window.open(window.location.href, '_blank')" style="padding: 6px 12px; background: #003399; color: white; border: 1px solid #002266; cursor: pointer; border-radius: 4px;">
+                        Conectar Monitor Secundário
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
-
+    <!-- JANELA: CAT HELPER -->
     <div class="window hidden" id="cat-window" onmousedown="trazerParaFrente('cat-window')">
         <div class="window-header">
             <span class="window-title">Cat Helper v1.2</span>
@@ -245,12 +287,13 @@
                 <div class="cat-speech" id="cat-text">
                     <p><strong>Miau! Olá, novo vigia!</strong></p>
                     <p>Abra o <em>Câmera Sistema</em> para monitorar as salas. Fique de olho na energia, não queremos que as luzes se apaguem...</p>
-                    <button onclick="glitchCatHelper()" style="margin-top: 10px; cursor: pointer;">Avançar Dica ▶</button>
+                    <button onclick="glitchCatHelper()" style="margin-top: 10px; padding: 4px 8px; cursor: pointer;">Avançar Dica ▶</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- JANELA: EXPLORADOR DE ARQUIVOS -->
     <div class="window hidden" id="arquivos-window" style="width: 550px;" onmousedown="trazerParaFrente('arquivos-window')">
         <div class="window-header">
             <span class="window-title">Arquivos - C:\Usuários\Guarda</span>
@@ -262,64 +305,26 @@
         </div>
         <div class="window-content file-explorer">
             <div class="explorer-sidebar">
-                <ul>
-                    <li style="background: #dbeaf9; font-weight: bold;">📁 Arquivos</li>
-                    <li>🖼️ Fotos</li>
-                    <li>📊 Relatórios</li>
-                    <li>👥 Funcionários</li>
-                    <li>💾 Backup</li>
-                    <li>🔒 Confidencial</li>
-                </ul>
-            </div>
-
-            <div class="explorer-sidebar">
-                <!-- Tag Details cria uma árvore expansível nativa do HTML -->
                 <details open>
                     <summary style="font-weight: bold; cursor: pointer; padding: 5px; background: #dbeaf9; border-radius: 3px;">📁 C:\Usuários</summary>
                     <ul style="margin-left: 15px; padding-top: 5px;">
                         <li>🖼️ Fotos da Pizzaria</li>
-                        <li>📊 Relatórios (vazio)</li>
+                        <li>📊 Relatórios</li>
                         <li>👥 Funcionários</li>
-                        
-                        <details style="margin-top: 5px;">
-                            <summary style="cursor: pointer; padding: 2px;">💾 Sistema</summary>
-                            <ul style="margin-left: 15px;">
-                                <li>Logs de Erro</li>
-                                <li>Backup Automático</li>
-                            </ul>
-                        </details>
                     </ul>
                 </details>
                 
-                <div style="color: #c42b2b; font-weight: bold; padding: 8px 5px; margin-top: 10px; cursor: pointer; border-top: 1px solid #ccc;" ondblclick="mostrarAlerta('Acesso Negado: Criptografia Ativa.', 'Alerta de Segurança')">
+                <div style="color: #c42b2b; font-weight: bold; padding: 8px 5px; margin-top: 10px; cursor: pointer; border-top: 1px solid #ccc;" ondblclick="acessarPastaConfidencial()">
                     🔒 Disco Restrito (Z:)
                 </div>
             </div>
             
             <div class="explorer-main">
-                <div class="file-item">
-                    <div class="icon-img icon-folder small"></div>
-                    <span>Fotos</span>
-                </div>
-                <div class="file-item">
-                    <div class="icon-img icon-folder small"></div>
-                    <span>Relatórios</span>
-                </div>
-                <div class="file-item">
-                    <div class="icon-img icon-folder small"></div>
-                    <span>Funcionários</span>
-                </div>
-                <div class="file-item">
-                    <div class="icon-img icon-folder small"></div>
-                    <span>Backup</span>
-                </div>
-                
-                <div class="file-item" ondblclick="mostrarAlerta('ERRO DE SISTEMA: Acesso Remoto (ADMIN) exigido. Permissão negada.', 'Acesso Negado')">
+                <div class="file-item" ondblclick="acessarPastaConfidencial()">
                     <div class="icon-img icon-folder small" style="filter: hue-rotate(150deg);"></div>
                     <span style="color: #c42b2b; font-weight: bold;">Confidencial</span>
                 </div>
 
-                <!-- Arquivos de Texto Arrastáveis -->
                 <div class="file-item draggable-file" draggable="true" data-filename="Email_Rogerio.txt" data-content="Para: Rogério Vinhedo&#10;Assunto: Primeira noite&#10;&#10;Primeira noite sendo empregada se passou... me avisaram que o limpador faltou e terei que limpar a área de jantar. Vi algo se mexendo atrás das cortinas. Te amo amor.">
                     <div class="icon-img icon-txt small" style="pointer-events: none;"></div>
                     <span style="pointer-events: none;">Email_Rogerio.txt</span>
@@ -333,6 +338,7 @@
         </div>
     </div>
 
+    <!-- JANELA: COMPUTADOR -->
     <div class="window hidden" id="computador-window" style="width: 600px;" onmousedown="trazerParaFrente('computador-window')">
         <div class="window-header">
             <span class="window-title">Computador</span>
@@ -346,14 +352,12 @@
             <div class="explorer-sidebar">
                 <ul>
                     <li onclick="abrirJanela('arquivos-window')">📁 Documentos</li>
-                    <li>🖼️ Imagens</li>
                     <li style="background: #dbeaf9; font-weight: bold;">💻 Computador</li>
                     <li onclick="abrirJanela('rede-window')">🌐 Rede</li>
                 </ul>
             </div>
             <div class="explorer-main">
                 <h3 class="drive-title">Unidades de Disco Rígido (1)</h3>
-                
                 <div class="drive-item" ondblclick="abrirJanela('arquivos-window')">
                     <div class="drive-icon">💽</div>
                     <div class="drive-info">
@@ -365,36 +369,43 @@
                     </div>
                 </div>
 
-                <h3 class="drive-title" style="margin-top: 20px;">Dispositivos com Armazenamento Removível (1)</h3>
-                
-                <div class="drive-item">
-                    <div class="drive-icon">💾</div>
+                <h3 class="drive-title" style="margin-top: 20px;">Unidades de Rede Criptografadas (1)</h3>
+                <div class="drive-item" ondblclick="acessarPastaConfidencial()">
+                    <div class="drive-icon">🔒</div>
                     <div class="drive-info">
-                        <strong>Unidade de Disquete (A:)</strong>
-                        <span style="margin-top: 5px;">VILLASBOAS</span>
+                        <strong>Servidor Subterrâneo (Z:)</strong>
+                        <span style="margin-top: 5px; color: #c42b2b;">Requer Chave Admin</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- JANELA: MONITOR DE REDE (MECÂNICA DE DEFESA) -->
     <div class="window hidden" id="rede-window" onmousedown="trazerParaFrente('rede-window')">
         <div class="window-header" style="background: linear-gradient(to bottom, #222, #000); color: white;">
-            <span class="window-title">Monitor de Rede</span>
+            <span class="window-title">Monitor de Rede & Firewall</span>
             <div class="window-controls">
                 <button class="win-btn win-btn-min" onclick="minimizarJanela('rede-window')" title="Minimizar">🗕</button>
                 <button class="win-btn win-btn-max" onclick="maximizarJanela('rede-window')" title="Maximizar">🗖</button>
                 <button class="win-btn win-btn-close" onclick="fecharJanela('rede-window')" title="Fechar">✕</button>
             </div>
         </div>
-        <div class="window-content network-bg">
-            <p style="color: #4aff4a;">> PING: 999ms</p>
-            <p style="color: #4aff4a;">> STATUS: <span style="color: red; animation: text-blink 1s infinite;">SINAL COMPROMETIDO</span></p>
-            <p style="color: #4aff4a;">> RASTREANDO PACOTES...</p>
-            <p style="color: #ffda33; margin-top: 20px;">AVISO: Conexão externa detectada na Sala 03. Eles estão na rede.</p>
+        <div class="window-content network-bg" style="flex-direction: column; justify-content: space-between;">
+            <div>
+                <p style="color: #4aff4a;">> SUB-REDE VILAS BOAS [PORTA 8080]</p>
+                <p style="color: #4aff4a; margin-top: 8px;">> STATUS: <span id="net-status-text" style="color: #4aff4a;">ESTÁVEL (12ms)</span></p>
+                <p id="net-alert-text" style="color: #aaa; margin-top: 15px; line-height: 1.4;">Tráfego local normal. Nenhuma invasão crítica detectada.</p>
+            </div>
+            <div style="border-top: 1px solid #333; padding-top: 15px;">
+                <button id="btn-purge-network" onclick="reiniciarFirewall()" style="width: 100%; padding: 10px; background: #8a1a1a; color: #fff; border: 1px solid #ff5555; font-family: monospace; font-weight: bold; cursor: pointer;">
+                    ⚡ EXECUTAR PULSO DE FIREWALL (-5% ENERGIA)
+                </button>
+            </div>
         </div>
     </div>
 
+    <!-- MENU INICIAR -->
     <div id="start-menu" class="hidden">
         <div class="user-profile-img">
             <div class="flower-avatar"></div>
@@ -415,6 +426,13 @@
                         <div class="item-text">
                             <strong>Câmera Sistema</strong>
                             <span>Sistema de Segurança</span>
+                        </div>
+                    </div>
+                    <div class="start-item" onclick="abrirJanela('email-window'); toggleStartMenu();">
+                        <div class="icon-img icon-email small"></div>
+                        <div class="item-text">
+                            <strong>VilasMail</strong>
+                            <span>Correio Interno</span>
                         </div>
                     </div>
                     <div class="start-item" onclick="abrirJanela('cat-window'); toggleStartMenu();">
@@ -442,19 +460,18 @@
                 <div class="right-user-name">Caroline</div>
                 <div class="start-divider"></div>
                 <div class="right-item" onclick="abrirJanela('arquivos-window'); toggleStartMenu();">Documentos</div>
-                <div class="right-item">Imagens</div>
-                <div class="right-item">Música</div>
+                <div class="right-item" onclick="abrirJanela('email-window'); toggleStartMenu();">Correio (VilasMail)</div>
                 <div class="start-divider"></div>
                 
                 <div class="right-item" onclick="abrirJanela('computador-window'); toggleStartMenu();">Computador</div>
-                <div class="right-item" onclick="abrirJanela('rede-window'); toggleStartMenu();">Rede</div>
+                <div class="right-item" onclick="abrirJanela('rede-window'); toggleStartMenu();">Rede / Firewall</div>
                 
                 <div class="start-divider"></div>
-                <div class="right-item">Painel de Controle</div>
-                <div class="right-item">Ajuda e Suporte</div>
+                <div class="right-item" onclick="abrirJanela('settings-window'); toggleStartMenu();">Painel de Controle</div>
+                <div class="right-item" onclick="abrirJanela('tutorial-note'); toggleStartMenu();">Instruções do Turno</div>
                 
                 <div class="power-controls">
-                    <button class="power-btn power-off" onclick="window.location.reload()" title="Desligar">⏻</button>
+                    <button class="power-btn power-off" onclick="window.location.reload()" title="Reiniciar">⏻</button>
                     <button class="power-btn lock" title="Bloquear">🔒</button>
                     <button class="power-btn arrow-btn">▶</button>
                 </div>
@@ -463,20 +480,18 @@
     </div>
 
     <footer id="taskbar">
-        
         <button id="start-orb" aria-label="Menu Iniciar">
             <div class="start-logo"></div>
         </button>
 
         <div id="open-windows"></div>
 
-        <div id="system-tray">
+        <div id="system-tray" style="display: flex; align-items: center;">
             <div id="power-meter" title="Energia do Sistema" style="display: flex; align-items: center; gap: 5px; margin-right: 15px; color: #4aff4a; font-weight: bold;">
                 🔋 <span id="power-text">100%</span>
             </div>
             <span id="clock">12:00 AM</span>
         </div>
-        
     </footer>
 
     <script type="module" src="main.js"></script>

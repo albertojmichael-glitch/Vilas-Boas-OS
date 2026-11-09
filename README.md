@@ -1,1 +1,1 @@
-Projeto em hiatus
+Projeto em construção (hiatus terminado)

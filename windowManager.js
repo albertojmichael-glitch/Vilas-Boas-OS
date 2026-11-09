@@ -1,9 +1,10 @@
+// windowManager.js
 import { Storage } from './storage.js';
 import { GameState } from './gameState.js';
+import { AudioManager } from './assets/sounds/audioManager.js';
 
 export const WindowManager = {
     zIndexCounter: 10,
-    // 1. Cria o canal de comunicação para múltiplos monitores
     canalMonitores: new BroadcastChannel('vilasboas_os_network'),
     
     windowIcons: {
@@ -12,17 +13,18 @@ export const WindowManager = {
         'cat-window': 'icon-cat',
         'arquivos-window': 'icon-folder',
         'rede-window': 'icon-network',
-        'computador-window': 'icon-computer'
+        'computador-window': 'icon-computer',
+        'email-window': 'icon-email',
+        'settings-window': 'icon-computer'
     },
 
     initRede() {
-        // Escuta se alguma janela foi enviada de outra aba (Monitor 2)
         this.canalMonitores.onmessage = (evento) => {
             if (evento.data.tipo === 'TRANSFERIR_JANELA') {
                 this.abrir(evento.data.id);
                 const win = document.getElementById(evento.data.id);
                 if (win) {
-                    win.style.left = '10px'; // Aparece no canto esquerdo da nova tela
+                    win.style.left = '10px';
                     win.style.top = evento.data.novoY + 'px';
                 }
             }
@@ -36,11 +38,16 @@ export const WindowManager = {
         win.classList.remove('hidden');
         this.trazerParaFrente(id);
         
-        this.criarAbaTaskbar(id, win);
+        if (id !== 'tutorial-note' && id !== 'custom-alert' && id !== 'debug-window') {
+            this.criarAbaTaskbar(id, win);
+            Storage.salvarEstadoJanela(id, win.style.top, win.style.left, true);
+        }
 
-        if (id === 'camera-window' && window.GameState) {
+        if (id === 'camera-window') {
             GameState.setCameraAberta(true);
         }
+
+        AudioManager.play('click');
     },
 
     fechar(id) {
@@ -53,9 +60,15 @@ export const WindowManager = {
         const taskbarItem = document.getElementById('taskbar-' + id);
         if (taskbarItem) taskbarItem.remove();
 
-        if (id === 'camera-window' && window.GameState) {
+        if (id !== 'tutorial-note' && id !== 'custom-alert' && id !== 'debug-window') {
+            Storage.salvarEstadoJanela(id, win.style.top, win.style.left, false);
+        }
+
+        if (id === 'camera-window') {
             GameState.setCameraAberta(false);
         }
+
+        AudioManager.play('click');
     },
 
     restaurarJanelas() {
@@ -64,8 +77,8 @@ export const WindowManager = {
         Object.keys(state).forEach(id => {
             const win = document.getElementById(id);
             if (win) {
-                if (state[id].top !== undefined) win.style.top = state[id].top;
-                if (state[id].left !== undefined) win.style.left = state[id].left;
+                if (state[id].top) win.style.top = state[id].top;
+                if (state[id].left) win.style.left = state[id].left;
                 
                 if (state[id].isOpen) {
                     this.abrir(id);
@@ -77,20 +90,20 @@ export const WindowManager = {
     maximizar(id) {
         const win = document.getElementById(id);
         if (win) {
-            // Adiciona a classe que ativa a transição suave de tamanho
             win.classList.add('animating-size');
-            
             win.classList.toggle('maximized');
             this.trazerParaFrente(id);
 
-            // Remove a classe de animação após terminar, para não travar o arraste (Drag)
             setTimeout(() => {
                 win.classList.remove('animating-size');
             }, 300);
         }
     },
 
-    
+    // Alias para evitar erros quando chamado como minimizar() ou alternarMinimizar()
+    minimizar(id) {
+        this.alternarMinimizar(id);
+    },
 
     alternarMinimizar(id) {
         const win = document.getElementById(id);
@@ -99,10 +112,12 @@ export const WindowManager = {
         if (win.classList.contains('hidden')) {
             win.classList.remove('hidden');
             this.trazerParaFrente(id);
+            if (id === 'camera-window') GameState.setCameraAberta(true);
         } else {
             if (Number(win.style.zIndex) === this.zIndexCounter) {
                 win.classList.add('hidden');
                 this.atualizarAbasAtivas(null);
+                if (id === 'camera-window') GameState.setCameraAberta(false);
             } else {
                 this.trazerParaFrente(id);
             }
@@ -142,15 +157,12 @@ export const WindowManager = {
                         <div class="icon-img ${iconClass}" style="width: 12px; height: 12px; margin: 0; box-shadow: none;"></div>
                         <span class="preview-title">${titleText}</span>
                     </div>
-                    <div class="preview-thumbnail">
-                        <!-- O conteúdo real será injetado aqui -->
-                    </div>
+                    <div class="preview-thumbnail"></div>
                 </div>
             `;
             
             taskbarItem.onclick = () => this.alternarMinimizar(id);
             
-            // 2. MÁGICA DO LIVE THUMBNAIL: Atualiza a miniatura toda vez que o mouse passar por cima!
             taskbarItem.addEventListener('mouseenter', () => {
                 const thumbContainer = taskbarItem.querySelector('.preview-thumbnail');
                 this.atualizarPreviewReal(id, thumbContainer);
@@ -162,24 +174,23 @@ export const WindowManager = {
 
     atualizarPreviewReal(idJanela, previewThumbnailElement) {
         const janelaOriginal = document.getElementById(idJanela);
-        if (!janelaOriginal) return;
+        if (!janelaOriginal || !previewThumbnailElement) return;
 
-        // Limpa o preview antigo
         previewThumbnailElement.innerHTML = '';
         
-        // Faz uma cópia visual do HTML da janela
         const clone = janelaOriginal.cloneNode(true);
-        clone.removeAttribute('id'); // Remove ID para evitar duplicatas no DOM
+        clone.removeAttribute('id');
+        clone.classList.remove('hidden');
         
-        // Aplica o redimensionamento usando placa de vídeo (scale)
         clone.style.position = 'absolute';
         clone.style.top = '0';
         clone.style.left = '0';
         clone.style.transformOrigin = 'top left';
         
-        const escala = previewThumbnailElement.offsetWidth / janelaOriginal.offsetWidth;
+        const larguraOriginal = janelaOriginal.offsetWidth || 450;
+        const escala = previewThumbnailElement.offsetWidth / larguraOriginal;
         clone.style.transform = `scale(${escala})`;
-        clone.style.pointerEvents = 'none'; // Evita que o usuário clique nos botões da miniatura
+        clone.style.pointerEvents = 'none';
         
         previewThumbnailElement.appendChild(clone);
     },
@@ -203,6 +214,8 @@ export const WindowManager = {
         target.addEventListener('touchstart', dragStart, { passive: false });
 
         function dragStart(e) {
+            if (e.target.closest('.win-btn')) return;
+
             if (e.type === 'touchstart') {
                 pos3 = e.touches[0].clientX;
                 pos4 = e.touches[0].clientY;
@@ -254,33 +267,24 @@ export const WindowManager = {
             
             if (rafId) cancelAnimationFrame(rafId);
 
-            // 3. MÁGICA DOS MÚLTIPLOS MONITORES: 
-            // Se o usuário arrastar a janela para o canto direito da tela (> 90% da largura)
             if (elmnt.classList.contains('window') && elmnt.offsetLeft > window.innerWidth - 80) {
-                
-                // Envia a janela para o monitor secundário via rádio
                 WindowManager.canalMonitores.postMessage({
                     tipo: 'TRANSFERIR_JANELA',
                     id: elmnt.id,
                     novoY: elmnt.offsetTop
                 });
-                
-                // Esconde a janela desta tela
                 WindowManager.fechar(elmnt.id);
-                
             } else if (elmnt.classList.contains('window')) {
-                Storage.salvarEstadoJanela(elmnt.id, elmnt.style.top, elmnt.style.left, true);
+                Storage.salvarEstadoJanela(elmnt.id, elmnt.style.top, elmnt.style.left, !elmnt.classList.contains('hidden'));
             }
 
             if (uiCallbacks && uiCallbacks.onDragEnd) uiCallbacks.onDragEnd(elmnt);
         }
     },    
 
-    
     tornarRedimensionavel(elmnt) {
         if (!elmnt) return;
 
-        // Injeta o HTML do puxador dinamicamente
         const handle = document.createElement('div');
         handle.className = 'resize-handle';
         elmnt.appendChild(handle);
@@ -293,12 +297,11 @@ export const WindowManager = {
 
         const startResize = (e) => {
             e.preventDefault();
-            e.stopPropagation(); // Evita que o evento vaze e inicie um Drag sem querer
+            e.stopPropagation();
 
             originalWidth = elmnt.offsetWidth;
             originalHeight = elmnt.offsetHeight;
             
-            // Suporte para touch e mouse
             originalMouseX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
             originalMouseY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
 
@@ -322,7 +325,6 @@ export const WindowManager = {
                 const width = originalWidth + (clientX - originalMouseX);
                 const height = originalHeight + (clientY - originalMouseY);
                 
-                // Clamping: Limites mínimos de tamanho da janela
                 if (width > 300) elmnt.style.width = width + 'px';
                 if (height > 200) elmnt.style.height = height + 'px';
             });
