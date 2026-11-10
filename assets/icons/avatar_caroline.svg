@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1d4e89"/>
+      <stop offset="50%" stop-color="#0d2b4e"/>
+      <stop offset="100%" stop-color="#07162c"/>
+    </linearGradient>
+    <linearGradient id="aurora" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00d2ff" stop-opacity="0.15"/>
+      <stop offset="50%" stop-color="#3a7bd5" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#7ef9ff" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="suit" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2b4c7e"/>
+      <stop offset="100%" stop-color="#132644"/>
+    </linearGradient>
+    <linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.45"/>
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.08"/>
+      <stop offset="51%" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" fill="url(#bg)"/>
+  <path d="M-10,95 C30,65 80,115 138,55 L138,128 L-10,128 Z" fill="url(#aurora)"/>
+  <circle cx="64" cy="48" r="22" fill="#f0d5be"/>
+  <path d="M40,46 C40,26 88,26 88,46 C88,36 78,30 64,30 C50,30 40,36 40,46 Z" fill="#2c1d14"/>
+  <path d="M26,124 C28,88 44,76 64,76 C84,76 100,88 102,124 Z" fill="url(#suit)"/>
+  <polygon points="64,78 56,96 64,118 72,96" fill="#0d1b30"/>
+  <!-- Crachá / Emblema de Segurança -->
+  <polygon points="82,92 88,95 86,104 82,107 78,104 76,95" fill="#ffd166" stroke="#b58300" stroke-width="1.5"/>
+  <!-- Reflexo Aero -->
+  <rect width="128" height="64" fill="url(#gloss)"/>
+</svg>
+

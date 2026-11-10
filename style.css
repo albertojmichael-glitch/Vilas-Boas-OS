@@ -1,31 +1,62 @@
-/* Reset Básico */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', 'Tahoma', sans-serif; /* Fonte padrão do Vista */
-}
-
-
 /* =========================================
-   BASE DO SISTEMA (TELA CHEIA BLINDADA)
+   RESET E BASE DO SISTEMA (WINDOWS VISTA AERO)
    ========================================= */
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --aero-glass-bg: rgba(18, 34, 56, 0.58);
+    --aero-glass-active: rgba(24, 48, 78, 0.68);
+    --aero-border: rgba(180, 220, 255, 0.45);
+    --aero-border-active: rgba(130, 205, 255, 0.78);
+    --aero-header-gloss: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.42) 0%,
+        rgba(255, 255, 255, 0.14) 46%,
+        rgba(10, 24, 42, 0.22) 50%,
+        rgba(8, 18, 34, 0.35) 100%
+    );
+    --taskbar-aero-bg: linear-gradient(
+        180deg,
+        rgba(58, 96, 142, 0.72) 0%,
+        rgba(28, 54, 88, 0.78) 46%,
+        rgba(10, 24, 44, 0.88) 50%,
+        rgba(14, 32, 58, 0.92) 100%
+    );
+    --vista-blue: #005a9e;
+    --vista-cyan: #50c8ff;
+    --danger-red: #dc2626;
+    --warning-amber: #d97706;
+    --safe-green: #16a34a;
 }
 
 html, body {
-    margin: 0;
-    padding: 0;
     width: 100vw;
     height: 100vh;
-    overflow: hidden; /* Impede a barra de rolagem de aparecer */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
     background: url('assets/wallpapers/wallpaper.png') no-repeat center center fixed;
     background-size: cover !important;
+    user-select: none;
 }
 
-/* O Desktop ocupa a tela toda, menos os 40px da barra de tarefas */
+/* Foco visível claro para navegação por teclado em todo o OS */
+:focus-visible {
+    outline: 2px solid #50c8ff !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 3px rgba(0, 120, 215, 0.45) !important;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* =========================================
+   ÁREA DE TRABALHO E AERO SNAP PREVIEW
+   ========================================= */
 #desktop {
     position: absolute;
     top: 0;
@@ -33,100 +64,99 @@ html, body {
     width: 100vw;
     height: calc(100vh - 40px);
     z-index: 1;
+    overflow: hidden;
 }
 
-/* Força as janelas a flutuarem para não quebrarem a tela */
-.window {
-    position: absolute !important;
+.aero-snap-preview {
+    position: absolute;
+    z-index: 9990;
+    background: rgba(80, 180, 255, 0.22);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 2px solid rgba(160, 225, 255, 0.85);
+    box-shadow: inset 0 0 25px rgba(120, 200, 255, 0.45), 0 8px 25px rgba(0, 0, 0, 0.4);
+    border-radius: 6px;
+    pointer-events: none;
+    transition: all 0.15s ease-out;
 }
 
-/* Oculta de verdade os elementos escondidos */
-.hidden {
-    display: none !important;
+.aero-snap-preview.snap-left {
+    top: 6px;
+    left: 6px;
+    width: calc(50vw - 10px);
+    height: calc(100vh - 52px);
 }
 
-/* =========================================
-   VARIÁVEIS GLOBAIS DE TEMA (CSS VARIABLES)
-   ========================================= */
-:root {
-    /* Cores Base do Sistema */
-    --sys-taskbar-bg: linear-gradient(to bottom, #444, #111);
-    --sys-taskbar-border: #555;
-    
-    /* Aero Glass (Vidro Fosco) */
-    --aero-bg: rgba(20, 30, 40, 0.45);
-    --aero-border: rgba(255, 255, 255, 0.4);
-    --aero-header: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 45%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.2) 100%);
-    
-    /* Acessibilidade */
-    --hc-bg: #000;
-    --hc-text: #00ff00;
+.aero-snap-preview.snap-right {
+    top: 6px;
+    left: calc(50vw + 4px);
+    width: calc(50vw - 10px);
+    height: calc(100vh - 52px);
 }
 
-/* =========================================
-   BARRA DE TAREFAS (FIXADA NO FUNDO)
-   ========================================= */
-#taskbar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100vw;
-    height: 40px;
-    z-index: 9999;
-    
-    /* Mantenha as cores e efeitos da sua barra aqui: */
-    background: linear-gradient(to bottom, #444, #111);
-    border-top: 1px solid #555;
-    box-shadow: 0 -2px 5px rgba(0,0,0,0.5);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 10px;
+.aero-snap-preview.snap-max {
+    top: 6px;
+    left: 6px;
+    width: calc(100vw - 12px);
+    height: calc(100vh - 52px);
 }
 
+/* Destaque de Onboarding */
+.onboarding-highlight {
+    animation: pulse-onboarding 0.9s ease-in-out infinite alternate !important;
+    box-shadow: 0 0 0 3px #ffd166, 0 0 18px 6px rgba(80, 200, 255, 0.95) !important;
+    border-radius: 6px !important;
+    z-index: 10002 !important;
+}
+
+@keyframes pulse-onboarding {
+    from { transform: scale(1); }
+    to { transform: scale(1.07); }
+}
 
 /* =========================================
    TELA DE BOOT
    ========================================= */
 #boot-screen {
     position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
     background-color: #000;
     color: #fff;
-    z-index: 10001; 
+    z-index: 200000;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: opacity 1s ease-out; 
+    transition: opacity 0.6s ease-out;
 }
 
 .boot-content {
     text-align: center;
-    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
 }
 
 .ms-logo {
     font-weight: normal;
-    font-size: 2rem;
-    margin-bottom: 20px;
+    font-size: 2.1rem;
+    letter-spacing: 0.5px;
+    color: #e8f4ff;
 }
 
 .progress-bar-container {
-    width: 200px; /* Um pouco mais curta, como no original */
-    height: 14px;
+    width: 220px;
+    height: 15px;
     border: 2px solid #555;
-    border-radius: 0; /* Bordas 100% quadradas! */
-    margin: 0 auto 30px auto;
+    background-color: #000;
     position: relative;
     overflow: hidden;
-    background-color: #000;
 }
 
 .progress-indicator {
-    width: 60px; /* Largura do bloquinho que desliza */
+    width: 60px;
     height: 100%;
-    
-    /* O truque mestre: desenha barrinhas verdes com espaços transparentes entre elas */
     background: repeating-linear-gradient(
         90deg,
         #24d830,
@@ -134,828 +164,357 @@ html, body {
         transparent 6px,
         transparent 9px
     );
-    
     position: absolute;
     left: -60px;
-    /* Animação suave e contínua */
-    animation: loading-bar 1.8s infinite linear;
+    animation: loading-bar 1.6s infinite linear;
 }
 
 @keyframes loading-bar {
     0% { left: -60px; }
-    100% { left: 220px; } /* Vai até sumir no lado direito */
+    100% { left: 230px; }
+}
+
+.boot-status {
+    font-size: 0.85rem;
+    color: #9ec5ea;
+    min-height: 1.2em;
+}
+
+.boot-skip-btn {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ccc;
+    border: 1px solid #444;
+    padding: 5px 14px;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.boot-skip-btn:hover {
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+    border-color: #888;
 }
 
 .corp-text {
-    color: #777;
-    font-size: 0.8rem;
-}
-
-
-#open-windows {
-    flex: 1;
-    margin-left: 60px; /* Espaço para o botão Iniciar gigante */
-}
-
-#system-tray {
-    color: #fff;
-    font-size: 0.9rem;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-    padding: 0 10px;
+    color: #666;
+    font-size: 0.78rem;
+    margin-top: 16px;
 }
 
 /* =========================================
-   ÍCONES DA ÁREA DE TRABALHO
+   ÍCONES DO DESKTOP E ÍCONES LOCAIS DO SISTEMA
    ========================================= */
 .desktop-icon {
-    width: 75px;
+    width: 86px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: white;
-    text-shadow: 1px 1px 2px black;
-    font-size: 0.85rem;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95), 0 0 4px rgba(0, 0, 0, 0.8);
+    font-size: 0.78rem;
+    line-height: 1.2;
+    text-align: center;
     cursor: pointer;
-    margin: 0;
-    padding: 5px;
+    padding: 6px 4px;
     border: 1px solid transparent;
+    border-radius: 4px;
     position: absolute;
-    z-index: 1;
+    z-index: 2;
+    transition: background-color 0.12s, border-color 0.12s, box-shadow 0.12s;
+}
+
+.desktop-icon span {
+    margin-top: 4px;
+    word-break: break-word;
+    max-width: 100%;
 }
 
 .desktop-icon:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    border: 1px dotted rgba(255, 255, 255, 0.5);
+    background-color: rgba(180, 220, 255, 0.22);
+    border: 1px solid rgba(180, 225, 255, 0.55);
+    box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.25);
 }
 
-#icon-notepad {
-    top: 20px;
-    left: 20px;
+.desktop-icon.selected {
+    background: linear-gradient(180deg, rgba(60, 155, 255, 0.42), rgba(25, 105, 210, 0.52));
+    border: 1px solid rgba(150, 215, 255, 0.92);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
-#icon-cameras {
-    top: 110px; /* Fica logo abaixo do Bloco de Notas */
-    left: 20px;
-}
+/* Posições organizadas em 2 colunas no Desktop */
+#icon-notepad  { top: 18px;  left: 16px; }
+#icon-cameras  { top: 112px; left: 16px; }
+#icon-lixeira  { top: 206px; left: 16px; }
+#icon-settings { top: 300px; left: 16px; }
 
-.icon-txt {
-    width: 32px; 
+#icon-cat      { top: 18px;  left: 112px; }
+#icon-arquivos { top: 112px; left: 112px; }
+#icon-rede     { top: 206px; left: 112px; }
+#icon-email    { top: 300px; left: 112px; }
+
+/* Ícones 100% locais e consistentes */
+.icon-img {
+    width: 32px;
     height: 32px;
-    
-    background-image: url('assets/icons/blocodenotas.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    
-    
-    background-color: transparent !important;
-    border: none !important;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.5); 
-    border-radius: 4px;
     position: relative;
+    flex-shrink: 0;
 }
 
+.desktop-icon .icon-img {
+    width: 46px;
+    height: 46px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.55));
+}
 
-.icon-txt::after, .icon-txt::before {
-    display: none !important; 
+.icon-img.small {
+    width: 28px;
+    height: 28px;
+}
+
+.icon-img.title-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.icon-txt      { background-image: url('assets/icons/blocodenotas.png'); }
+.icon-exe      { background-image: url('assets/icons/camera.png'); }
+.icon-cat      { background-image: url('assets/icons/cathelper.png'); }
+.icon-folder   { background-image: url('assets/icons/pasta.png'); }
+.icon-computer { background-image: url('assets/icons/computer.png'); }
+.icon-network  { background-image: url('assets/icons/network.svg'); }
+.icon-settings { background-image: url('assets/icons/settings.svg'); }
+.icon-email    { background-image: url('assets/icons/email.png'); }
+.icon-trash    { background-image: url('assets/icons/lixeiravazia.png'); }
+.icon-trash.full { background-image: url('assets/icons/lixeracheia.png'); }
+
+.restricted-folder-icon {
+    filter: sepia(0.8) saturate(2.2) hue-rotate(-10deg);
+}
+
+/* Badge numérico de e-mails não lidos no ícone do desktop */
+.icon-badge {
+    position: absolute;
+    top: -4px;
+    right: -6px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    background: #0078d7;
+    color: #fff;
+    border: 1.5px solid #fff;
+    border-radius: 10px;
+    font-size: 0.68rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 /* =========================================
-   AERO GLASS VISUAL STYLE & ANIMATIONS
+   JANELAS AERO GLASS E CABEÇALHOS PADRONIZADOS
    ========================================= */
 .window {
-    position: absolute;
-    top: 20%; left: 30%;
-    width: 450px;
-    
-    /* Base do Vidro (Aero Glass) */
-    background: rgba(20, 30, 40, 0.45); /* Tom escuro translúcido */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    
-    /* Bordas e Reflexos do Vidro */
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 
-        inset 0 1px 1px rgba(255, 255, 255, 0.7), /* Brilho interno no topo */
-        inset 0 0 3px rgba(255, 255, 255, 0.3), /* Reflexo nas laterais */
-        0 12px 30px rgba(0, 0, 0, 0.6); /* Sombra pesada clássica do Vista */
-    border-radius: 8px;
-    padding: 5px; /* Espessura da borda de vidro */
-    
+    position: absolute !important;
+    top: 12%;
+    left: 24%;
+    width: min(480px, calc(100vw - 16px));
+    max-width: calc(100vw - 8px);
+    max-height: calc(100vh - 48px);
+
+    background: var(--aero-glass-bg);
+    backdrop-filter: blur(14px) saturate(135%);
+    -webkit-backdrop-filter: blur(14px) saturate(135%);
+
+    border: 1px solid var(--aero-border);
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.65),
+        inset 0 0 4px rgba(170, 220, 255, 0.25),
+        0 12px 32px rgba(0, 0, 0, 0.65);
+    border-radius: 7px;
+    padding: 5px;
+
     display: flex;
     flex-direction: column;
     z-index: 10;
-    
-    /* Animação suave de Abrir/Fechar (Easing) */
-    transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.2s ease-out;
+
+    transition: opacity 0.18s ease-out, transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
     transform: scale(1);
     opacity: 1;
     pointer-events: auto;
 }
 
-/* Substituímos o display:none por opacidade para permitir a animação! */
+.window.active-window {
+    background: var(--aero-glass-active);
+    border-color: var(--aero-border-active);
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.8),
+        inset 0 0 6px rgba(130, 205, 255, 0.35),
+        0 14px 36px rgba(0, 0, 0, 0.75);
+}
+
+/* Tamanhos responsivos das janelas */
+.window.win-size-sm { width: min(440px, calc(100vw - 16px)); }
+.window.win-size-md { width: min(520px, calc(100vw - 16px)); }
+.window.win-size-lg { width: min(640px, calc(100vw - 16px)); }
+
 .window.hidden {
-    display: flex !important; 
+    display: flex !important;
     opacity: 0;
-    transform: scale(0.95); /* A janela encolhe levemente ao fechar */
-    pointer-events: none; /* Impede cliques quando invisível */
+    transform: scale(0.95);
+    pointer-events: none;
+}
+
+/* Estado minimizado separado do fechado para preservar dimensões na prévia Aero Peek */
+.window.minimized {
+    display: flex !important;
+    opacity: 0;
+    transform: translateY(35px) scale(0.9);
+    pointer-events: none;
+}
+
+/* Identidade própria para Câmeras e Rede mantendo a mesma estrutura e estilo Aero */
+.window.window-theme-security {
+    background: rgba(14, 28, 42, 0.72);
+    border-color: rgba(120, 195, 235, 0.5);
+}
+
+.window.window-theme-network {
+    background: rgba(12, 24, 38, 0.76);
+    border-color: rgba(100, 185, 240, 0.5);
+}
+
+.window.window-theme-debug {
+    background: rgba(45, 14, 18, 0.82);
+    border-color: rgba(255, 120, 120, 0.5);
 }
 
 .window-header {
-    /* Gradiente reflexivo do Vista (Branco em cima, escuro embaixo) */
-    background: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 45%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.2) 100%);
-    padding: 6px 8px;
-    border-radius: 4px 4px 0 0;
+    background: var(--aero-header-gloss);
+    min-height: 32px;
+    padding: 4px 6px 4px 8px;
+    border-radius: 5px 5px 0 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    cursor: grab;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-}
-
-.window-header:active { cursor: grabbing; }
-
-.window-title { 
-    color: #fff;
-    font-weight: bold; 
-    font-size: 0.9rem; 
-    /* Brilho ao redor do texto no Aero */
-    text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 0 6px rgba(255,255,255,0.4);
-}
-
-.window-content {
-    background: #f0f0f0; /* O fundo do aplicativo em si continua sólido */
-    border: 1px solid #000; /* Linha preta separando o vidro do app */
-    margin-top: 2px;
-    border-radius: 0 0 3px 3px;
-    height: 300px;
-    display: flex;
-    overflow: hidden;
-}
-
-/* =========================================
-   ÍCONE DAS CÂMERAS (IMAGEM REAL)
-   ========================================= */
-.icon-exe {
-    width: 32px; 
-    height: 32px;
-    /* Coloque o link ou o caminho da imagem da câmera aqui */
-    background-image: url('https://i.imgur.com/EbhKTQh.png'); 
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    
-    margin-bottom: 5px;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-    position: relative;
-    border-radius: 4px;
-    background-color: transparent; /* Remove o fundo cinza antigo */
-    border: none; /* Remove a borda antiga para a imagem ficar limpa */
-}
-
-/* Desliga a "telinha azul" que criamos antes com CSS puro */
-.icon-exe::after {
-    display: none;
-}
-
-/* =========================================
-   SISTEMA DE CÂMERAS AVANÇADO
-   ========================================= */
-.camera-app-layout {
-    display: flex;
-    background-color: #000;
-    height: 350px;
-    padding: 0;
-}
-
-.camera-view {
-    flex: 1;
-    position: relative;
-    overflow: hidden;
-}
-
-.camera-overlay {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    pointer-events: none; /* Para não bloquear cliques */
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.cam-text {
-    color: #fff;
-    font-family: 'Courier New', monospace;
-    font-size: 1.1rem;
-    text-shadow: 2px 2px 0 #000, -1px -1px 0 #000;
-    z-index: 2;
-}
-
-.cam-rec {
-    color: #ff3333;
-    font-family: 'Courier New', monospace;
-    font-weight: bold;
-    font-size: 1.2rem;
-    animation: text-blink 1s infinite;
-    text-shadow: 2px 2px 0 #000;
-    z-index: 2;
-}
-
-/* Menu lateral de botões das câmeras */
-.camera-sidebar {
-    width: 150px;
-    background: #111;
-    border-left: 2px solid #333;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.cam-btn {
-    background: #222;
-    color: #aaa;
-    border: 1px solid #555;
-    padding: 8px 5px;
-    cursor: pointer;
-    font-family: 'Courier New', monospace;
-    text-align: left;
-    transition: 0.2s;
-    line-height: 1.2;
-}
-
-.cam-btn:hover {
-    background: #333;
-    color: #fff;
-}
-
-.cam-btn.active {
-    background: #4aff4a;
-    color: #000;
-    border-color: #fff;
-    font-weight: bold;
-}
-
-.cam-btn small {
-    font-size: 0.7rem;
-}
-
-/* =========================================
-   ESTILO MENU INICIAR (VISTA EXATO)
-   ========================================= */
-#start-menu {
-    position: absolute;
-    bottom: 40px; /* Grudado na barra de tarefas */
-    left: 0;
-    width: 420px;
-    background: rgba(10, 10, 10, 0.65);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 5px 5px 5px 0;
-    box-shadow: inset 0 0 2px rgba(255,255,255,0.5), 0 5px 15px rgba(0,0,0,0.8);
-    z-index: 10000;
-    /* A foto de perfil fica vazando pra fora, então não podemos usar overflow hidden no container principal */
-}
-
-/* A foto de perfil no topo direito */
-.user-profile-img {
-    position: absolute;
-    top: -25px;
-    right: 15px;
-    width: 64px;
-    height: 64px;
-    background: linear-gradient(135deg, #eee, #aaa);
-    border: 2px solid rgba(255, 255, 255, 0.8);
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.6), inset 0 0 5px rgba(0,0,0,0.5);
-    z-index: 10001;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
-
-/* =========================================
-   AVATAR DO MENU INICIAR (IMAGEM REAL)
-   ========================================= */
-.flower-avatar {
-    width: 100%;
-    height: 100%;
-    /* Coloque o link ou caminho da imagem do perfil aqui */
-    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7Yc3zZl0OxHwrPEQCX3MbiOToGWJcUFQ5HTn7PL3GVA&s=10');
-    background-size: cover; /* 'cover' garante que a foto preencha o quadrado todo sem distorcer */
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-/* Desliga as pétalas e o miolo antigos de CSS puro para não sujarem a foto */
-.flower-avatar::before,
-.flower-avatar::after {
-    display: none;
-}
-
-.start-menu-inner {
-    display: flex;
-    padding: 8px;
-    height: 480px;
-}
-
-/* --- COLUNA DA ESQUERDA (Branca) --- */
-.start-left {
-    flex: 1.3;
-    background: #ffffff;
-    border: 1px solid #999;
-    border-radius: 3px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.start-programs {
-    padding: 5px;
-    overflow-y: auto;
-}
-
-.start-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 6px;
-    cursor: pointer;
-    border-radius: 3px;
-    border: 1px solid transparent;
-}
-
-.start-item:hover {
-    background: linear-gradient(to bottom, #e5f1fb, #cce4f7);
-    border: 1px solid #a3c9ea;
-}
-
-.start-item.small .icon-img { 
-    transform: scale(0.8); 
-    margin-bottom: 0; 
-}
-
-.item-text {
-    display: flex;
-    flex-direction: column;
-    color: #000;
-}
-.item-text strong { font-size: 0.9rem; font-weight: bold; }
-.item-text span { font-size: 0.75rem; color: #666; }
-
-/* Base da Coluna Esquerda (Todos os Programas e Pesquisa) */
-.all-programs-wrapper {
-    border-top: 1px solid #d9d9d9;
-    padding: 8px;
-    background: linear-gradient(to bottom, #fff, #f0f0f0);
-    border-radius: 0 0 3px 3px;
-}
-
-.all-programs {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #333;
-    font-size: 0.85rem;
-    padding: 5px;
-    cursor: pointer;
-    margin-bottom: 8px;
-}
-.all-programs:hover { color: #0066cc; }
-.all-programs .arrow { font-size: 0.6rem; color: #444; }
-
-.search-box {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-.search-box input {
-    width: 100%;
-    padding: 4px 25px 4px 8px;
-    border: 1px solid #a0a0a0;
-    border-radius: 12px;
-    font-size: 0.85rem;
-    color: #333;
-    background: #fff;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-    outline: none;
-}
-.search-box input::placeholder { font-style: italic; color: #888; }
-.search-icon {
-    position: absolute;
-    right: 8px;
-    color: #666;
-    font-size: 1rem;
-    transform: rotate(-45deg);
-}
-
-/* --- COLUNA DA DIREITA (Vidro Escuro) --- */
-.start-right {
-    flex: 1;
-    padding: 30px 10px 10px 15px; /* Espaço extra no topo para a foto não cobrir o texto */
-    display: flex;
-    flex-direction: column;
-    color: #fff;
-    font-size: 0.85rem;
-}
-
-.right-user-name {
-    font-weight: bold;
-    font-size: 1rem;
-    margin-bottom: 5px;
-    text-shadow: 1px 1px 2px #000;
-}
-
-.right-item {
-    padding: 6px 8px;
-    cursor: pointer;
-    border-radius: 3px;
-    text-shadow: 1px 1px 2px #000;
-    margin-bottom: 2px;
-    border: 1px solid transparent;
-}
-.right-item:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: inset 0 0 5px rgba(255,255,255,0.2);
-}
-
-.start-divider {
-    height: 1px;
-    background: rgba(255, 255, 255, 0.2);
-    margin: 4px 0;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.5);
-}
-
-/* Botões de Energia no fundo à direita */
-.power-controls {
-    margin-top: auto; /* Joga os botões lá pro fundo */
-    display: flex;
-    justify-content: flex-end;
-    gap: 2px;
-}
-
-.power-btn {
-    height: 24px;
-    background: linear-gradient(to bottom, #555, #222);
-    border: 1px solid #111;
-    color: white;
-    cursor: pointer;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 2px rgba(0,0,0,0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.power-btn:hover { filter: brightness(1.3); }
-
-.power-off { width: 35px; border-radius: 3px 0 0 3px; color: #ff5555; }
-.lock { width: 30px; color: #ffcc00; font-size: 0.7rem; }
-.arrow-btn { width: 18px; border-radius: 0 3px 3px 0; font-size: 0.6rem; }
-
-
-/* Rodapé do Menu */
-.start-footer {
-    height: 45px;
-    background: rgba(0,0,0,0.4);
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 0 15px;
-}
-
-.shutdown-btn {
-    background: linear-gradient(to bottom, #e04343, #8a1a1a);
-    border: 1px solid #333;
-    color: white;
-    padding: 4px 10px;
-    border-radius: 3px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 0.8rem;
-}
-
-.shutdown-btn:hover { filter: brightness(1.2); }
-
-/* =========================================
-   POSIÇÕES DOS NOVOS ÍCONES
-   ========================================= */
-#icon-cat { top: 20px; left: 110px; }
-#icon-arquivos { top: 110px; left: 110px; }
-#icon-rede { top: 200px; left: 110px; }
-
-/* Ícone de Gatinho */
-.icon-cat {
-    width: 32px; 
-    height: 32px;
-    
-    background-image: url("assets/icons/cathelper.png"); 
-    background-size: contain; 
-    background-repeat: no-repeat;
-    background-position: center;
-    
-    
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-    border-radius: 4px; 
-}
-
-/* Ícone de Pasta (Arquivos) */
-.icon-folder {
-    width: 32px; 
-    height: 32px;
-    background-image: url('assets/icons/pasta.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-}
-
-/* Ícone de Rede */
-.icon-network {
-    width: 32px; 
-    height: 32px;
-    background-image: url('assets/icons/computer.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-}
-
-/* =========================================
-   INTERFACES DOS APLICATIVOS
-   ========================================= */
-/* Janela: Cat Helper */
-.cat-helper-bg { background: #fffdf2; display: flex; padding: 20px; }
-.cat-container { display: flex; gap: 20px; align-items: flex-start; }
-.cat-avatar {
-    font-size: 3rem; 
-    position: relative;
-    background: #ffaa00;
-    border-radius: 50%;
-    width: 70px; height: 70px;
-    display: flex; justify-content: center; align-items: center;
-    border: 3px solid #333;
-}
-.guard-hat {
-    position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
-    background: #111; color: #ffcc00; font-size: 0.4rem; font-family: sans-serif;
-    padding: 2px 8px; border-radius: 4px 4px 0 0; font-weight: bold;
-    border: 2px solid #333; border-bottom: none;
-}
-.cat-speech {
-    background: #fff; padding: 15px; border-radius: 8px;
-    border: 2px solid #ddd; position: relative; font-family: 'Segoe UI', Tahoma, sans-serif;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.1); flex: 1;
-}
-.cat-speech p { margin-bottom: 8px; font-size: 0.95rem; color: #333; }
-
-/* Janela: Arquivos (File Explorer) */
-.file-explorer { display: flex; height: 350px !important; padding: 0 !important; background: #fff;}
-.explorer-sidebar {
-    width: 150px; background: #f0f0f0; border-right: 1px solid #ccc;
-    padding: 10px; overflow-y: auto;
-}
-.explorer-sidebar ul { list-style: none; padding: 0; margin: 0; }
-.explorer-sidebar li {
-    padding: 6px; cursor: pointer; color: #333; font-size: 0.85rem;
-    border-radius: 3px; margin-bottom: 2px;
-}
-.explorer-sidebar li:hover { background: #dbeaf9; }
-.explorer-main {
-    flex: 1; padding: 15px; display: flex; gap: 15px;
-    align-content: flex-start; flex-wrap: wrap;
-}
-.file-item {
-    display: flex; flex-direction: column; align-items: center;
-    width: 70px; text-align: center; cursor: pointer;
-    padding: 5px; border: 1px solid transparent; border-radius: 3px;
-}
-.file-item:hover { background: #e5f1fb; border: 1px solid #a3c9ea; }
-.file-item span { font-size: 0.8rem; color: #000; margin-top: 5px; }
-
-/* Janela: Rede */
-.network-bg {
-    background: #000; font-family: 'Courier New', Courier, monospace;
-    padding: 20px !important; font-weight: bold;
-}
-
-/* =========================================
-   ABAS DA BARRA DE TAREFAS & AERO PEEK
-   ========================================= */
-#open-windows {
-    display: flex;
-    gap: 5px;
-    height: 100%;
-    align-items: center;
-}
-
-.taskbar-item {
-    position: relative; /* Essencial para o Preview flutuar acima dela */
-    width: 140px; 
-    height: 30px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 3px;
-    color: white;
-    cursor: pointer;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    text-shadow: 1px 1px 2px black;
-    font-size: 0.8rem;
-    transition: all 0.2s;
-    /* Removemos o overflow:hidden daqui para o preview poder "vazar" pra fora */
-}
-
-/* Container do texto e ícone da aba */
-.item-content {
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
     gap: 8px;
-    height: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    cursor: grab;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.45);
+    flex-shrink: 0;
 }
 
-.taskbar-item:hover {
-    background: rgba(255, 255, 255, 0.25);
-    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5);
+.window-header:active {
+    cursor: grabbing;
 }
 
-.taskbar-item.active {
-    background: rgba(255, 255, 255, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.6), 0 2px 5px rgba(0,0,0,0.5);
-}
-
-.taskbar-item .icon-img {
-    width: 16px;
-    height: 16px;
-    margin: 0;
-    box-shadow: none;
-    border-radius: 2px;
-}
-
-/* =========================================
-   AERO PEEK (PREVIEW FLUTUANTE)
-   ========================================= */
-.taskbar-preview {
-    position: absolute;
-    bottom: 40px; /* Fica logo acima da barra de tarefas */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 140px;
-    height: 100px;
-    background: rgba(20, 30, 40, 0.6);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 5px;
-    box-shadow: 0 0 2px rgba(255,255,255,0.4) inset, 0 8px 15px rgba(0,0,0,0.8);
-    display: flex;
-    flex-direction: column;
-    padding: 6px;
-    
-    /* Estado inicial invisível */
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none; /* O mouse passa direto por ele */
-    transition: opacity 0.2s ease, visibility 0.2s ease;
-    z-index: 10000;
-}
-
-/* O segredo do OS: Delay! O preview só aparece se você parar o mouse em cima por 0.5s */
-.taskbar-item:hover .taskbar-preview {
-    opacity: 1;
-    visibility: visible;
-    transition-delay: 0.6s; 
-}
-
-.preview-header {
+.window-title-group {
     display: flex;
     align-items: center;
-    gap: 5px;
-    margin-bottom: 5px;
-}
-
-.preview-title {
-    font-size: 0.75rem;
-    font-weight: bold;
-    color: #fff;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.preview-thumbnail {
+    gap: 7px;
+    min-width: 0;
     flex: 1;
-    background: linear-gradient(135deg, #f0f0f0, #ccc);
-    border: 1px solid #111;
-    border-radius: 2px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
 }
 
-/* =========================================
-   CAT HELPER GLITCH (LORE)
-   ========================================= */
-.cat-avatar.glitched {
-    background: #000 !important; /* Gato fica preto */
-    border-color: #4a0082 !important;
-    color: white;
+.window-title {
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.86rem;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95), 0 0 8px rgba(180, 225, 255, 0.35);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.guard-hat.glitched-hat {
-    background: #4a0082 !important; /* Chapéu roxo escuro */
-    color: #ff0000 !important;
-    border-color: #111 !important;
-}
-
-.glitched-text {
-    font-family: 'Courier New', Courier, monospace !important;
-    color: #cc0000 !important;
-    background: #000 !important;
-    border-color: #cc0000 !important;
-}
-
-/* =========================================
-   BOTÕES DE CONTROLE DAS JANELAS (AERO VISTA)
-   ========================================= */
+/* Botões de Controle de Janela com SVGs consistentes e área clicável ampliada */
 .window-controls {
     display: flex;
     align-items: center;
-    gap: 3px;
+    gap: 2px;
+    flex-shrink: 0;
 }
 
 .win-btn {
-    width: 26px;
-    height: 18px;
-    border: 1px solid rgba(0, 0, 0, 0.4);
+    min-width: 31px;
+    height: 22px;
+    padding: 0 6px;
+    border: 1px solid rgba(15, 25, 40, 0.65);
     border-radius: 3px;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.1));
-    color: #222;
-    font-size: 0.65rem;
-    font-weight: bold;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.65) 0%,
+        rgba(215, 232, 250, 0.35) 50%,
+        rgba(160, 190, 225, 0.25) 100%
+    );
+    color: #102030;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
-    transition: all 0.15s ease;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+    transition: background 0.12s ease, box-shadow 0.12s ease, color 0.12s ease;
 }
 
 .win-btn:hover {
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3));
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.92) 0%,
+        rgba(185, 225, 255, 0.65) 50%,
+        rgba(120, 185, 245, 0.5) 100%
+    );
+    box-shadow: 0 0 8px rgba(130, 210, 255, 0.85), inset 0 1px 0 #fff;
+    color: #001830;
 }
 
-/* Botão Fechar (Vermelho Brilhante) */
 .win-btn-close {
-    background: linear-gradient(to bottom, #e86868, #c42b2b);
-    color: white;
-    border-color: #721414;
-    text-shadow: 0 1px 1px black;
+    min-width: 42px;
+    background: linear-gradient(180deg, #f27d72 0%, #d4382c 50%, #a81b12 100%);
+    color: #fff;
+    border-color: #63100b;
+    box-shadow: inset 0 1px 0 rgba(255, 210, 210, 0.65);
 }
 
 .win-btn-close:hover {
-    background: linear-gradient(to bottom, #ff5555, #e61919);
-    box-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+    background: linear-gradient(180deg, #ff948a 0%, #f03e30 50%, #c9180c 100%);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(255, 65, 50, 0.85), inset 0 1px 0 #fff;
 }
 
-/* =========================================
-   ESTADO MAXIMIZADO (TELA CHEIA)
-   ========================================= */
+.window-content {
+    background: #f5f7fa;
+    border: 1px solid rgba(10, 20, 35, 0.75);
+    margin-top: 3px;
+    border-radius: 0 0 4px 4px;
+    height: 340px;
+    min-height: 180px;
+    flex: 1;
+    display: flex;
+    overflow: auto;
+    user-select: text;
+}
+
+/* Estados Maximizado e Aero Snap */
 .window.maximized {
     top: 0 !important;
     left: 0 !important;
     width: 100vw !important;
-    height: calc(100vh - 40px) !important; /* Desconta a altura da Barra de Tarefas */
+    height: calc(100vh - 40px) !important;
+    max-width: 100vw !important;
+    max-height: calc(100vh - 40px) !important;
     border-radius: 0 !important;
 }
 
-.window.maximized .window-header {
-    border-radius: 0 !important;
-}
-
-.window.maximized .window-content {
-    flex: 1;
-    height: calc(100% - 32px) !important;
-}
-
-/* =========================================
-   AERO SNAP (METADE DA TELA)
-   ========================================= */
 .window.snapped-left {
     top: 0 !important;
     left: 0 !important;
     width: 50vw !important;
     height: calc(100vh - 40px) !important;
+    max-width: 50vw !important;
+    max-height: calc(100vh - 40px) !important;
     border-radius: 0 !important;
 }
 
@@ -964,144 +523,1675 @@ html, body {
     left: 50vw !important;
     width: 50vw !important;
     height: calc(100vh - 40px) !important;
+    max-width: 50vw !important;
+    max-height: calc(100vh - 40px) !important;
     border-radius: 0 !important;
 }
 
+.window.maximized .window-header,
 .window.snapped-left .window-header,
 .window.snapped-right .window-header {
     border-radius: 0 !important;
 }
 
+.window.maximized .window-content,
 .window.snapped-left .window-content,
 .window.snapped-right .window-content {
     flex: 1;
-    height: calc(100% - 32px) !important; /* Estica o conteúdo até o fundo */
+    height: calc(100% - 36px) !important;
+}
+
+.window.animating-size {
+    transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
 }
 
 /* =========================================
-   JANELA: COMPUTADOR (ESTILO DOS DISCOS)
+   COMPONENTES PADRÃO VISTA (BOTÕES E INPUTS)
    ========================================= */
+.vista-btn {
+    padding: 5px 12px;
+    border: 1px solid #8e9cad;
+    border-radius: 3px;
+    background: linear-gradient(180deg, #f8fafd 0%, #e6edf5 50%, #d2deeb 51%, #dfeaf4 100%);
+    color: #1b2838;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transition: all 0.12s;
+}
+
+.vista-btn:hover:not(:disabled) {
+    border-color: #3c7fb1;
+    background: linear-gradient(180deg, #eaf6fd 0%, #d9f0fc 50%, #bee6fd 51%, #a7d9f5 100%);
+    box-shadow: 0 0 4px rgba(60, 127, 177, 0.35);
+}
+
+.vista-btn:disabled {
+    opacity: 0.52;
+    cursor: not-allowed;
+}
+
+.vista-btn.primary {
+    border-color: #1f5f99;
+    background: linear-gradient(180deg, #4da6ff 0%, #1a75cf 50%, #0d5ca8 100%);
+    color: #fff;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.vista-btn.primary:hover:not(:disabled) {
+    filter: brightness(1.1);
+}
+
+.vista-btn.danger-btn {
+    border-color: #991b1b;
+    background: linear-gradient(180deg, #ef4444 0%, #b91c1c 100%);
+    color: #fff;
+}
+
+.vista-btn.small-btn {
+    padding: 3px 9px;
+    font-size: 0.78rem;
+}
+
+.vista-btn.full-width-btn {
+    width: 100%;
+    margin-top: 8px;
+}
+
+.vista-input {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid #8e9cad;
+    border-radius: 3px;
+    font-size: 0.9rem;
+    background: #fff;
+    color: #111;
+}
+
+/* =========================================
+   DIÁLOGOS MODAIS (ALERTA E AUTENTICAÇÃO Z:)
+   ========================================= */
+.modal-dialog {
+    width: min(370px, calc(100vw - 24px)) !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 99999 !important;
+}
+
+.modal-dialog.hidden {
+    transform: translate(-50%, -50%) scale(0.95) !important;
+}
+
+.alert-dialog-content,
+.auth-dialog-content {
+    background: #fff;
+    padding: 18px;
+    height: auto !important;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.alert-body-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.88rem;
+    color: #222;
+    line-height: 1.4;
+}
+
+.alert-icon {
+    font-size: 1.6rem;
+}
+
+.alert-ok-btn {
+    align-self: flex-end;
+    min-width: 80px;
+}
+
+.auth-dialog-content p {
+    font-size: 0.84rem;
+    color: #222;
+    line-height: 1.4;
+}
+
+.auth-error {
+    color: #b91c1c !important;
+    font-weight: 600;
+    font-size: 0.8rem !important;
+}
+
+.auth-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+/* =========================================
+   SISTEMA DE CÂMERAS (HUD E SELETOR RESPONSIVO)
+   ========================================= */
+.camera-app-layout {
+    display: flex;
+    background-color: #060a0e;
+    height: 360px;
+    padding: 0;
+    overflow: hidden;
+}
+
+.camera-view {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    min-height: 210px;
+    background: #000;
+}
+
+#camera-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.camera-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.camera-hud-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.cam-text {
+    color: #fff;
+    background: rgba(0, 0, 0, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 4px 9px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.88rem;
+    font-weight: bold;
+    letter-spacing: 0.4px;
+}
+
+.cam-hud-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cam-status-pill {
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-family: 'Consolas', monospace;
+    font-size: 0.75rem;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cam-status-pill.status-online {
+    color: #4ade80;
+    border-color: rgba(74, 222, 128, 0.5);
+}
+
+.cam-status-pill.status-sync {
+    color: #7ef9ff;
+    border-color: rgba(126, 249, 255, 0.6);
+}
+
+.cam-status-pill.status-warning {
+    color: #fbbf24;
+    border-color: #fbbf24;
+}
+
+.cam-status-pill.status-critical {
+    color: #fff;
+    background: rgba(185, 28, 28, 0.9);
+    border: 2px solid #fca5a5;
+}
+
+.cam-rec {
+    color: #ff4d4d;
+    background: rgba(0, 0, 0, 0.72);
+    padding: 3px 7px;
+    border-radius: 3px;
+    font-family: 'Consolas', monospace;
+    font-weight: bold;
+    font-size: 0.82rem;
+    animation: rec-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes rec-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+}
+
+.cam-danger-banner {
+    pointer-events: auto;
+    background: rgba(127, 29, 29, 0.92);
+    border: 2px solid #f87171;
+    border-radius: 4px;
+    padding: 8px 10px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-size: 0.78rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.8);
+}
+
+.cam-firewall-shortcut {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fff;
+    padding: 4px 10px;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 0.76rem;
+    cursor: pointer;
+}
+
+.cam-firewall-shortcut:hover {
+    background: #fff;
+    transform: scale(1.02);
+}
+
+.camera-sidebar {
+    width: 168px;
+    background: #0d131a;
+    border-left: 1px solid #263545;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+
+.cam-btn {
+    background: #16202c;
+    color: #cbd5e1;
+    border: 1px solid #334155;
+    border-radius: 4px;
+    padding: 8px;
+    cursor: pointer;
+    font-family: 'Consolas', monospace;
+    text-align: left;
+    transition: all 0.15s;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.cam-btn:hover {
+    background: #1e2d3d;
+    border-color: #64748b;
+    color: #fff;
+}
+
+.cam-btn.active {
+    background: linear-gradient(180deg, #1d4e89, #12345b);
+    color: #fff;
+    border: 1.5px solid #60a5fa;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.cam-btn.has-warning {
+    border-color: #f59e0b;
+    border-style: dashed;
+}
+
+.cam-btn.has-danger {
+    background: linear-gradient(180deg, #5c1111, #380808);
+    border: 2px solid #f87171;
+    color: #fff;
+}
+
+.cam-btn-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+}
+
+.cam-btn small {
+    font-size: 0.72rem;
+    opacity: 0.85;
+}
+
+.cam-btn-badge {
+    font-size: 0.65rem;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.badge-normal {
+    background: rgba(56, 189, 248, 0.18);
+    color: #7dd3fc;
+}
+
+.badge-warning {
+    background: #f59e0b;
+    color: #000;
+}
+
+.badge-danger {
+    background: #ef4444;
+    color: #fff;
+}
+
+/* =========================================
+   MONITOR DE REDE & FIREWALL
+   ========================================= */
+.network-bg {
+    background: #0a1017;
+    color: #e2e8f0;
+    font-family: 'Consolas', 'Courier New', monospace;
+    padding: 16px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.network-status-card {
+    padding: 14px;
+    border-radius: 5px;
+    background: #111b27;
+    border: 1px solid #2b4257;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.network-status-card.net-level-1 {
+    border-left: 5px solid #22c55e;
+}
+
+.network-status-card.net-level-2 {
+    border: 2px dashed #f59e0b;
+    background: #1c1810;
+}
+
+.network-status-card.net-level-3 {
+    border: 2px solid #ef4444;
+    background: #220c0c;
+    box-shadow: inset 0 0 18px rgba(239, 68, 68, 0.25);
+}
+
+.net-subnet-line {
+    color: #7dd3fc;
+    font-size: 0.82rem;
+}
+
+.net-status-banner {
+    font-size: 0.95rem;
+    font-weight: bold;
+    padding: 6px 10px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.net-level-1 .net-status-banner { color: #4ade80; }
+.net-level-2 .net-status-banner { color: #fbbf24; }
+.net-level-3 .net-status-banner { color: #fca5a5; }
+
+.net-alert-desc {
+    color: #cbd5e1;
+    font-size: 0.84rem;
+    line-height: 1.45;
+}
+
+.net-camera-link-row {
+    margin-top: 4px;
+}
+
+.net-cam-shortcut-btn {
+    background: #1e293b;
+    color: #e2e8f0;
+    border: 1px solid #475569;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.net-cam-shortcut-btn:hover {
+    background: #334155;
+    border-color: #94a3b8;
+    color: #fff;
+}
+
+.network-footer-actions {
+    border-top: 1px solid #1e293b;
+    padding-top: 12px;
+}
+
+.firewall-btn {
+    width: 100%;
+    padding: 11px;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.86rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.firewall-btn.firewall-standby {
+    background: #1e293b;
+    color: #94a3b8;
+    border: 1px solid #334155;
+    cursor: not-allowed;
+}
+
+.firewall-btn.firewall-warning {
+    background: linear-gradient(180deg, #b45309, #78350f);
+    color: #fff;
+    border: 1px solid #fbbf24;
+}
+
+.firewall-btn.firewall-critical {
+    background: linear-gradient(180deg, #dc2626, #991b1b);
+    color: #fff;
+    border: 2px solid #fca5a5;
+    box-shadow: 0 0 14px rgba(220, 38, 38, 0.55);
+}
+
+.firewall-btn:hover:not(:disabled) {
+    filter: brightness(1.15);
+}
+
+/* =========================================
+   EXPLORADOR DE ARQUIVOS E VILASMAIL
+   ========================================= */
+.explorer-window-content {
+    display: flex;
+    flex-direction: column;
+    height: 360px;
+    padding: 0 !important;
+    background: #fff;
+}
+
+.explorer-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    background: linear-gradient(180deg, #f4f8fc, #e3ecf7);
+    border-bottom: 1px solid #c5d4e6;
+    flex-wrap: wrap;
+}
+
+.explorer-address-bar {
+    flex: 1;
+    min-width: 140px;
+    padding: 4px 8px;
+    border: 1px solid #9cb2c9;
+    border-radius: 3px;
+    background: #fff;
+    color: #1e293b;
+    font-size: 0.8rem;
+}
+
+.explorer-hint-bar {
+    background: #eff6ff;
+    color: #1e40af;
+    border-bottom: 1px solid #bfdbfe;
+    padding: 4px 10px;
+    font-size: 0.74rem;
+}
+
+.explorer-body,
+.file-explorer {
+    flex: 1;
+    display: flex;
+    min-height: 0;
+    background: #fff;
+    overflow: hidden;
+}
+
+.explorer-sidebar {
+    width: 175px;
+    background: #f1f5f9;
+    border-right: 1px solid #cbd5e1;
+    padding: 8px;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+
+.explorer-sidebar ul {
+    list-style: none;
+}
+
+.explorer-sidebar li {
+    padding: 6px 8px;
+    cursor: pointer;
+    color: #1e293b;
+    font-size: 0.81rem;
+    border-radius: 4px;
+    margin-bottom: 3px;
+    border: 1px solid transparent;
+}
+
+.explorer-sidebar li.tree-subitem {
+    padding-left: 18px;
+}
+
+.explorer-sidebar li.tree-restricted {
+    margin-top: 8px;
+    border-top: 1px solid #cbd5e1;
+    padding-top: 8px;
+    color: #92400e;
+    font-weight: 600;
+}
+
+.explorer-sidebar li:hover {
+    background: #e0f2fe;
+    border-color: #bae6fd;
+}
+
+.explorer-sidebar li.active-tree-item {
+    background: #dbeafe;
+    border-color: #93c5fd;
+    font-weight: 600;
+    color: #1e3a8a;
+}
+
+.explorer-main {
+    flex: 1;
+    padding: 12px;
+    display: flex;
+    gap: 12px;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    overflow-y: auto;
+}
+
+.file-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 92px;
+    text-align: center;
+    cursor: pointer;
+    padding: 8px 6px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: all 0.12s;
+}
+
+.file-item:hover {
+    background: #f0f9ff;
+    border-color: #bae6fd;
+}
+
+.file-item.selected {
+    background: linear-gradient(180deg, #dbeafe, #bfdbfe);
+    border-color: #60a5fa;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.file-item span {
+    font-size: 0.76rem;
+    color: #0f172a;
+    margin-top: 6px;
+    word-break: break-word;
+    line-height: 1.2;
+}
+
+.file-item .restricted-label {
+    color: #92400e;
+    font-weight: 600;
+}
+
+.explorer-statusbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 10px;
+    background: #f1f5f9;
+    border-top: 1px solid #cbd5e1;
+    font-size: 0.74rem;
+    color: #475569;
+}
+
+/* VilasMail */
+.email-sidebar {
+    width: 215px;
+    padding: 6px;
+}
+
+.email-item {
+    padding: 8px;
+    border-bottom: 1px solid #e2e8f0;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    cursor: pointer;
+}
+
+.email-item.unread-email {
+    background: #eff6ff;
+    border-left: 3px solid #0284c7;
+}
+
+.email-item.selected-email {
+    background: #dbeafe !important;
+    border-color: #60a5fa;
+}
+
+.email-item-top {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8rem;
+}
+
+.email-dot {
+    color: #0284c7;
+    font-size: 0.7rem;
+}
+
+.email-new-pill {
+    margin-left: auto;
+    background: #0284c7;
+    color: #fff;
+    font-size: 0.62rem;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.email-item-subject {
+    font-size: 0.76rem;
+    color: #334155;
+    margin-top: 2px;
+}
+
+.email-item-time {
+    font-size: 0.68rem;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+.email-reader {
+    display: block !important;
+    padding: 16px;
+    color: #1e293b;
+}
+
+.email-reader-header h4 {
+    font-size: 1rem;
+    color: #0f172a;
+    margin-bottom: 4px;
+}
+
+.email-meta-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #475569;
+}
+
+.email-divider {
+    margin: 10px 0;
+    border: none;
+    border-top: 1px solid #cbd5e1;
+}
+
+.email-body-pre {
+    white-space: pre-wrap;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: #1e293b;
+}
+
+/* =========================================
+   BLOCO DE NOTAS COM ESTADO DE ALTERAÇÕES E DROPZONE
+   ========================================= */
+.notepad-content {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+}
+
+.notepad-menu {
+    background: #f1f5f9;
+    border-bottom: 1px solid #cbd5e1;
+    padding: 4px 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.notepad-actions {
+    display: flex;
+    gap: 4px;
+}
+
+.notepad-menu button {
+    background: #fff;
+    border: 1px solid #cbd5e1;
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 3px 9px;
+    font-size: 0.78rem;
+    color: #1e293b;
+}
+
+.notepad-menu button:hover {
+    background: #e0f2fe;
+    border-color: #7dd3fc;
+}
+
+.notepad-status {
+    font-size: 0.74rem;
+    color: #15803d;
+    font-weight: 600;
+}
+
+.notepad-status.is-dirty {
+    color: #b45309;
+}
+
+.notepad-confirm-bar {
+    background: #fffbeb;
+    border-bottom: 1px solid #fde68a;
+    padding: 6px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    color: #92400e;
+}
+
+.confirm-bar-btns {
+    display: flex;
+    gap: 6px;
+}
+
+.notepad-editor-wrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+    min-height: 0;
+}
+
+#notepad-textarea {
+    flex: 1;
+    width: 100%;
+    border: none;
+    resize: none;
+    padding: 10px;
+    font-family: 'Consolas', monospace;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: #0f172a;
+    outline: none;
+}
+
+.notepad-drop-overlay {
+    position: absolute;
+    inset: 8px;
+    background: rgba(224, 242, 254, 0.92);
+    border: 2px dashed #0284c7;
+    border-radius: 6px;
+    color: #0369a1;
+    font-weight: bold;
+    font-size: 0.9rem;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 16px;
+    pointer-events: none;
+}
+
+body.dragging-txt-file #notepad-window .notepad-drop-overlay,
+#notepad-window.drop-target-hover .notepad-drop-overlay {
+    display: flex;
+}
+
+/* =========================================
+   CONFIGURAÇÕES (PAINEL DE CONTROLE)
+   ========================================= */
+.settings-layout {
+    display: flex;
+    height: 370px;
+    background: #fff;
+    padding: 0 !important;
+}
+
+.settings-sidebar {
+    width: 185px;
+    background: #f1f5f9;
+    border-right: 1px solid #cbd5e1;
+    padding: 8px;
+    flex-shrink: 0;
+}
+
+.settings-sidebar ul {
+    list-style: none;
+}
+
+.settings-sidebar li {
+    padding: 8px 10px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.82rem;
+    color: #334155;
+    border: 1px solid transparent;
+}
+
+.settings-sidebar li:hover {
+    background: #e0f2fe;
+}
+
+.settings-sidebar li.active {
+    background: #dbeafe;
+    border-color: #93c5fd;
+    font-weight: 600;
+    color: #1e3a8a;
+}
+
+.settings-main {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.settings-main h3 {
+    font-size: 0.98rem;
+    color: #0f4c81;
+    border-bottom: 1px solid #cbd5e1;
+    padding-bottom: 5px;
+    margin-bottom: 12px;
+}
+
+.wp-preview-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.wp-live-monitor {
+    width: 190px;
+    height: 105px;
+    border: 4px solid #334155;
+    border-radius: 6px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.wp-monitor-taskbar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 12px;
+    background: rgba(15, 35, 65, 0.85);
+    border-top: 1px solid rgba(150, 210, 255, 0.5);
+}
+
+.wp-preview-caption {
+    font-size: 0.74rem;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+.wallpaper-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+    gap: 10px;
+}
+
+.wallpaper-card {
+    background: #f8fafc;
+    border: 2px solid #cbd5e1;
+    border-radius: 5px;
+    padding: 6px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.15s;
+}
+
+.wallpaper-card:hover {
+    border-color: #38bdf8;
+}
+
+.wallpaper-card.active-wp {
+    border-color: #0284c7;
+    background: #eff6ff;
+}
+
+.wallpaper-thumb {
+    width: 100%;
+    height: 64px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 3px;
+}
+
+.wp-card-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.wp-active-badge {
+    font-size: 0.68rem;
+    color: #0284c7;
+    font-weight: bold;
+}
+
+.settings-option-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.option-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.option-info strong {
+    font-size: 0.84rem;
+    color: #0f172a;
+}
+
+.option-info small,
+.settings-desc {
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+.settings-toggle-btn {
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid #94a3b8;
+    background: #e2e8f0;
+    color: #334155;
+    font-weight: bold;
+    font-size: 0.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.settings-toggle-btn.toggle-on {
+    background: #0284c7;
+    border-color: #0369a1;
+    color: #fff;
+}
+
+.volume-control-group {
+    padding: 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.volume-control-group label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #1e293b;
+    margin-bottom: 6px;
+}
+
+.slider-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.slider-row input[type="range"] {
+    flex: 1;
+    cursor: pointer;
+}
+
+.kb-help-box {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 0.76rem;
+    color: #1e3a8a;
+    line-height: 1.4;
+}
+
+.quick-snap-controls {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+.lang-buttons-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* =========================================
+   CAT HELPER, COMPUTADOR, LIXEIRA E POST-IT
+   ========================================= */
+.cat-helper-bg {
+    background: #fffdf5;
+    padding: 18px;
+    height: auto !important;
+}
+
+.cat-container {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.cat-avatar {
+    font-size: 2.6rem;
+    position: relative;
+    background: #ffaa00;
+    border-radius: 50%;
+    width: 68px;
+    height: 68px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #333;
+    flex-shrink: 0;
+}
+
+.guard-hat {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #111;
+    color: #ffcc00;
+    font-size: 0.45rem;
+    padding: 2px 7px;
+    border-radius: 4px 4px 0 0;
+    font-weight: bold;
+    border: 2px solid #333;
+}
+
+.cat-speech {
+    background: #fff;
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    flex: 1;
+}
+
+.cat-speech p {
+    margin-bottom: 6px;
+    font-size: 0.86rem;
+    color: #1e293b;
+    line-height: 1.4;
+}
+
+.cat-avatar.glitched {
+    background: #000 !important;
+    border-color: #6b21a8 !important;
+    color: #fff;
+}
+
+.guard-hat.glitched-hat {
+    background: #4c1d95 !important;
+    color: #f87171 !important;
+}
+
+.glitched-text {
+    font-family: 'Consolas', monospace !important;
+    color: #fca5a5 !important;
+    background: #0f0505 !important;
+    border-color: #dc2626 !important;
+}
+
+.glitched-text p {
+    color: #fca5a5 !important;
+}
+
+/* Computador */
 .drive-title {
     width: 100%;
     font-size: 0.85rem;
-    color: #003399;
-    border-bottom: 1px solid #a3c9ea;
-    padding-bottom: 5px;
-    margin-bottom: 10px;
-    font-weight: bold;
+    color: #0f4c81;
+    border-bottom: 1px solid #cbd5e1;
+    padding-bottom: 4px;
+    margin-bottom: 8px;
 }
 
 .drive-item {
     display: flex;
     align-items: center;
-    gap: 15px;
-    width: 320px;
+    gap: 14px;
+    width: min(330px, 100%);
     padding: 10px;
-    border: 1px solid transparent;
-    border-radius: 3px;
+    border: 1px solid #e2e8f0;
+    border-radius: 5px;
     cursor: pointer;
+    background: #f8fafc;
 }
 
 .drive-item:hover {
-    background: linear-gradient(to bottom, #e5f1fb, #cce4f7);
-    border: 1px solid #a3c9ea;
+    background: #eff6ff;
+    border-color: #93c5fd;
 }
 
 .drive-icon {
-    font-size: 2.5rem;
-    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
+    font-size: 2.2rem;
 }
 
 .drive-info {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 3px;
 }
 
-.drive-info strong {
-    font-size: 0.9rem;
-    color: #222;
-}
-
-.drive-info span {
-    font-size: 0.75rem;
-    color: #666;
-}
-
+.drive-info strong { font-size: 0.85rem; color: #0f172a; }
+.drive-info span { font-size: 0.74rem; color: #64748b; }
 
 .progress-bar {
     width: 100%;
-    height: 14px;
-    background: #e0e0e0;
-    border: 1px solid #b3b3b3;
-    border-radius: 2px;
+    height: 12px;
+    background: #e2e8f0;
+    border: 1px solid #94a3b8;
+    border-radius: 3px;
     overflow: hidden;
-    margin-top: 3px;
 }
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(to bottom, #5cb8e6, #0088cc);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+    background: linear-gradient(180deg, #38bdf8, #0284c7);
 }
 
+/* Lixeira */
+.trash-window-content {
+    background: #fff;
+    padding: 16px;
+    height: auto !important;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
 
-.icon-computer {
-    width: 32px; height: 32px;
-    background: linear-gradient(135deg, #62a5d4, #2a5a8a); 
+.trash-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.trash-entry {
+    padding: 6px 10px;
+    background: #f1f5f9;
     border-radius: 4px;
-    border: 2px solid #ccc;
+    font-size: 0.82rem;
 }
 
+/* Post-it Interativo de Tutorial */
+.post-it {
+    width: min(300px, calc(100vw - 24px)) !important;
+    background: #fef08a !important;
+    border: 1px solid #eab308 !important;
+    border-bottom-right-radius: 18px 6px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45) !important;
+    padding: 0 !important;
+    backdrop-filter: none !important;
+}
 
-#icon-lixeira { top: 200px; left: 20px; }
+.post-it-header {
+    background: rgba(234, 179, 8, 0.3) !important;
+    border-bottom: 1px solid rgba(161, 98, 7, 0.25) !important;
+    padding: 4px 8px !important;
+}
 
+.post-it-header-title {
+    font-size: 0.76rem;
+    font-weight: bold;
+    color: #713f12;
+}
+
+.post-it-content {
+    background: transparent !important;
+    border: none !important;
+    height: auto !important;
+    min-height: 0;
+    padding: 12px 14px 14px 14px;
+    color: #422006;
+    display: flex !important;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.post-it-content h3 {
+    font-size: 0.92rem;
+    color: #713f12;
+}
+
+.tutorial-body-text {
+    font-size: 0.82rem;
+    line-height: 1.42;
+}
+
+.tutorial-actions-row {
+    display: flex;
+}
+
+.post-it-btn {
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid #ca8a04;
+    background: rgba(255, 255, 255, 0.65);
+    color: #713f12;
+    font-size: 0.76rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.post-it-btn:hover:not(:disabled) {
+    background: #fff;
+}
+
+.post-it-btn.primary {
+    background: #854d0e;
+    color: #fff;
+    border-color: #713f12;
+}
+
+.post-it-btn.highlight-btn {
+    width: 100%;
+    background: #fef9c3;
+    border-color: #a16207;
+}
+
+.tutorial-footer-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 6px;
+    border-top: 1px solid rgba(161, 98, 7, 0.2);
+}
+
+.tutorial-dots {
+    display: flex;
+    gap: 5px;
+}
+
+.tutorial-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(113, 63, 18, 0.3);
+}
+
+.tutorial-dot.active {
+    background: #713f12;
+}
 
 /* =========================================
-   ÍCONE DA LIXEIRA (IMAGENS REAIS)
+   MENU INICIAR (VISTA FUNCIONAL)
    ========================================= */
-.icon-trash {
-    width: 32px; 
-    height: 32px;
-    background-image: url('assets/icons/lixeiravazia.png');
-    background-size: contain;
-    background-repeat: no-repeat;
+#start-menu {
+    position: fixed;
+    bottom: 40px;
+    left: 0;
+    width: min(430px, calc(100vw - 8px));
+    background: rgba(12, 26, 46, 0.84);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid rgba(160, 215, 255, 0.45);
+    border-radius: 6px 6px 0 0;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 8px 28px rgba(0, 0, 0, 0.8);
+    z-index: 10000;
+}
+
+.user-profile-img {
+    position: absolute;
+    top: -24px;
+    right: 18px;
+    width: 60px;
+    height: 60px;
+    background: #0d253f;
+    border: 2px solid rgba(255, 255, 255, 0.85);
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.65);
+    z-index: 10001;
+    overflow: hidden;
+}
+
+.flower-avatar {
+    width: 100%;
+    height: 100%;
+    background-image: url('assets/icons/avatar_caroline.svg');
+    background-size: cover;
     background-position: center;
-    
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+}
+
+.start-menu-inner {
+    display: flex;
+    padding: 8px;
+    height: min(460px, calc(100vh - 80px));
+    gap: 6px;
+}
+
+.start-left {
+    flex: 1.35;
+    background: #ffffff;
+    border: 1px solid #94a3b8;
     border-radius: 4px;
-    background-color: transparent;
-    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
 }
 
-
-.icon-trash.full {
-    
-    background-image: url('assets/icons/lixeracheia.png');
+.start-programs {
+    padding: 6px;
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
+.start-item {
+    width: 100%;
+    background: transparent;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 8px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: 1px solid transparent;
+}
 
-.icon-trash::before,
-.icon-trash::after {
-    display: none !important;
+.start-item:hover {
+    background: linear-gradient(180deg, #eff6ff, #dbeafe);
+    border-color: #93c5fd;
+}
+
+.item-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.item-text strong {
+    font-size: 0.83rem;
+    color: #0f172a;
+}
+
+.item-text span {
+    font-size: 0.72rem;
+    color: #64748b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.start-search-empty {
+    padding: 16px;
+    font-size: 0.8rem;
+    color: #64748b;
+    text-align: center;
+}
+
+.all-programs-wrapper {
+    border-top: 1px solid #e2e8f0;
+    padding: 8px;
+    background: #f8fafc;
+}
+
+.all-programs {
+    width: 100%;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #1e293b;
+    font-size: 0.8rem;
+    padding: 5px 6px;
+    cursor: pointer;
+    margin-bottom: 6px;
+}
+
+.all-programs:hover {
+    background: #e0f2fe;
+    border-color: #bae6fd;
+    color: #0369a1;
+}
+
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 5px 26px 5px 9px;
+    border: 1px solid #94a3b8;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: #0f172a;
+    background: #fff;
+}
+
+.search-icon {
+    position: absolute;
+    right: 8px;
+    color: #64748b;
+    pointer-events: none;
+}
+
+.start-right {
+    flex: 1;
+    padding: 36px 6px 6px 8px;
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    position: relative;
+}
+
+.right-user-name {
+    font-weight: 600;
+    font-size: 0.92rem;
+    margin-bottom: 6px;
+    padding-left: 6px;
+    text-shadow: 0 1px 3px #000;
+}
+
+.right-item {
+    width: 100%;
+    background: transparent;
+    color: #f1f5f9;
+    text-align: left;
+    padding: 6px 8px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    border: 1px solid transparent;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+.right-item:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.35);
+}
+
+.start-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.18);
+    margin: 5px 4px;
+}
+
+.power-controls {
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-end;
+    gap: 2px;
+}
+
+.power-btn {
+    height: 26px;
+    background: linear-gradient(180deg, #475569, #1e293b);
+    border: 1px solid #0f172a;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.power-btn:hover {
+    filter: brightness(1.25);
+}
+
+.power-off {
+    width: 34px;
+    border-radius: 3px 0 0 3px;
+    background: linear-gradient(180deg, #d9534f, #991b1b);
+}
+
+.lock {
+    width: 32px;
+    font-size: 0.78rem;
+}
+
+.arrow-btn {
+    width: 22px;
+    border-radius: 0 3px 3px 0;
+    font-size: 0.65rem;
+}
+
+.power-submenu {
+    position: absolute;
+    bottom: 36px;
+    right: 6px;
+    width: 220px;
+    background: rgba(15, 28, 48, 0.96);
+    border: 1px solid rgba(160, 215, 255, 0.55);
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
+    z-index: 10005;
+}
+
+.power-submenu button {
+    background: transparent;
+    border: 1px solid transparent;
+    color: #f1f5f9;
+    text-align: left;
+    padding: 6px 8px;
+    border-radius: 3px;
+    font-size: 0.76rem;
+    cursor: pointer;
+}
+
+.power-submenu button:hover {
+    background: rgba(80, 180, 255, 0.25);
+    border-color: rgba(140, 210, 255, 0.45);
+}
+
+.power-submenu button.danger-item {
+    color: #fca5a5;
 }
 
 /* =========================================
-   O BOTÃO INICIAR (VISTA ORB)
+   BARRA DE TAREFAS AERO GLASS E START ORB VISTA
    ========================================= */
+#taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 40px;
+    z-index: 9999;
+
+    background: var(--taskbar-aero-bg);
+    backdrop-filter: blur(16px) saturate(145%);
+    -webkit-backdrop-filter: blur(16px) saturate(145%);
+    border-top: 1px solid rgba(155, 215, 255, 0.52);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.35),
+        0 -4px 16px rgba(0, 0, 0, 0.55);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 8px 0 6px;
+}
+
+/* Botão Iniciar (Vista Orb) com tamanho e brilho de destaque sem reduzir a área útil */
 #start-orb {
-    width: 44px;
-    height: 44px;
+    width: 50px;
+    height: 50px;
     border: none;
-    background: transparent;
+    background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.35), transparent 72%);
     cursor: pointer;
     position: relative;
-    top: -2px; /* Faz a bolinha vazar um pouquinho pra cima da barra */
-    margin-left: -5px;
-    margin-right: 10px;
-    outline: none;
-    z-index: 10001;
+    top: -6px;
+    margin-right: 8px;
+    border-radius: 50%;
+    z-index: 10002;
+    flex-shrink: 0;
+    transition: transform 0.15s ease, filter 0.2s ease;
 }
 
 .start-logo {
@@ -1111,327 +2201,476 @@ html, body {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    
     border-radius: 50%;
-    box-shadow: inset 0 0 5px rgba(255,255,255,0.4), 0 2px 5px rgba(0,0,0,0.5);
-    transition: filter 0.2s, transform 0.1s;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 8px rgba(56, 189, 248, 0.45));
+    transition: filter 0.2s ease, transform 0.12s ease;
 }
 
-.start-logo:hover {
-    filter: brightness(1.2) drop-shadow(0 0 5px rgba(255,255,255,0.4));
+#start-orb:hover .start-logo,
+#start-orb.orb-active .start-logo {
+    filter: brightness(1.22) drop-shadow(0 0 12px rgba(80, 215, 255, 0.9));
 }
 
-.start-logo:active {
-    transform: scale(0.95);
+#start-orb:active .start-logo {
+    transform: scale(0.94);
 }
 
-/* =========================================
-   INÍCIO RÁPIDO (QUICK LAUNCH)
-   ========================================= */
-#quick-launch {
+/* Abas da Barra de Tarefas e Aero Peek */
+#open-windows {
+    flex: 1;
+    display: flex;
+    gap: 5px;
+    height: 100%;
+    align-items: center;
+    min-width: 0;
+    overflow: visible;
+}
+
+.taskbar-item {
+    position: relative;
+    width: min(155px, 22vw);
+    min-width: 90px;
+    height: 30px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.06));
+    border: 1px solid rgba(190, 225, 255, 0.28);
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+    font-size: 0.78rem;
+    transition: all 0.15s;
+}
+
+.item-content {
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    gap: 6px;
+    height: 100%;
+    overflow: hidden;
+}
+
+.taskbar-title-text {
+    flex: 1;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.taskbar-badge {
+    background: #0284c7;
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: bold;
+    padding: 1px 5px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.taskbar-item:hover {
+    background: linear-gradient(180deg, rgba(160, 220, 255, 0.35), rgba(80, 160, 235, 0.22));
+    border-color: rgba(180, 230, 255, 0.65);
+}
+
+.taskbar-item.active {
+    background: linear-gradient(180deg, rgba(120, 200, 255, 0.45), rgba(40, 120, 210, 0.38));
+    border-color: rgba(190, 235, 255, 0.85);
+    box-shadow: inset 0 0 10px rgba(180, 230, 255, 0.45), 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.taskbar-item .icon-img {
+    width: 16px;
+    height: 16px;
+}
+
+/* Aero Peek (Miniatura Flutuante) */
+.taskbar-preview {
+    position: absolute;
+    bottom: 38px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 184px;
+    height: 132px;
+    background: rgba(16, 32, 54, 0.86);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(175, 225, 255, 0.6);
+    border-radius: 6px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 8px 22px rgba(0, 0, 0, 0.85);
+    display: flex;
+    flex-direction: column;
+    padding: 6px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.18s ease, visibility 0.18s ease;
+    z-index: 10005;
+}
+
+.taskbar-item:hover .taskbar-preview,
+.taskbar-item:focus-visible .taskbar-preview {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0.25s;
+}
+
+.preview-header {
     display: flex;
     align-items: center;
     gap: 6px;
-    margin-right: 15px;
-    padding-right: 15px;
-    border-right: 1px solid rgba(255,255,255,0.2); 
-    height: 100%;
+    margin-bottom: 5px;
+    min-width: 0;
 }
 
-.ql-icon {
-    width: 22px !important;
-    height: 22px !important;
-    cursor: pointer;
-    border: 1px solid transparent !important;
+.preview-title {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.preview-thumbnail {
+    flex: 1;
+    position: relative;
+    background: #0d1826;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 3px;
-    box-shadow: none !important; 
-    background-color: transparent !important;
-    transition: background-color 0.2s, border 0.2s;
+    overflow: hidden;
 }
 
-.ql-icon:hover {
-    background-color: rgba(255,255,255,0.15) !important;
-    border: 1px solid rgba(255,255,255,0.4) !important;
-}
-
-
-
-
-.icon-txt, .icon-exe, .icon-cat, .icon-folder, .icon-network, .icon-trash, .icon-computer {
-    background-color: transparent !important;
-    border: none !important;
-    box-shadow: none !important; 
-}
-
-
-.desktop-icon .icon-img {
-    width: 48px !important;  
-    height: 48px !important;
-}
-
-
-.ql-icon {
-    width: 28px !important;  
-    height: 28px !important;
-    background-color: transparent !important;
-    border: none !important;
-}
-
-
-.ql-icon:hover {
-    background-color: rgba(255, 255, 255, 0.1) !important;
+.preview-minimized-badge {
+    position: absolute;
+    inset: auto 4px 4px 4px;
+    background: rgba(10, 20, 35, 0.88);
+    color: #bae6fd;
+    font-size: 0.64rem;
+    text-align: center;
+    padding: 2px 4px;
     border-radius: 3px;
+    border: 1px solid rgba(125, 211, 252, 0.4);
 }
 
 /* =========================================
-   BLOCO DE NOTAS FUNCIONAL
+   BANDEJA DO SISTEMA, ENERGIA E RELÓGIO
    ========================================= */
-.notepad-content {
+#system-tray {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 100%;
+    padding-left: 8px;
+    border-left: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.tray-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #fff;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+}
+
+.tray-btn:hover {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+.tray-power-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: rgba(10, 22, 38, 0.65);
+    border: 1px solid rgba(140, 205, 255, 0.35);
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.tray-power-btn:hover {
+    background: rgba(30, 58, 95, 0.8);
+    border-color: rgba(180, 225, 255, 0.7);
+}
+
+.tray-power-btn.power-good { color: #86efac; }
+.tray-power-btn.power-warn { color: #fde047; border-color: #eab308; }
+.tray-power-btn.power-critical {
+    color: #fca5a5;
+    background: rgba(127, 29, 29, 0.85);
+    border-color: #f87171;
+}
+
+.power-load-bars {
+    font-family: monospace;
+    font-size: 0.7rem;
+    opacity: 0.9;
+}
+
+.clock-widget {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    background: white;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #fff;
+    line-height: 1.1;
 }
 
-.notepad-menu {
-    background: #f0f0f0;
-    border-bottom: 1px solid #ccc;
-    padding: 2px 5px;
+.clock-mode-badge {
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    color: #93c5fd;
+    text-transform: uppercase;
+}
+
+.clock-mode-badge.shift-active {
+    color: #fde047;
+}
+
+#clock {
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+/* Painel Flutuante de Energia (#power-flyout) */
+.power-flyout {
+    position: fixed;
+    bottom: 46px;
+    right: 12px;
+    width: min(310px, calc(100vw - 24px));
+    background: rgba(14, 28, 48, 0.94);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(150, 215, 255, 0.55);
+    border-radius: 6px;
+    padding: 12px;
+    color: #f1f5f9;
+    box-shadow: 0 8px 26px rgba(0, 0, 0, 0.8);
+    z-index: 10002;
     display: flex;
-    gap: 5px;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.notepad-menu button {
-    background: transparent;
-    border: 1px solid transparent;
-    cursor: pointer;
-    padding: 3px 8px;
-    font-size: 0.8rem;
-    color: #333;
+.power-flyout-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.84rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 6px;
 }
 
-.notepad-menu button:hover {
-    background: #e5f1fb;
-    border: 1px solid #a3c9ea;
-    border-radius: 2px;
-}
-
-#notepad-textarea {
-    flex: 1;
+.power-flyout-progress {
     width: 100%;
-    border: none;
-    resize: none;
-    padding: 5px;
-    font-family: 'Consolas', monospace;
-    font-size: 14px;
-    outline: none;
+    height: 12px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.power-flyout-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.power-flyout-fill.fill-good { background: linear-gradient(90deg, #22c55e, #4ade80); }
+.power-flyout-fill.fill-warn { background: linear-gradient(90deg, #eab308, #facc15); }
+.power-flyout-fill.fill-critical { background: linear-gradient(90deg, #dc2626, #f87171); }
+
+.power-flyout-rate-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+}
+
+.rate-normal { color: #86efac; }
+.rate-warn { color: #fde047; }
+.rate-high { color: #fca5a5; font-weight: bold; }
+
+.power-breakdown-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 0.75rem;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.power-breakdown-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
 }
 
 /* =========================================
-   OVERLAYS DO JOGO (INÍCIO E BLACKOUT)
+   NOTIFICAÇÕES DISCRETAS DA BANDEJA (TOASTS)
+   ========================================= */
+.tray-notifications {
+    position: fixed;
+    bottom: 48px;
+    right: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 10004;
+    pointer-events: none;
+}
+
+.tray-toast {
+    pointer-events: auto;
+    width: min(320px, calc(100vw - 24px));
+    background: rgba(16, 34, 58, 0.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(145, 210, 255, 0.65);
+    border-left: 4px solid #38bdf8;
+    border-radius: 6px;
+    padding: 10px 12px;
+    color: #f8fafc;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.75);
+    animation: toast-in 0.22s ease-out;
+}
+
+.tray-toast.toast-success { border-left-color: #22c55e; }
+.tray-toast.toast-email { border-left-color: #60a5fa; }
+
+.tray-toast.toast-leaving {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.2s ease;
+}
+
+@keyframes toast-in {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.toast-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    margin-bottom: 4px;
+}
+
+.toast-close {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 0 4px;
+}
+
+.toast-close:hover { color: #fff; }
+
+.toast-body {
+    font-size: 0.78rem;
+    color: #e2e8f0;
+    line-height: 1.35;
+}
+
+.toast-actions {
+    margin-top: 8px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.toast-action-btn {
+    background: #0284c7;
+    color: #fff;
+    border: 1px solid #38bdf8;
+    padding: 4px 10px;
+    border-radius: 3px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.toast-action-btn:hover {
+    background: #0369a1;
+}
+
+/* =========================================
+   TELA DE LOGIN E OVERLAYS DO JOGO
    ========================================= */
 .game-overlay {
     position: fixed;
     top: 0; left: 0;
     width: 100vw; height: 100vh;
-    z-index: 999999; /* Fica acima de TUDO na tela */
+    z-index: 100000;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#start-screen {
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(5px);
-}
-
-.start-box {
-    background: #111;
-    border: 1px solid #444;
-    padding: 40px;
-    text-align: center;
-    color: white;
-    border-radius: 4px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.8);
-}
-
-.start-btn {
-    background: #333;
-    color: white;
-    border: 1px solid #777;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.start-btn:hover {
-    background: #555;
-    border-color: white;
-}
-
-#blackout-overlay {
-    background: black;
-    color: white;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 24px;
-    text-align: center;
-}
-
-/* Garante que os overlays sumam completamente */
-.game-overlay.hidden {
-    display: none !important;
-}
-
-#start-menu.hidden {
-    display: none !important;
-}
-
-/* =========================================
-   PAINEL DE CONTROLE (CONFIGURAÇÕES)
-   ========================================= */
-.settings-layout {
-    display: flex;
-    height: 350px !important;
-    background: #fff;
-    padding: 0 !important;
-}
-
-.settings-sidebar {
-    width: 160px;
-    background: #f0f0f0;
-    border-right: 1px solid #ccc;
-    padding: 10px;
-}
-
-.settings-sidebar ul {
-    list-style: none;
-    padding: 0;
-}
-
-.settings-sidebar li {
-    padding: 8px 10px;
-    margin-bottom: 5px;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    color: #333;
-}
-
-.settings-sidebar li:hover {
-    background: #e5f1fb;
-}
-
-.settings-sidebar li.active {
-    background: #cce4f7;
-    border: 1px solid #a3c9ea;
-    font-weight: bold;
-    color: #003399;
-}
-
-.settings-main {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-}
-
-.settings-main h3 {
-    font-size: 1.1rem;
-    color: #003399;
-    border-bottom: 1px solid #a3c9ea;
-    padding-bottom: 5px;
-    margin-bottom: 15px;
-}
-
-/* Grade de Papéis de Parede */
-.wallpaper-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 15px;
-}
-
-.wallpaper-thumb {
-    width: 100%;
-    height: 75px;
-    background-size: cover;
-    background-position: center;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-    transition: transform 0.1s, border-color 0.2s;
-}
-
-.wallpaper-thumb:hover {
-    transform: scale(1.05);
-    border-color: #0066cc;
-    box-shadow: 2px 4px 8px rgba(0,102,204,0.4);
-}
-
-/* =========================================
-   MODO DE ALTO CONTRASTE (ACESSIBILIDADE)
-   ========================================= */
-body.high-contrast {
-    background: #000 !important;
-}
-
-body.high-contrast #desktop,
-body.high-contrast .window,
-body.high-contrast .window-header,
-body.high-contrast .window-content,
-body.high-contrast #taskbar,
-body.high-contrast #start-menu {
-    background: #000 !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    box-shadow: none !important;
-}
-
-body.high-contrast * {
-    color: #00ff00 !important; /* Texto Verde Neon */
-    border-color: #00ff00 !important;
-    text-shadow: none !important;
-}
-
-body.high-contrast .desktop-icon:focus,
-body.high-contrast .cam-btn:focus,
-body.high-contrast .win-btn:focus {
-    outline: 2px dashed #00ff00 !important;
-    outline-offset: 4px;
-}
-
-/* =========================================
-   TELA DE LOGIN (VISTA)
-   ========================================= */
 .login-overlay {
     background: url('assets/wallpapers/wallpaper.png') no-repeat center center fixed;
     background-size: cover;
-    z-index: 100000;
+}
+
+.login-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(10, 25, 45, 0.35), rgba(5, 12, 24, 0.75));
 }
 
 .login-container {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    animation: fadeIn 1s ease-out;
+    background: rgba(15, 32, 56, 0.55);
+    backdrop-filter: blur(12px);
+    padding: 28px 36px;
+    border-radius: 10px;
+    border: 1px solid rgba(180, 225, 255, 0.4);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.65);
 }
 
 .user-avatar-login {
-    width: 120px;
-    height: 120px;
-    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7Yc3zZl0OxHwrPEQCX3MbiOToGWJcUFQ5HTn7PL3GVA&s=10');
+    width: 112px;
+    height: 112px;
+    background-image: url('assets/icons/avatar_caroline.svg');
     background-size: cover;
-    border-radius: 5px;
-    border: 3px solid rgba(255,255,255,0.8);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    margin-bottom: 10px;
+    background-position: center;
+    border-radius: 6px;
+    border: 3px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    margin-bottom: 12px;
 }
 
 .user-name-login {
-    color: white;
-    font-size: 2rem;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-    font-weight: normal;
+    color: #fff;
+    font-size: 1.75rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.85);
+    font-weight: 500;
+}
+
+.login-subtitle {
+    color: #bae6fd;
+    font-size: 0.88rem;
+    margin-bottom: 14px;
 }
 
 .password-box {
@@ -1442,158 +2681,258 @@ body.high-contrast .win-btn:focus {
 
 .password-box input {
     padding: 6px 10px;
-    border: 1px solid #777;
-    border-radius: 3px;
+    border: 1px solid #94a3b8;
+    border-radius: 4px;
     width: 180px;
-    font-size: 1rem;
-    outline: none;
-    background: rgba(255,255,255,0.9);
+    font-size: 0.95rem;
+    background: rgba(255, 255, 255, 0.92);
 }
 
 .login-submit-btn {
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
-    background: #24d830;
-    color: white;
-    border: 2px solid white;
+    background: linear-gradient(180deg, #38bdf8, #0284c7);
+    color: #fff;
+    border: 2px solid #e0f2fe;
     cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-    display: flex; 
-    justify-content: center; 
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
     align-items: center;
     font-weight: bold;
-    transition: 0.2s;
 }
 
-.login-submit-btn:hover, .login-submit-btn:focus {
-    filter: brightness(1.2);
+.login-submit-btn:hover {
+    filter: brightness(1.15);
     transform: scale(1.05);
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+.login-hint {
+    color: #cbd5e1;
+    font-size: 0.75rem;
+    margin-top: 12px;
 }
 
-/* =========================================
-   POST-IT (TUTORIAL)
-   ========================================= */
-.post-it {
-    width: 260px;
-    background: #fdf590 !important; /* Amarelo clássico */
-    border: none !important;
-    border-bottom-right-radius: 20px 5px !important;
-    box-shadow: 4px 4px 15px rgba(0,0,0,0.3) !important;
-    transform: rotate(3deg); /* Levemente torto */
-    padding: 0 !important;
-    backdrop-filter: none !important; /* Tira o efeito de vidro */
+#blackout-overlay {
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
 }
 
-.post-it-header {
-    background: transparent !important;
-    border: none !important;
-    justify-content: flex-end !important;
+.overlay-Main-title {
+    font-family: 'Consolas', monospace;
+    font-size: 2rem;
+    white-space: pre-line;
+    margin-bottom: 20px;
 }
 
-.post-it-content {
-    background: transparent !important;
-    border: none !important;
+.jumpscare-bg {
+    background: #1a0000;
+    flex-direction: column;
+    gap: 18px;
+    padding: 20px;
+    text-align: center;
+}
+
+.jumpscare-title {
+    color: #ff3333;
+    font-family: 'Consolas', monospace;
+    font-size: 2.6rem;
+    white-space: pre-line;
+}
+
+.jumpscare-sub {
+    color: #e2e8f0;
+    font-family: monospace;
+}
+
+.win-bg {
+    background: rgba(4, 24, 12, 0.96);
+    flex-direction: column;
+    gap: 18px;
+    padding: 20px;
+    text-align: center;
+}
+
+.win-title {
+    color: #4ade80;
+    font-family: 'Consolas', monospace;
+    font-size: 3.6rem;
+}
+
+.win-sub {
+    color: #fff;
+    font-size: 1.15rem;
+}
+
+.start-btn {
+    background: #1e293b;
+    color: #fff;
+    border: 1px solid #64748b;
+    padding: 10px 22px;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.start-btn:hover {
+    background: #334155;
+    border-color: #fff;
+}
+
+/* Debug */
+.debug-content {
+    background: #0f172a;
+    padding: 14px;
     height: auto !important;
-    padding: 10px 15px 25px 15px;
-    font-family: 'Comic Sans MS', 'Chalkboard SE', cursive; /* Fonte de anotação */
-    color: #333;
-    display: block !important;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.post-it-content h3 {
-    font-size: 1.1rem;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-    padding-bottom: 5px;
-    margin-bottom: 10px;
+.debug-content button {
+    background: #1e293b;
+    color: #38bdf8;
+    border: 1px solid #38bdf8;
+    padding: 6px;
+    border-radius: 3px;
+    font-family: monospace;
+    cursor: pointer;
 }
 
-.post-it-content ul { padding-left: 20px; margin-bottom: 15px; }
-.post-it-content li { margin-bottom: 8px; font-size: 0.9rem; }
-.post-it-content p { font-size: 0.9rem; font-style: italic; }
-
-/* =========================================
-   RESIZE HANDLE (REDIMENSIONAMENTO)
-   ========================================= */
+/* Handle de Redimensionamento */
 .resize-handle {
     position: absolute;
     bottom: 0;
     right: 0;
     width: 16px;
     height: 16px;
-    cursor: nwse-resize; /* Muda o cursor para a setinha diagonal */
+    cursor: nwse-resize;
     z-index: 20;
 }
 
-/* Os "risquinhos" clássicos no canto da janela */
 .resize-handle::after {
     content: '';
     position: absolute;
-    bottom: 4px; 
+    bottom: 4px;
     right: 4px;
-    width: 8px; 
+    width: 8px;
     height: 8px;
-    border-right: 2px solid rgba(255, 255, 255, 0.6);
-    border-bottom: 2px solid rgba(255, 255, 255, 0.6);
-    box-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+    border-right: 2px solid rgba(255, 255, 255, 0.65);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.65);
 }
 
 /* =========================================
-   ANIMAÇÃO DE MAXIMIZAR
+   RESPONSIVIDADE E TELAS ESTREITAS
    ========================================= */
-/* Adicionamos uma classe específica para animar transições de tamanho APENAS ao maximizar/restaurar, 
-   para não causar lag (jank) enquanto o usuário arrasta livremente */
-.window.animating-size {
-    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+@media (max-width: 680px) {
+    .camera-app-layout {
+        flex-direction: column;
+        height: 390px;
+    }
+
+    .camera-sidebar {
+        width: 100%;
+        flex-direction: row;
+        border-left: none;
+        border-top: 1px solid #263545;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 6px;
+    }
+
+    .cam-btn {
+        min-width: 125px;
+        flex: 1;
+    }
+
+    .explorer-body,
+    .file-explorer,
+    .settings-layout {
+        flex-direction: column;
+    }
+
+    .explorer-sidebar,
+    .email-sidebar,
+    .settings-sidebar {
+        width: 100%;
+        max-height: 110px;
+        border-right: none;
+        border-bottom: 1px solid #cbd5e1;
+    }
+
+    .settings-sidebar ul,
+    .explorer-sidebar ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
 }
 
 /* =========================================
-   CORREÇÕES E NOVOS ELEMENTOS (ADICIONAR AO FINAL DO STYLE.CSS)
+   PREFERÊNCIA POR MOVIMENTO REDUZIDO
    ========================================= */
-@keyframes text-blink {
-    0%, 49% { opacity: 1; }
-    50%, 100% { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
 
-/* Usa os ícones locais da pasta assets/icons/ */
-.icon-exe {
-    background-image: url('assets/icons/camera.png') !important;
+body.reduced-motion *,
+body.reduced-motion *::before,
+body.reduced-motion *::after {
+    animation: none !important;
+    transition: none !important;
 }
 
-.icon-computer {
-    background-image: url('assets/icons/computer.png') !important;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+/* =========================================
+   MODO DE ALTO CONTRASTE
+   ========================================= */
+body.high-contrast {
+    background: #000 !important;
 }
 
-.icon-email {
-    width: 32px;
-    height: 32px;
-    background-image: url('assets/icons/email.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+body.high-contrast #desktop,
+body.high-contrast .window,
+body.high-contrast .window-header,
+body.high-contrast .window-content,
+body.high-contrast #taskbar,
+body.high-contrast #start-menu,
+body.high-contrast .power-flyout,
+body.high-contrast .tray-toast,
+body.high-contrast .explorer-sidebar,
+body.high-contrast .settings-sidebar,
+body.high-contrast .network-status-card {
+    background: #000 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+    border-color: #00ff00 !important;
 }
 
-/* Posições organizadas em 2 colunas no Desktop */
-#icon-notepad  { top: 20px;  left: 20px; }
-#icon-cameras  { top: 110px; left: 20px; }
-#icon-lixeira  { top: 200px; left: 20px; }
-#icon-settings { top: 290px; left: 20px; }
+body.high-contrast * {
+    color: #00ff00 !important;
+    border-color: #00ff00 !important;
+    text-shadow: none !important;
+}
 
-#icon-cat      { top: 20px;  left: 110px; }
-#icon-arquivos { top: 110px; left: 110px; }
-#icon-rede     { top: 200px; left: 110px; }
-#icon-email    { top: 290px; left: 110px; }
+body.high-contrast button,
+body.high-contrast .vista-btn,
+body.high-contrast .cam-btn,
+body.high-contrast .win-btn {
+    background: #000 !important;
+    border: 1px solid #00ff00 !important;
+}
 
-/* Destaque para e-mails não lidos no VilasMail */
-.unread-email {
-    background: #fff8dc !important;
-    border-left: 3px solid #0066cc;
+body.high-contrast .cam-btn.active,
+body.high-contrast .settings-toggle-btn.toggle-on,
+body.high-contrast .desktop-icon.selected,
+body.high-contrast .file-item.selected {
+    background: #003b00 !important;
+    outline: 2px solid #ffff00 !important;
 }

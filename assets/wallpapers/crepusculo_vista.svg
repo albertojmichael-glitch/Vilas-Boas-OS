@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="emeraldSky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#072227"/>
+      <stop offset="45%" stop-color="#134e5e"/>
+      <stop offset="100%" stop-color="#0b3842"/>
+    </linearGradient>
+    <linearGradient id="emeraldWave" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#71b280" stop-opacity="0.1"/>
+      <stop offset="50%" stop-color="#4ef0b6" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#3a7bd5" stop-opacity="0.2"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#emeraldSky)"/>
+  <path d="M0,740 C480,520 960,880 1440,580 C1680,440 1820,520 1920,480 L1920,1080 L0,1080 Z" fill="url(#emeraldWave)"/>
+  <path d="M0,860 C540,700 1080,620 1920,820 L1920,1080 L0,1080 Z" fill="#05191d" fill-opacity="0.55"/>
+</svg>
+

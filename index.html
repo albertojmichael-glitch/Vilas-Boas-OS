@@ -8,274 +8,491 @@
 </head>
 <body>
 
-    <div id="boot-screen">
+    <!-- TELA DE BOOT COM PROGRESSO REAL -->
+    <div id="boot-screen" role="status" aria-live="polite">
         <div class="boot-content">
             <h2 class="ms-logo">Vilas Boas®</h2>
             <div class="progress-bar-container">
                 <div class="progress-indicator"></div>
             </div>
-            <p class="corp-text">© Vilas Boas Corporation</p>
+            <p id="boot-status-text" class="boot-status" data-i18n="BOOT_LOADING">Carregando módulos do sistema...</p>
+            <button type="button" id="boot-skip-btn" class="boot-skip-btn" data-i18n="BOOT_SKIP">Pular Inicialização (Enter)</button>
+            <p class="corp-text" data-i18n="CORP_COPYRIGHT">© Vilas Boas Corporation</p>
         </div>
     </div>
 
     <!-- TELA DE LOGIN VISTA -->
     <div id="start-screen" class="game-overlay login-overlay">
         <div class="login-container">
-            <div class="user-avatar-login"></div>
+            <div class="user-avatar-login" role="img" aria-label="Avatar de Caroline_F"></div>
             <h2 class="user-name-login">Caroline_F</h2>
-            <p style="color: #ccc; margin-bottom: 15px;">Segurança (Turno Noturno)</p>
+            <p id="login-role-text" class="login-subtitle" data-i18n="LOGIN_ROLE">Segurança (Turno Noturno)</p>
             
             <div class="password-box">
-                <input type="password" placeholder="Senha" value="12345" readonly>
-                <button class="login-submit-btn" onclick="fazerLogin()" tabindex="0" title="Fazer Logon">➔</button>
+                <input type="password" id="login-password-input" data-i18n-placeholder="LOGIN_PASSWORD_PLACEHOLDER" placeholder="Senha" value="12345" readonly aria-label="Senha">
+                <button type="button" class="login-submit-btn" onclick="fazerLogin()" data-i18n-title="LOGIN_BTN" title="Fazer Logon">➔</button>
             </div>
+            <p class="login-hint" data-i18n="LOGIN_HINT">Pressione Enter ou clique na seta para iniciar o turno</p>
         </div>
     </div>
 
     <!-- OVERLAY: FALTA DE ENERGIA -->
-    <div id="blackout-overlay" class="game-overlay hidden">
+    <div id="blackout-overlay" class="game-overlay hidden" role="alertdialog" aria-modal="true">
         <div class="blackout-text">
-            SISTEMA DESLIGADO.<br>ENERGIA ESGOTADA.<br><br>
-            <button class="start-btn" onclick="window.location.reload()">Reiniciar Turno</button>
+            <h1 class="overlay-Main-title" data-i18n="BLACKOUT_TITLE">SISTEMA DESLIGADO.
+ENERGIA ESGOTADA.</h1>
+            <button type="button" class="start-btn" onclick="window.location.reload()" data-i18n="BLACKOUT_Restart_BTN">Reiniciar Turno</button>
         </div>
     </div>
 
     <!-- OVERLAY: JUMPSCARE / GAME OVER -->
-    <div id="jumpscare-overlay" class="game-overlay hidden" style="background: #1a0000; flex-direction: column; gap: 20px;">
-        <h1 style="color: #ff2222; font-family: 'Courier New', monospace; font-size: 3rem; text-align: center; animation: text-blink 0.2s infinite;">
-            SINAL PERDIDO<br>ELE ENTROU NA SALA
-        </h1>
-        <p style="color: #ccc; font-family: monospace;">Você não reiniciou o Firewall da Sala 03 a tempo.</p>
-        <button class="start-btn" onclick="window.location.reload()">Tentar Novamente</button>
+    <div id="jumpscare-overlay" class="game-overlay jumpscare-bg hidden" role="alertdialog" aria-modal="true">
+        <h1 class="jumpscare-title" data-i18n="JUMPSCARE_TITLE">SINAL PERDIDO
+ELE ENTROU NA SALA</h1>
+        <p class="jumpscare-sub" data-i18n="JUMPSCARE_SUB">Você não acionou o Pulso de Firewall na Sala 03 a tempo.</p>
+        <button type="button" class="start-btn" onclick="window.location.reload()" data-i18n="JUMPSCARE_BTN">Tentar Novamente</button>
     </div>
 
     <!-- OVERLAY: VITÓRIA 6:00 AM -->
-    <div id="win-overlay" class="game-overlay hidden" style="background: rgba(0, 15, 0, 0.95); flex-direction: column; gap: 20px;">
-        <h1 style="color: #4aff4a; font-family: 'Courier New', monospace; font-size: 4rem;">06:00 AM</h1>
-        <p style="color: #fff; font-size: 1.2rem;">Turno concluído com sucesso. Bom trabalho, Caroline.</p>
-        <button class="start-btn" onclick="window.location.reload()">Jogar Novamente</button>
+    <div id="win-overlay" class="game-overlay win-bg hidden" role="alertdialog" aria-modal="true">
+        <h1 class="win-title" data-i18n="WIN_TITLE">06:00 AM</h1>
+        <p class="win-sub" data-i18n="WIN_SUB">Turno concluído com sucesso. Bom trabalho, Caroline.</p>
+        <button type="button" class="start-btn" onclick="window.location.reload()" data-i18n="WIN_BTN">Jogar Novamente</button>
     </div>
 
-    <main id="desktop">
+    <!-- ÁREA DE TRABALHO -->
+    <main id="desktop" aria-label="Área de Trabalho">
 
-        <div class="desktop-icon" id="icon-notepad" data-action="open-window" data-target="notepad-window">
+        <div class="desktop-icon" id="icon-notepad" data-target="notepad-window">
             <div class="icon-img icon-txt"></div>
             <span data-i18n="DESKTOP_NOTEPAD">LEIA-ME.txt</span>
         </div>
 
-        <div class="desktop-icon" id="icon-cameras" ondblclick="abrirJanela('camera-window')">
+        <div class="desktop-icon" id="icon-cameras" data-target="camera-window">
             <div class="icon-img icon-exe"></div>
-            <span data-i18n="DESKTOP_CAMERAS">Câmera Sistema</span>
+            <span data-i18n="DESKTOP_CAMERAS">Sistema de Câmeras</span>
         </div>
         
-        <div class="desktop-icon" id="icon-lixeira" ondblclick="abrirLixeira()">
+        <div class="desktop-icon" id="icon-lixeira" data-target="lixeira-window">
             <div class="icon-img icon-trash"></div>
             <span data-i18n="LIXERO">Lixeira</span>
         </div>
 
-        <div class="desktop-icon" id="icon-cat" ondblclick="abrirJanela('cat-window')">
+        <div class="desktop-icon" id="icon-settings" data-target="settings-window">
+            <div class="icon-img icon-settings"></div>
+            <span data-i18n="SETTINGS">Configurações</span>
+        </div>
+
+        <div class="desktop-icon" id="icon-cat" data-target="cat-window">
             <div class="icon-img icon-cat"></div>
-            <span>Cat Helper</span>
+            <span data-i18n="DESKTOP_CAT">Cat Helper</span>
         </div>
 
-        <div class="desktop-icon" id="icon-arquivos" ondblclick="abrirJanela('arquivos-window')">
+        <div class="desktop-icon" id="icon-arquivos" data-target="arquivos-window">
             <div class="icon-img icon-folder"></div>
-            <span data-i18n="FILES">Arquivos</span>
+            <span data-i18n="FILES">Explorador de Arquivos</span>
         </div>
 
-        <div class="desktop-icon" id="icon-rede" ondblclick="abrirJanela('rede-window')">
+        <div class="desktop-icon" id="icon-rede" data-target="rede-window">
             <div class="icon-img icon-network"></div>
-            <span data-i18n="NET">Rede</span>
+            <span data-i18n="NET">Monitor de Rede</span>
         </div>
 
-        <div class="desktop-icon" id="icon-email" ondblclick="abrirJanela('email-window')">
-            <div class="icon-img icon-email"></div>
-            <span>VilasMail</span>
+        <div class="desktop-icon" id="icon-email" data-target="email-window">
+            <div class="icon-img icon-email">
+                <span id="email-unread-badge" class="icon-badge">1</span>
+            </div>
+            <span data-i18n="DESKTOP_EMAIL">VilasMail</span>
         </div>
 
-        <div class="desktop-icon" id="icon-settings" ondblclick="abrirJanela('settings-window')">
-            <div class="icon-img icon-computer"></div>
-            <span>Configurações</span>
-        </div>
-
-        <!-- POST-IT DE TUTORIAL -->
-        <div class="window hidden post-it" id="tutorial-note" style="top: 15%; left: 65%;">
+        <!-- GUIA INTERATIVO DO TURNO (POST-IT PASSO A PASSO) -->
+        <div class="window hidden post-it" id="tutorial-note" style="top: 12%; left: 62%;">
             <div class="window-header post-it-header">
+                <span class="post-it-header-title" data-i18n="TUTORIAL_TITLE">Guia do Turno Noturno</span>
                 <div class="window-controls">
-                    <button class="win-btn win-btn-close" data-action="close-window" data-target="tutorial-note">✕</button>
+                    <button type="button" class="win-btn win-btn-close" onclick="fecharJanela('tutorial-note')" title="Fechar">✕</button>
                 </div>
             </div>
             <div class="window-content post-it-content">
-                <h3>Instruções do Turno:</h3>
-                <ul>
-                    <li>Vigie as salas pelo <b>Câmera Sistema</b>.</li>
-                    <li>Câmeras abertas gastam o <b>dobro</b> de bateria 🔋.</li>
-                    <li>Se a entidade chegar na <b>CAM 03</b>, abra a <b>Rede</b> e acione o <b>Pulso de Firewall</b>!</li>
-                </ul>
-                <p>Sobreviva até as 6:00 AM.<br>- A Gerência</p>
+                <h3 id="tutorial-step-title">1/3 • Monitoramento por Câmeras</h3>
+                <p id="tutorial-step-body" class="tutorial-body-text">
+                    Use o Sistema de Câmeras para vigiar as 4 salas da pizzaria. Atenção: manter a janela de câmeras aberta triplica o consumo total de bateria!
+                </p>
+                <div class="tutorial-actions-row">
+                    <button type="button" class="post-it-btn highlight-btn" onclick="UI.destacarPassoTutorial()" data-i18n="TUTORIAL_HIGHLIGHT_BTN">Destacar Controle</button>
+                </div>
+                <div class="tutorial-footer-nav">
+                    <button type="button" id="tutorial-prev-btn" class="post-it-btn" onclick="passoTutorialAnterior()" data-i18n="TUTORIAL_PREV_BTN">◀ Anterior</button>
+                    <div class="tutorial-dots" aria-hidden="true">
+                        <span class="tutorial-dot active"></span>
+                        <span class="tutorial-dot"></span>
+                        <span class="tutorial-dot"></span>
+                    </div>
+                    <button type="button" id="tutorial-next-btn" class="post-it-btn primary" onclick="passoTutorialProximo()" data-i18n="TUTORIAL_NEXT_BTN">Próximo ▶</button>
+                </div>
             </div>
         </div>
 
     </main>
 
-    <!-- ALERTA DO SISTEMA -->
-    <div class="window hidden" id="custom-alert" style="width: 350px; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 99999; box-shadow: 0 0 15px rgba(0,0,0,0.8);">
+    <!-- ALERTA MODAL DO SISTEMA (RESERVADO PARA ERROS E FALHAS CRÍTICAS) -->
+    <div class="window hidden modal-dialog" id="custom-alert" role="alertdialog" aria-modal="true" aria-labelledby="alert-title">
         <div class="window-header">
-            <span class="window-title" id="alert-title">Aviso</span>
+            <div class="window-title-group">
+                <span class="window-title" id="alert-title" data-i18n="WARNING_TITLE">Aviso do Sistema</span>
+            </div>
             <div class="window-controls">
-                <button class="win-btn win-btn-close" onclick="fecharAlerta()" title="Fechar">✕</button>
+                <button type="button" class="win-btn win-btn-close" onclick="fecharAlerta()" title="Fechar">✕</button>
             </div>
         </div>
-        <div class="window-content" style="background: white; padding: 20px; height: auto; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 15px;">
-            <span id="alert-message" style="font-size: 14px; color: #333;">Aqui vai o texto do alerta.</span>
-            <button onclick="fecharAlerta()" style="padding: 4px 20px; cursor: pointer; border: 1px solid #999; border-radius: 3px; background: #e0e0e0; font-family: Tahoma;">OK</button>
+        <div class="window-content alert-dialog-content">
+            <div class="alert-body-row">
+                <span class="alert-icon" aria-hidden="true">⚠️</span>
+                <span id="alert-message">Mensagem do sistema.</span>
+            </div>
+            <button type="button" class="vista-btn alert-ok-btn" onclick="fecharAlerta()">OK</button>
+        </div>
+    </div>
+
+    <!-- MODAL DE AUTENTICAÇÃO DO DISCO RESTRITO (Z:) -->
+    <div class="window hidden modal-dialog" id="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
+        <div class="window-header">
+            <div class="window-title-group">
+                <span class="window-title" id="auth-modal-title" data-i18n="AUTH_MODAL_TITLE">Controle de Acesso Restrito (Disco Z:)</span>
+            </div>
+            <div class="window-controls">
+                <button type="button" class="win-btn win-btn-close" onclick="UI.fecharModalSenhaConfidencial()" title="Fechar">✕</button>
+            </div>
+        </div>
+        <div class="window-content auth-dialog-content">
+            <p id="auth-modal-desc" data-i18n="AUTH_MODAL_DESC">Digite a chave de administrador para descriptografar a pasta Confidencial (Dica: enviada por e-mail pelo suporte de TI às 02:00 AM):</p>
+            <input type="password" id="auth-password-input" class="vista-input" data-i18n-placeholder="AUTH_MODAL_PLACEHOLDER" placeholder="Chave de 4 dígitos..." maxlength="8">
+            <p id="auth-error-text" class="auth-error hidden"></p>
+            <div class="auth-actions">
+                <button type="button" class="vista-btn primary" onclick="UI.confirmarSenhaConfidencial()" data-i18n="AUTH_MODAL_CONFIRM">Desbloquear</button>
+                <button type="button" class="vista-btn" onclick="UI.fecharModalSenhaConfidencial()" data-i18n="AUTH_MODAL_CANCEL">Cancelar</button>
+            </div>
         </div>
     </div>
 
     <!-- JANELA: BLOCO DE NOTAS -->
-    <div class="window hidden" id="notepad-window" onmousedown="trazerParaFrente('notepad-window')">
+    <div class="window hidden win-size-md" id="notepad-window">
         <div class="window-header">
-            <span class="window-title">LEIA-ME.txt - Bloco de Notas</span>
+            <div class="window-title-group">
+                <div class="icon-img icon-txt title-icon"></div>
+                <span class="window-title">LEIA-ME.txt - Bloco de Notas</span>
+            </div>
             <div class="window-controls">
-                <button class="win-btn win-btn-min" onclick="minimizarJanela('notepad-window')" title="Minimizar">🗕</button>
-                <button class="win-btn win-btn-max" onclick="maximizarJanela('notepad-window')" title="Maximizar">🗖</button>
-                <button class="win-btn win-btn-close" onclick="fecharJanela('notepad-window')" title="Fechar">✕</button>
+                <button type="button" class="win-btn win-btn-min" onclick="minimizarJanela('notepad-window')"></button>
+                <button type="button" class="win-btn win-btn-max" onclick="maximizarJanela('notepad-window')"></button>
+                <button type="button" class="win-btn win-btn-close" onclick="fecharJanela('notepad-window')"></button>
             </div>
         </div>
         <div class="window-content notepad-content">
             <div class="notepad-menu">
-                <button onclick="salvarNotepad()">Salvar</button>
-                <button onclick="limparNotepad()">Limpar</button>
+                <div class="notepad-actions">
+                    <button type="button" onclick="salvarNotepad()" data-i18n="NOTEPAD_SAVE">Salvar (Ctrl+S)</button>
+                    <button type="button" onclick="limparNotepad()" data-i18n="NOTEPAD_CLEAR">Limpar</button>
+                </div>
+                <span id="notepad-status-text" class="notepad-status" data-i18n="NOTEPAD_STATUS_SAVED">✔ Salvo no Disco Local (C:)</span>
             </div>
-            <textarea id="notepad-textarea"></textarea>
+            <div id="notepad-confirm-bar" class="notepad-confirm-bar hidden" role="region" aria-live="polite">
+                <span data-i18n="NOTEPAD_CONFIRM_CLEAR">Deseja realmente limpar todo o texto?</span>
+                <div class="confirm-bar-btns">
+                    <button type="button" class="vista-btn danger-btn" onclick="confirmarLimparNotepad(true)" data-i18n="NOTEPAD_CONFIRM_YES">Sim, Limpar</button>
+                    <button type="button" class="vista-btn" onclick="confirmarLimparNotepad(false)" data-i18n="NOTEPAD_CONFIRM_NO">Cancelar</button>
+                </div>
+            </div>
+            <div class="notepad-editor-wrapper">
+                <textarea id="notepad-textarea" aria-label="Editor do Bloco de Notas"></textarea>
+                <div id="notepad-drop-hint" class="notepad-drop-overlay" data-i18n="NOTEPAD_DROP_HINT">
+                    📄 Solte o arquivo .txt aqui para abrir no Bloco de Notas
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- JANELA: SISTEMA DE CÂMERAS -->
-    <div class="window hidden" id="camera-window" style="width: 600px;" onmousedown="trazerParaFrente('camera-window')">
-        <div class="window-header" style="background: linear-gradient(to bottom, #555, #222); color: white; border-bottom: 1px solid #111;">
-            <span class="window-title">Sistema de Segurança - VILAS BOAS</span>
+    <div class="window hidden window-theme-security win-size-lg" id="camera-window">
+        <div class="window-header">
+            <div class="window-title-group">
+                <div class="icon-img icon-exe title-icon"></div>
+                <span class="window-title" data-i18n="APP_CAMERAS">Sistema de Câmeras</span>
+            </div>
             <div class="window-controls">
-                <button class="win-btn win-btn-min" onclick="minimizarJanela('camera-window')" title="Minimizar">🗕</button>
-                <button class="win-btn win-btn-max" onclick="maximizarJanela('camera-window')" title="Maximizar">🗖</button>
-                <button class="win-btn win-btn-close" onclick="fecharJanela('camera-window')" title="Fechar">✕</button>
+                <button type="button" class="win-btn win-btn-min" onclick="minimizarJanela('camera-window')"></button>
+                <button type="button" class="win-btn win-btn-max" onclick="maximizarJanela('camera-window')"></button>
+                <button type="button" class="win-btn win-btn-close" onclick="fecharJanela('camera-window')"></button>
             </div>
         </div>
         <div class="window-content camera-app-layout">
             <div class="camera-view">
-                <canvas id="camera-canvas" width="300" height="250" style="width: 100%; height: 100%;"></canvas>
+                <canvas id="camera-canvas" width="360" height="270"></canvas>
                 <div class="camera-overlay">
-                    <span id="cam-name" class="cam-text">CAM 01 - PALCO PRINCIPAL</span>
-                    <span class="cam-rec">● REC</span>
+                    <div class="camera-hud-top">
+                        <span id="cam-name" class="cam-text">CAM 01 - PALCO PRINCIPAL</span>
+                        <div class="cam-hud-right">
+                            <span id="cam-status-badge" class="cam-status-pill status-online">● SINAL ONLINE</span>
+                            <span class="cam-rec">● REC</span>
+                        </div>
+                    </div>
+                    <div id="cam-danger-banner" class="cam-danger-banner hidden">
+                        <span data-i18n="CAM_DANGER_BANNER">PERIGO CRÍTICO NA SALA 03! A entidade está prestes a invadir o escritório.</span>
+                        <button type="button" class="cam-firewall-shortcut" onclick="abrirRedeDaCamera()" data-i18n="CAM_OPEN_FIREWALL_BTN">⚡ Abrir Monitor de Rede (Firewall)</button>
+                    </div>
                 </div>
             </div>
             
-            <div class="camera-sidebar">
-                <button class="cam-btn active" onclick="trocarCamera(1)">CAM 01<br><small>Palco Principal</small></button>
-                <button class="cam-btn" onclick="trocarCamera(2)">CAM 02<br><small>Corredor Leste</small></button>
-                <button class="cam-btn" onclick="trocarCamera(3)">CAM 03<br><small>Sala dos Fundos</small></button>
-                <button class="cam-btn" onclick="trocarCamera(4)">CAM 04<br><small>Cozinha</small></button>
+            <div class="camera-sidebar" role="group" aria-label="Seletor de Câmeras">
+                <button type="button" class="cam-btn active" onclick="trocarCamera(1)">
+                    <div class="cam-btn-top"><strong>CAM 01</strong><span class="cam-btn-badge badge-normal">Normal</span></div>
+                    <small data-i18n="CAM_1_SHORT">Palco Principal</small>
+                </button>
+                <button type="button" class="cam-btn" onclick="trocarCamera(2)">
+                    <div class="cam-btn-top"><strong>CAM 02</strong><span class="cam-btn-badge hidden"></span></div>
+                    <small data-i18n="CAM_2_SHORT">Corredor Leste</small>
+                </button>
+                <button type="button" class="cam-btn" onclick="trocarCamera(3)">
+                    <div class="cam-btn-top"><strong>CAM 03</strong><span class="cam-btn-badge hidden"></span></div>
+                    <small data-i18n="CAM_3_SHORT">Sala dos Fundos</small>
+                </button>
+                <button type="button" class="cam-btn" onclick="trocarCamera(4)">
+                    <div class="cam-btn-top"><strong>CAM 04</strong><span class="cam-btn-badge hidden"></span></div>
+                    <small data-i18n="CAM_4_SHORT">Cozinha</small>
+                </button>
             </div>
         </div>
     </div>
 
     <!-- JANELA: VILASMAIL (CLIENTE DE E-MAIL) -->
-    <div class="window hidden" id="email-window" style="width: 560px;" onmousedown="trazerParaFrente('email-window')">
+    <div class="window hidden win-size-lg" id="email-window">
         <div class="window-header">
-            <span class="window-title">VilasMail - Caixa de Entrada (Caroline_F)</span>
+            <div class="window-title-group">
+                <div class="icon-img icon-email title-icon"></div>
+                <span class="window-title" data-i18n="EMAIL_WINDOW_TITLE">VilasMail - Caixa de Entrada (Caroline_F)</span>
+            </div>
             <div class="window-controls">
-                <button class="win-btn win-btn-min" onclick="minimizarJanela('email-window')" title="Minimizar">🗕</button>
-                <button class="win-btn win-btn-max" onclick="maximizarJanela('email-window')" title="Maximizar">🗖</button>
-                <button class="win-btn win-btn-close" onclick="fecharJanela('email-window')" title="Fechar">✕</button>
+                <button type="button" class="win-btn win-btn-min" onclick="minimizarJanela('email-window')"></button>
+                <button type="button" class="win-btn win-btn-max" onclick="maximizarJanela('email-window')"></button>
+                <button type="button" class="win-btn win-btn-close" onclick="fecharJanela('email-window')"></button>
             </div>
         </div>
-        <div class="window-content file-explorer">
-            <div class="explorer-sidebar" style="width: 190px;">
-                <ul id="email-list">
-                    <li onclick=" document.getElementById('email-body-view').innerHTML = '<h4>Bem-vinda ao Turno Noturno</h4><p><strong>De:</strong> Recursos Humanos</p><hr style=\'margin:10px 0;\'><p>Olá Caroline, seu turno vai da Meia-Noite às 06:00 AM. Mantenha o consumo de energia controlado e cheque o Monitor de Rede caso note interferências na Sala 03.</p>'; ">
-                        <strong>Recursos Humanos</strong><br><small>Bem-vinda ao Turno</small>
-                    </li>
-                </ul>
+        <div class="window-content file-explorer email-layout">
+            <div class="explorer-sidebar email-sidebar">
+                <ul id="email-list" aria-label="Lista de E-mails"></ul>
             </div>
-            <div class="explorer-main" id="email-body-view" style="display: block; overflow-y: auto; color: #222; font-size: 0.9rem;">
-                <h4>Bem-vinda ao Turno Noturno</h4>
-                <p><strong>De:</strong> Recursos Humanos</p>
-                <hr style="margin: 10px 0;">
-                <p>Olá Caroline, seu turno vai da Meia-Noite às 06:00 AM. Mantenha o consumo de energia controlado e cheque o Monitor de Rede caso note interferências na Sala 03.</p>
-            </div>
+            <div class="explorer-main email-reader" id="email-body-view"></div>
         </div>
     </div>
 
     <!-- PAINEL DE DEBUG (CTRL + SHIFT + D) -->
-    <div class="window hidden" id="debug-window" style="width: 300px; z-index: 99999;" onmousedown="trazerParaFrente('debug-window')">
-        <div class="window-header" style="background: linear-gradient(to bottom, #660000, #330000); border-bottom: 1px solid #ff5555;">
-            <span class="window-title" style="color: #ffaaaa;">⚠️ DEV TOOLS</span>
+    <div class="window hidden window-theme-debug" id="debug-window" style="width: 310px; z-index: 99999;">
+        <div class="window-header">
+            <div class="window-title-group">
+                <span class="window-title" data-i18n="APP_DEBUG">⚠️ DEV TOOLS</span>
+            </div>
             <div class="window-controls">
-                <button class="win-btn win-btn-close" onclick="fecharJanela('debug-window')" title="Fechar">✕</button>
+                <button type="button" class="win-btn win-btn-close" onclick="fecharJanela('debug-window')"></button>
             </div>
         </div>
-        <div class="window-content" style="background: #111; color: #0f0; padding: 15px; height: auto; display: flex; flex-direction: column; gap: 10px; font-family: monospace;">
-            <button onclick="GameState.horaAtual = 5; GameState.avancarHora();" style="background: #333; color: #0f0; border: 1px solid #0f0; padding: 5px; cursor: pointer;">Vencer Turno (6:00 AM)</button>
-            <button onclick="GameState.posicaoEntidade = 3; GameState.emitir('game:entityMove', { posicao: 3 });" style="background: #333; color: #ffda33; border: 1px solid #ffda33; padding: 5px; cursor: pointer;">Mover Inimigo p/ Sala 03</button>
-            <button onclick="GameState.energia = 10; GameState.emitir('game:powerUpdate', { energia: 10 });" style="background: #333; color: #ff5555; border: 1px solid #ff5555; padding: 5px; cursor: pointer;">Drenar Energia (10%)</button>
-            <button onclick="glitchCatHelper()" style="background: #333; color: #aaa; border: 1px solid #aaa; padding: 5px; cursor: pointer;">Forçar Glitch do Gato</button>
+        <div class="window-content debug-content">
+            <button type="button" onclick="GameState.horaAtual = 5; GameState.avancarHora();">Vencer Turno (6:00 AM)</button>
+            <button type="button" onclick="GameState.posicaoEntidade = 2; GameState.emitir('game:entityMove', { posicao: 2 });">Mover Inimigo p/ CAM 02</button>
+            <button type="button" onclick="GameState.posicaoEntidade = 3; GameState.emitir('game:entityMove', { posicao: 3 });">Mover Inimigo p/ Sala 03</button>
+            <button type="button" onclick="GameState.energia = 15; GameState.emitirPowerUpdate();">Drenar Energia (15%)</button>
+            <button type="button" onclick="glitchCatHelper()">Forçar Glitch do Gato</button>
         </div>
     </div>
 
     <!-- JANELA: CONFIGURAÇÕES -->
-    <div class="window hidden" id="settings-window" style="width: 520px;" onmousedown="trazerParaFrente('settings-window')">
+    <div class="window hidden win-size-lg" id="settings-window">
         <div class="window-header">
-            <span class="window-title">Painel de Controle - Personalização</span>
+            <div class="window-title-group">
+                <div class="icon-img icon-settings title-icon"></div>
+                <span class="window-title" data-i18n="SETTINGS_WINDOW_TITLE">Configurações do Sistema</span>
+            </div>
             <div class="window-controls">
-                <button class="win-btn win-btn-min" onclick="minimizarJanela('settings-window')" title="Minimizar">🗕</button>
-                <button class="win-btn win-btn-max" onclick="maximizarJanela('settings-window')" title="Maximizar">🗖</button>
-                <button class="win-btn win-btn-close" onclick="fecharJanela('settings-window')" title="Fechar">✕</button>
+                <button type="button" class="win-btn win-btn-min" onclick="minimizarJanela('settings-window')"></button>
+                <button type="button" class="win-btn win-btn-max" onclick="maximizarJanela('settings-window')"></button>
+                <button type="button" class="win-btn win-btn-close" onclick="fecharJanela('settings-window')"></button>
             </div>
         </div>
         <div class="window-content settings-layout">
-            <div class="settings-sidebar">
+            <div class="settings-sidebar" role="tablist">
                 <ul>
-                    <li class="active">Sistema & Tela</li>
-                    <li onclick="I18n.setIdioma('pt')">Idioma: Português</li>
-                    <li onclick="I18n.setIdioma('en')">Language: English</li>
+                    <li role="tab" class="active" data-settings-tab="display" onclick="UI.selecionarAbaConfig('display')" data-i18n="SETTINGS_TAB_DISPLAY">🎨 Tela & Papel de Parede</li>
+                    <li role="tab" data-settings-tab="audio" onclick="UI.selecionarAbaConfig('audio')" data-i18n="SETTINGS_TAB_AUDIO">🔊 Áudio & Volumes</li>
+                    <li role="tab" data-settings-tab="access" onclick="UI.selecionarAbaConfig('access')" data-i18n="SETTINGS_TAB_ACCESS">♿ Acessibilidade & Jogo</li>
+                    <li role="tab" data-settings-tab="lang" onclick="UI.selecionarAbaConfig('lang')" data-i18n="SETTINGS_TAB_LANG">🌐 Idioma & Monitores</li>
                 </ul>
             </div>
+
             <div class="settings-main">
-                <h3>Escolha seu Papel de Parede</h3>
-                <div class="wallpaper-grid">
-                    <div class="wallpaper-thumb" onclick="mudarPapelDeParede('assets/wallpapers/wallpaper.png')" style="background-image: url('assets/wallpapers/wallpaper.png');"></div>
-                    <div class="wallpaper-thumb" onclick="mudarPapelDeParede('https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=1000&auto=format&fit=crop')" style="background-image: url('https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=1000&auto=format&fit=crop');"></div>
-                    <div class="wallpaper-thumb" onclick="mudarPapelDeParede('https://images.unsplash.com/photo-1605806616949-1e87b487cb2a?q=80&w=1000&auto=format&fit=crop')" style="background-image: url('https://images.unsplash.com/photo-1605806616949-1e87b487cb2a?q=80&w=1000&auto=format&fit=crop');"></div>
+                <!-- ABA 1: TELA & PAPEL DE PAREDE -->
+                <div data-settings-panel="display">
+                    <h3 data-i18n="SETTINGS_WALLPAPER_TITLE">Papel de Parede (Arquivos Locais)</h3>
+                    <div class="wp-preview-wrapper">
+                        <div id="wallpaper-live-preview" class="wp-live-monitor">
+                            <div class="wp-monitor-taskbar"></div>
+                        </div>
+                        <span class="wp-preview-caption" data-i18n="SETTINGS_WALLPAPER_PREVIEW">Prévia da Área de Trabalho Atual</span>
+                    </div>
+
+                    <div class="wallpaper-grid">
+                        <button type="button" class="wallpaper-card" data-wp="assets/wallpapers/wallpaper.png" onclick="mudarPapelDeParede('assets/wallpapers/wallpaper.png')">
+                            <div class="wallpaper-thumb" style="background-image: url('assets/wallpapers/wallpaper.png');"></div>
+                            <span class="wp-card-title" data-i18n="SETTINGS_WP_DEFAULT">Aurora Vista (Padrão)</span>
+                            <span class="wp-active-badge" data-i18n="SETTINGS_ACTIVE_BADGE">✓ Ativo</span>
+                        </button>
+                        <button type="button" class="wallpaper-card" data-wp="assets/wallpapers/aurora_noturna.svg" onclick="mudarPapelDeParede('assets/wallpapers/aurora_noturna.svg')">
+                            <div class="wallpaper-thumb" style="background-image: url('assets/wallpapers/aurora_noturna.svg');"></div>
+                            <span class="wp-card-title" data-i18n="SETTINGS_WP_NIGHT">Aurora Noturna</span>
+                            <span class="wp-active-badge hidden" data-i18n="SETTINGS_ACTIVE_BADGE">✓ Ativo</span>
+                        </button>
+                        <button type="button" class="wallpaper-card" data-wp="assets/wallpapers/grade_seguranca.svg" onclick="mudarPapelDeParede('assets/wallpapers/grade_seguranca.svg')">
+                            <div class="wallpaper-thumb" style="background-image: url('assets/wallpapers/grade_seguranca.svg');"></div>
+                            <span class="wp-card-title" data-i18n="SETTINGS_WP_SECURITY">Grade Tática VB</span>
+                            <span class="wp-active-badge hidden" data-i18n="SETTINGS_ACTIVE_BADGE">✓ Ativo</span>
+                        </button>
+                        <button type="button" class="wallpaper-card" data-wp="assets/wallpapers/crepusculo_vista.svg" onclick="mudarPapelDeParede('assets/wallpapers/crepusculo_vista.svg')">
+                            <div class="wallpaper-thumb" style="background-image: url('assets/wallpapers/crepusculo_vista.svg');"></div>
+                            <span class="wp-card-title" data-i18n="SETTINGS_WP_EMERALD">Crepúsculo Esmeralda</span>
+                            <span class="wp-active-badge hidden" data-i18n="SETTINGS_ACTIVE_BADGE">✓ Ativo</span>
+                        </button>
+                    </div>
                 </div>
 
-                <h3 style="margin-top: 20px;">Acessibilidade & Áudio</h3>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <button onclick="toggleAltoContraste()" style="padding: 6px 12px; background: #333; color: white; border: 1px solid #777; cursor: pointer; border-radius: 4px;">
-                        Alto Contraste
-                    </button>
-                    <button onclick="AudioManager.toggleMute()" style="padding: 6px 12px; background: #444; color: white; border: 1px solid #777; cursor: pointer; border-radius: 4px;">
-                        Mutar / Ativar Sons
-                    </button>
+                <!-- ABA 2: ÁUDIO & VOLUMES SEPARADOS -->
+                <div data-settings-panel="audio" class="hidden">
+                    <h3 data-i18n="SETTINGS_AUDIO_TITLE">Controle de Volumes Independentes</h3>
+
+                    <div class="settings-option-row">
+                        <div class="option-info">
+                            <strong data-i18n="SETTINGS_MUTE_ALL">Silenciar Todo o Sistema (Mute Geral)</strong>
+                        </div>
+                        <button type="button" id="btn-toggle-mute" class="settings-toggle-btn" onclick="AudioManager.toggleMute()">
+                            <span class="state-pill">DESLIGADO</span>
+                        </button>
+                    </div>
+
+                    <div class="volume-control-group">
+                        <label for="slider-vol-ambient">
+                            <span data-i18n="SETTINGS_VOL_AMBIENT">Volume de Ambiente (Ar-condicionado / Tensão)</span>
+                            <strong id="val-vol-ambient">50%</strong>
+                        </label>
+                        <div class="slider-row">
+                            <input type="range" id="slider-vol-ambient" min="0" max="100" value="50" oninput="AudioManager.setVolume('ambient', this.value / 100)">
+                        </div>
+                    </div>
+
+                    <div class="volume-control-group">
+                        <label for="slider-vol-sfx">
+                            <span data-i18n="SETTINGS_VOL_SFX">Volume de Interface & Efeitos (Cliques, Câmeras, Alertas)</span>
+                            <strong id="val-vol-sfx">70%</strong>
+                        </label>
+                        <div class="slider-row">
+                            <input type="range" id="slider-vol-sfx" min="0" max="100" value="70" oninput="AudioManager.setVolume('sfx', this.value / 100)">
+                            <button type="button" class="vista-btn small-btn" onclick="AudioManager.play('camera')" data-i18n="SETTINGS_TEST_SOUND">Testar</button>
+                        </div>
+                    </div>
+
+                    <div class="volume-control-group">
+                        <label for="slider-vol-jumpscare">
+                            <span data-i18n="SETTINGS_VOL_JUMPSCARE">Volume de Sustos (Jumpscare / Emergência)</span>
+                            <strong id="val-vol-jumpscare">80%</strong>
+                        </label>
+                        <div class="slider-row">
+                            <input type="range" id="slider-vol-jumpscare" min="0" max="100" value="80" oninput="AudioManager.setVolume('jumpscare', this.value / 100)">
+                            <button type="button" class="vista-btn small-btn" onclick="AudioManager.play('error')" data-i18n="SETTINGS_TEST_SOUND">Testar</button>
+                        </div>
+                    </div>
                 </div>
 
-                <h3 style="margin-top: 20px;">Múltiplos Monitores</h3>
-                <div style="display: flex; align-items: center; gap: 15px;">
-                    <button onclick="window.open(window.location.href, '_blank')" style="padding: 6px 12px; background: #003399; color: white; border: 1px solid #002266; cursor: pointer; border-radius: 4px;">
-                        Conectar Monitor Secundário
-                    </button>
+                <!-- ABA 3: ACESSIBILIDADE & JOGO -->
+                <div data-settings-panel="access" class="hidden">
+                    <h3 data-i18n="SETTINGS_ACCESS_TITLE">Acessibilidade, Movimento e Sessão</h3>
+
+                    <div class="settings-option-row">
+                        <div class="option-info">
+                            <strong data-i18n="SETTINGS_HC_LABEL">Modo de Alto Contraste</strong>
+                            <small data-i18n="SETTINGS_HC_DESC">Aumenta o contraste com fundo escuro sólido e bordas luminosas.</small>
+                        </div>
+                        <button type="button" id="btn-toggle-hc" class="settings-toggle-btn" onclick="toggleAltoContraste()">
+                            <span class="state-pill">DESLIGADO</span>
+                        </button>
+                    </div>
+
+                    <div class="settings-option-row">
+                        <div class="option-info">
+                            <strong data-i18n="SETTINGS_RM_LABEL">Reduzir Flashes e Tremores (Movimento Reduzido)</strong>
+                            <small data-i18n="SETTINGS_RM_DESC">Desativa flashes brancos ao trocar de câmera e animações piscantes, preservando os alertas.</small>
+                        </div>
+                        <button type="button" id="btn-toggle-rm" class="settings-toggle-btn" onclick="toggleMovimentoReduzido()">
+                            <span class="state-pill">DESLIGADO</span>
+                        </button>
+                    </div>
+
+                    <div class="settings-option-row">
+                        <div class="option-info">
+                            <strong data-i18n="SETTINGS_RESTORE_LABEL">Restaurar Janelas Abertas ao Iniciar</strong>
+                            <small data-i18n="SETTINGS_RESTORE_DESC">Quando desativado, o turno começa com a área de trabalho limpa.</small>
+                        </div>
+                        <button type="button" id="btn-toggle-restore" class="settings-toggle-btn" onclick="toggleRestaurarJanelas()">
+                            <span class="state-pill">DESLIGADO</span>
+                        </button>
+                    </div>
+
+                    <div class="kb-help-box">
+                        <strong data-i18n="SETTINGS_KB_HELP_TITLE">Atalhos de Teclado para Janelas (Sem Mouse)</strong>
+                        <p data-i18n="SETTINGS_KB_HELP_TEXT">• Alt + Setas: Move a janela ativa | • Alt + Shift + ←/→/↑: Encaixa à esquerda, direita ou maximiza | • Alt + +/-: Redimensiona a janela | • Esc: Fecha menus, alertas ou a janela ativa.</p>
+                        <div class="quick-snap-controls">
+                            <button type="button" class="vista-btn small-btn" onclick="WindowManager.encaixarJanela(WindowManager.janelaAtivaId || 'settings-window', 'left')">◧ Snap ←</button>
+                            <button type="button" class="vista-btn small-btn" onclick="WindowManager.encaixarJanela(WindowManager.janelaAtivaId || 'settings-window', 'center')">▣ Centro</button>
+                            <button type="button" class="vista-btn small-btn" onclick="WindowManager.encaixarJanela(WindowManager.janelaAtivaId || 'settings-window', 'right')">◨ Snap →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ABA 4: IDIOMA & MONITORES -->
+                <div data-settings-panel="lang" class="hidden">
+                    <h3 data-i18n="SETTINGS_LANG_TITLE">Idioma do Sistema (Language)</h3>
+                    <div class="lang-buttons-row">
+                        <button type="button" class="settings-toggle-btn" data-lang-btn="pt" onclick="I18n.setIdioma('pt')">
+                            <span>🇧🇷 Português (Brasil)</span>
+                            <span class="state-pill">✓ Ativo</span>
+                        </button>
+                        <button type="button" class="settings-toggle-btn" data-lang-btn="en" onclick="I18n.setIdioma('en')">
+                            <span>🇺🇸 English (US)</span>
+                            <span class="state-pill"></span>
+                        </button>
+                    </div>
+
+                    <h3 style="margin-top: 22px;" data-i18n="SETTINGS_MONITORS_TITLE">Múltiplos Monitores</h3>
+                    <p class="settings-desc" data-i18n="SETTINGS_MONITORS_DESC">Abra uma segunda aba sincronizada para transferir janelas entre monitores.</p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
+                        <button type="button" class="vista-btn primary" onclick="window.open(window.location.href, '_blank')" data-i18n="SETTINGS_MONITORS_BTN">
+                            🖥️ Conectar Monitor Secundário
+                        </button>
+                        <button type="button" class="vista-btn" onclick="WindowManager.transferirJanelaAtivaParaSegundoMonitor()" data-i18n="SETTINGS_TRANSFER_BTN">
+                            ⇄ Enviar Janela Ativa ao 2º Monitor
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- JANELA: CAT HELPER -->
-    <div class="window hidden" id="cat-window" onmousedown="trazerParaFrente('cat-window')">
+    <div class="window hidden win-size-sm" id="cat-window">
         <div class="window-header">
-            <span class="window-title">Cat Helper v1.2</span>
+            <div class="window-title-group">
+                <div class="icon-img icon-cat title-icon"></div>
+                <span class="window-title" data-i18n="APP_CAT">Cat Helper</span>
+            </div>
             <div class="window-controls">
-                <button class="win-btn win-btn-min" onclick="minimizarJanela('cat-window')" title="Minimizar">🗕</button>
-                <button class="win-btn win-btn-max" onclick="maximizarJanela('cat-window')" title="Maximizar">🗖</button>
-                <button class="win-btn win-btn-close" onclick="fecharJanela('cat-window')" title="Fechar">✕</button>
+                <button type="button" class="win-btn win-btn-min" onclick="minimizarJanela('cat-window')"></button>
+                <button type="button" class="win-btn win-btn-max" onclick="maximizarJanela('cat-window')"></button>
+                <button type="button" class="win-btn win-btn-close" onclick="fecharJanela('cat-window')"></button>
             </div>
         </div>
         <div class="window-content cat-helper-bg">
@@ -285,120 +502,151 @@
                     🐱
                 </div>
                 <div class="cat-speech" id="cat-text">
-                    <p><strong>Miau! Olá, novo vigia!</strong></p>
-                    <p>Abra o <em>Câmera Sistema</em> para monitorar as salas. Fique de olho na energia, não queremos que as luzes se apaguem...</p>
-                    <button onclick="glitchCatHelper()" style="margin-top: 10px; padding: 4px 8px; cursor: pointer;">Avançar Dica ▶</button>
+                    <p><strong data-i18n="CAT_SPEECH_INIT_TITLE">Miau! Olá, novo vigia!</strong></p>
+                    <p data-i18n="CAT_SPEECH_INIT_BODY">Abra o Sistema de Câmeras para monitorar as salas. Fique de olho na energia na barra inferior, não queremos que as luzes se apaguem...</p>
+                    <button type="button" class="vista-btn" onclick="avancarDicaCat()" style="margin-top: 10px;" data-i18n="CAT_NEXT_TIP_BTN">Avançar Dica ▶</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- JANELA: EXPLORADOR DE ARQUIVOS -->
-    <div class="window hidden" id="arquivos-window" style="width: 550px;" onmousedown="trazerParaFrente('arquivos-window')">
+    <div class="window hidden win-size-lg" id="arquivos-window">
         <div class="window-header">
-            <span class="window-title">Arquivos - C:\Usuários\Guarda</span>
+            <div class="window-title-group">
+                <div class="icon-img icon-folder title-icon"></div>
+                <span class="window-title" data-i18n="APP_EXPLORER">Explorador de Arquivos</span>
+            </div>
             <div class="window-controls">
-                <button class="win-btn win-btn-min" onclick="minimizarJanela('arquivos-window')" title="Minimizar">🗕</button>
-                <button class="win-btn win-btn-max" onclick="maximizarJanela('arquivos-window')" title="Maximizar">🗖</button>
-                <button class="win-btn win-btn-close" onclick="fecharJanela('arquivos-window')" title="Fechar">✕</button>
+                <button type="button" class="win-btn win-btn-min" onclick="minimizarJanela('arquivos-window')"></button>
+                <button type="button" class="win-btn win-btn-max" onclick="maximizarJanela('arquivos-window')"></button>
+                <button type="button" class="win-btn win-btn-close" onclick="fecharJanela('arquivos-window')"></button>
             </div>
         </div>
-        <div class="window-content file-explorer">
-            <div class="explorer-sidebar">
-                <details open>
-                    <summary style="font-weight: bold; cursor: pointer; padding: 5px; background: #dbeaf9; border-radius: 3px;">📁 C:\Usuários</summary>
-                    <ul style="margin-left: 15px; padding-top: 5px;">
-                        <li>🖼️ Fotos da Pizzaria</li>
-                        <li>📊 Relatórios</li>
-                        <li>👥 Funcionários</li>
-                    </ul>
-                </details>
-                
-                <div style="color: #c42b2b; font-weight: bold; padding: 8px 5px; margin-top: 10px; cursor: pointer; border-top: 1px solid #ccc;" ondblclick="acessarPastaConfidencial()">
-                    🔒 Disco Restrito (Z:)
-                </div>
+        <div class="window-content explorer-window-content">
+            <div class="explorer-toolbar">
+                <button type="button" id="explorer-back-btn" class="vista-btn small-btn" onclick="UI.voltarPasta()" data-i18n="EXPLORER_BACK" disabled>◀ Voltar</button>
+                <button type="button" id="explorer-fwd-btn" class="vista-btn small-btn" onclick="UI.avancarPasta()" data-i18n="EXPLORER_FORWARD" disabled>▶ Avançar</button>
+                <button type="button" id="explorer-up-btn" class="vista-btn small-btn" onclick="UI.subirPasta()" data-i18n="EXPLORER_UP" disabled>⬆ Acima</button>
+                <input type="text" id="explorer-path-display" class="explorer-address-bar" readonly value="C:\Usuários\Guarda" aria-label="Caminho atual">
+                <button type="button" id="explorer-open-btn" class="vista-btn primary small-btn" onclick="UI.abrirSelecionadoExplorador()" data-i18n="EXPLORER_OPEN_BTN" disabled>📄 Abrir Selecionado</button>
             </div>
-            
-            <div class="explorer-main">
-                <div class="file-item" ondblclick="acessarPastaConfidencial()">
-                    <div class="icon-img icon-folder small" style="filter: hue-rotate(150deg);"></div>
-                    <span style="color: #c42b2b; font-weight: bold;">Confidencial</span>
+            <div class="explorer-hint-bar" data-i18n="EXPLORER_HINT">
+                Dica: Clique para selecionar, dê duplo clique ou Enter para abrir, ou arraste um arquivo .txt para o Bloco de Notas.
+            </div>
+            <div class="explorer-body">
+                <div class="explorer-sidebar">
+                    <ul>
+                        <li data-folder-nav="root" class="active-tree-item" onclick="UI.navegarPasta('root')" data-i18n="EXPLORER_FOLDER_ROOT">📁 C:\Usuários\Guarda</li>
+                        <li data-folder-nav="photos" class="tree-subitem" onclick="UI.navegarPasta('photos')" data-i18n="EXPLORER_FOLDER_PHOTOS">🖼️ Fotos da Pizzaria</li>
+                        <li data-folder-nav="reports" class="tree-subitem" onclick="UI.navegarPasta('reports')" data-i18n="EXPLORER_FOLDER_REPORTS">📊 Relatórios</li>
+                        <li data-folder-nav="staff" class="tree-subitem" onclick="UI.navegarPasta('staff')" data-i18n="EXPLORER_FOLDER_STAFF">👥 Funcionários</li>
+                        <li data-folder-nav="restricted" class="tree-restricted" onclick="UI.navegarPasta('restricted')" data-i18n="EXPLORER_FOLDER_RESTRICTED">🔒 Disco Restrito (Z:)</li>
+                    </ul>
                 </div>
-
-                <div class="file-item draggable-file" draggable="true" data-filename="Email_Rogerio.txt" data-content="Para: Rogério Vinhedo&#10;Assunto: Primeira noite&#10;&#10;Primeira noite sendo empregada se passou... me avisaram que o limpador faltou e terei que limpar a área de jantar. Vi algo se mexendo atrás das cortinas. Te amo amor.">
-                    <div class="icon-img icon-txt small" style="pointer-events: none;"></div>
-                    <span style="pointer-events: none;">Email_Rogerio.txt</span>
-                </div>
-                
-                <div class="file-item draggable-file" draggable="true" data-filename="Memo_Admin.txt" data-content="Memorando - Administração&#10;De: Renato&#10;&#10;O local permanece ativo para reduzir custo de reparo dos animatrônicos. Evitar menção a incidentes anteriores. Se a funcionária quiser desistir, ofereça bônus.">
-                    <div class="icon-img icon-txt small" style="pointer-events: none;"></div>
-                    <span style="pointer-events: none;">Memo_Admin.txt</span>
-                </div>
+                <div class="explorer-main" id="explorer-main-grid" role="region" aria-label="Arquivos da pasta"></div>
+            </div>
+            <div class="explorer-statusbar">
+                <span id="explorer-status-count">6 itens</span>
+                <span id="explorer-status-selected">Nenhum item selecionado</span>
             </div>
         </div>
     </div>
 
     <!-- JANELA: COMPUTADOR -->
-    <div class="window hidden" id="computador-window" style="width: 600px;" onmousedown="trazerParaFrente('computador-window')">
+    <div class="window hidden win-size-lg" id="computador-window">
         <div class="window-header">
-            <span class="window-title">Computador</span>
+            <div class="window-title-group">
+                <div class="icon-img icon-computer title-icon"></div>
+                <span class="window-title" data-i18n="APP_COMPUTER">Computador</span>
+            </div>
             <div class="window-controls">
-                <button class="win-btn win-btn-min" onclick="minimizarJanela('computador-window')" title="Minimizar">🗕</button>
-                <button class="win-btn win-btn-max" onclick="maximizarJanela('computador-window')" title="Maximizar">🗖</button>
-                <button class="win-btn win-btn-close" onclick="fecharJanela('computador-window')" title="Fechar">✕</button>
+                <button type="button" class="win-btn win-btn-min" onclick="minimizarJanela('computador-window')"></button>
+                <button type="button" class="win-btn win-btn-max" onclick="maximizarJanela('computador-window')"></button>
+                <button type="button" class="win-btn win-btn-close" onclick="fecharJanela('computador-window')"></button>
             </div>
         </div>
         <div class="window-content file-explorer">
             <div class="explorer-sidebar">
                 <ul>
-                    <li onclick="abrirJanela('arquivos-window')">📁 Documentos</li>
-                    <li style="background: #dbeaf9; font-weight: bold;">💻 Computador</li>
-                    <li onclick="abrirJanela('rede-window')">🌐 Rede</li>
+                    <li onclick="abrirJanela('arquivos-window')">📁 <span data-i18n="APP_EXPLORER">Explorador de Arquivos</span></li>
+                    <li class="active-tree-item">💻 <span data-i18n="APP_COMPUTER">Computador</span></li>
+                    <li onclick="abrirJanela('rede-window')">🌐 <span data-i18n="APP_NETWORK">Monitor de Rede</span></li>
                 </ul>
             </div>
-            <div class="explorer-main">
-                <h3 class="drive-title">Unidades de Disco Rígido (1)</h3>
-                <div class="drive-item" ondblclick="abrirJanela('arquivos-window')">
+            <div class="explorer-main" style="flex-direction: column; flex-wrap: nowrap;">
+                <h3 class="drive-title" data-i18n="COMPUTER_DRIVES_LOCAL">Unidades de Disco Rígido (1)</h3>
+                <div class="drive-item" onclick="abrirJanela('arquivos-window')">
                     <div class="drive-icon">💽</div>
                     <div class="drive-info">
-                        <strong>Disco Local (C:)</strong>
+                        <strong data-i18n="COMPUTER_LOCAL_DISK">Disco Local (C:)</strong>
                         <div class="progress-bar">
                             <div class="progress-fill" style="width: 82%;"></div>
                         </div>
-                        <span>10.5 GB livres de 60.0 GB</span>
+                        <span data-i18n="COMPUTER_LOCAL_SPACE">10,5 GB livres de 60,0 GB</span>
                     </div>
                 </div>
 
-                <h3 class="drive-title" style="margin-top: 20px;">Unidades de Rede Criptografadas (1)</h3>
-                <div class="drive-item" ondblclick="acessarPastaConfidencial()">
+                <h3 class="drive-title" style="margin-top: 18px;" data-i18n="COMPUTER_DRIVES_NET">Unidades de Rede Criptografadas (1)</h3>
+                <div class="drive-item" onclick="acessarPastaConfidencial()">
                     <div class="drive-icon">🔒</div>
                     <div class="drive-info">
-                        <strong>Servidor Subterrâneo (Z:)</strong>
-                        <span style="margin-top: 5px; color: #c42b2b;">Requer Chave Admin</span>
+                        <strong data-i18n="COMPUTER_NET_DISK">Servidor Subterrâneo (Z:)</strong>
+                        <span id="computer-z-status" style="margin-top: 4px; color: #9c6500; font-weight: 600;" data-i18n="COMPUTER_NET_LOCKED">Criptografado • Requer Chave Admin</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- JANELA: MONITOR DE REDE (MECÂNICA DE DEFESA) -->
-    <div class="window hidden" id="rede-window" onmousedown="trazerParaFrente('rede-window')">
-        <div class="window-header" style="background: linear-gradient(to bottom, #222, #000); color: white;">
-            <span class="window-title">Monitor de Rede & Firewall</span>
+    <!-- JANELA: LIXEIRA -->
+    <div class="window hidden win-size-sm" id="lixeira-window">
+        <div class="window-header">
+            <div class="window-title-group">
+                <div class="icon-img icon-trash title-icon"></div>
+                <span class="window-title" data-i18n="APP_TRASH">Lixeira</span>
+            </div>
             <div class="window-controls">
-                <button class="win-btn win-btn-min" onclick="minimizarJanela('rede-window')" title="Minimizar">🗕</button>
-                <button class="win-btn win-btn-max" onclick="maximizarJanela('rede-window')" title="Maximizar">🗖</button>
-                <button class="win-btn win-btn-close" onclick="fecharJanela('rede-window')" title="Fechar">✕</button>
+                <button type="button" class="win-btn win-btn-min" onclick="minimizarJanela('lixeira-window')"></button>
+                <button type="button" class="win-btn win-btn-max" onclick="maximizarJanela('lixeira-window')"></button>
+                <button type="button" class="win-btn win-btn-close" onclick="fecharJanela('lixeira-window')"></button>
             </div>
         </div>
-        <div class="window-content network-bg" style="flex-direction: column; justify-content: space-between;">
-            <div>
-                <p style="color: #4aff4a;">> SUB-REDE VILAS BOAS [PORTA 8080]</p>
-                <p style="color: #4aff4a; margin-top: 8px;">> STATUS: <span id="net-status-text" style="color: #4aff4a;">ESTÁVEL (12ms)</span></p>
-                <p id="net-alert-text" style="color: #aaa; margin-top: 15px; line-height: 1.4;">Tráfego local normal. Nenhuma invasão crítica detectada.</p>
+        <div class="window-content trash-window-content">
+            <p id="trash-status-msg" data-i18n="TRASH_EMPTY_MSG">A Lixeira está vazia.</p>
+            <ul id="trash-items-list" class="trash-list"></ul>
+            <button type="button" id="btn-restore-trash" class="vista-btn primary hidden" onclick="UI.restaurarLixeira()" data-i18n="TRASH_RESTORE_BTN">♻️ Restaurar Todos os Atalhos</button>
+        </div>
+    </div>
+
+    <!-- JANELA: MONITOR DE REDE (MECÂNICA DE DEFESA) -->
+    <div class="window hidden window-theme-network win-size-md" id="rede-window">
+        <div class="window-header">
+            <div class="window-title-group">
+                <div class="icon-img icon-network title-icon"></div>
+                <span class="window-title" data-i18n="APP_NETWORK">Monitor de Rede</span>
             </div>
-            <div style="border-top: 1px solid #333; padding-top: 15px;">
-                <button id="btn-purge-network" onclick="reiniciarFirewall()" style="width: 100%; padding: 10px; background: #8a1a1a; color: #fff; border: 1px solid #ff5555; font-family: monospace; font-weight: bold; cursor: pointer;">
+            <div class="window-controls">
+                <button type="button" class="win-btn win-btn-min" onclick="minimizarJanela('rede-window')"></button>
+                <button type="button" class="win-btn win-btn-max" onclick="maximizarJanela('rede-window')"></button>
+                <button type="button" class="win-btn win-btn-close" onclick="fecharJanela('rede-window')"></button>
+            </div>
+        </div>
+        <div class="window-content network-bg">
+            <div id="net-status-card" class="network-status-card net-level-1" aria-live="polite">
+                <p class="net-subnet-line" data-i18n="NET_SUBNET_HEADER">> SUB-REDE VILAS BOAS [PORTA 8080]</p>
+                <div class="net-status-banner">
+                    <span id="net-status-text">✔ [NÍVEL 1/3 • SEGURO] ESTÁVEL (12ms)</span>
+                </div>
+                <p id="net-alert-text" class="net-alert-desc">Tráfego local normal. Nenhuma invasão crítica detectada.</p>
+                <div class="net-camera-link-row">
+                    <button type="button" id="btn-open-alert-cam" class="net-cam-shortcut-btn" onclick="abrirCameraDoAlerta()" data-cam="1">
+                        📹 Ver Câmera Afetada (CAM 01)
+                    </button>
+                </div>
+            </div>
+            <div class="network-footer-actions">
+                <button type="button" id="btn-purge-network" class="firewall-btn firewall-standby" onclick="reiniciarFirewall()" data-i18n="NET_PURGE_BTN" disabled>
                     ⚡ EXECUTAR PULSO DE FIREWALL (-5% ENERGIA)
                 </button>
             </div>
@@ -406,91 +654,115 @@
     </div>
 
     <!-- MENU INICIAR -->
-    <div id="start-menu" class="hidden">
+    <div id="start-menu" class="hidden" role="menu" aria-label="Menu Iniciar">
         <div class="user-profile-img">
             <div class="flower-avatar"></div>
         </div>
 
         <div class="start-menu-inner">
             <div class="start-left">
-                <div class="start-programs">
-                    <div class="start-item" onclick="abrirJanela('notepad-window'); toggleStartMenu();">
-                        <div class="icon-img icon-txt small"></div>
-                        <div class="item-text">
-                            <strong>Bloco de Notas</strong>
-                            <span>Editor de Texto</span>
-                        </div>
-                    </div>
-                    <div class="start-item" onclick="abrirJanela('camera-window'); toggleStartMenu();">
-                        <div class="icon-img icon-exe small"></div>
-                        <div class="item-text">
-                            <strong>Câmera Sistema</strong>
-                            <span>Sistema de Segurança</span>
-                        </div>
-                    </div>
-                    <div class="start-item" onclick="abrirJanela('email-window'); toggleStartMenu();">
-                        <div class="icon-img icon-email small"></div>
-                        <div class="item-text">
-                            <strong>VilasMail</strong>
-                            <span>Correio Interno</span>
-                        </div>
-                    </div>
-                    <div class="start-item" onclick="abrirJanela('cat-window'); toggleStartMenu();">
-                        <div class="icon-img icon-cat small"></div>
-                        <div class="item-text">
-                            <strong>Cat Helper</strong>
-                            <span>Assistente Virtual</span>
-                        </div>
-                    </div>
-                </div>
+                <div id="start-programs-list" class="start-programs"></div>
                 
                 <div class="all-programs-wrapper">
-                    <div class="all-programs">
-                        <strong>Todos os Programas</strong>
-                        <span class="arrow">▶</span>
-                    </div>
+                    <button type="button" class="all-programs" id="btn-all-programs">
+                        <strong id="all-programs-label" data-i18n="START_ALL_PROGRAMS">Todos os Programas</strong>
+                        <span id="all-programs-arrow" class="arrow">▶</span>
+                    </button>
                     <div class="search-box">
-                        <input type="text" placeholder="Iniciar Pesquisa">
-                        <span class="search-icon">⌕</span>
+                        <input type="text" id="start-search-input" data-i18n-placeholder="START_SEARCH_PLACEHOLDER" placeholder="Iniciar Pesquisa (apps e arquivos)..." aria-label="Pesquisar programas e arquivos">
+                        <span class="search-icon" aria-hidden="true">⌕</span>
                     </div>
                 </div>
             </div>
 
             <div class="start-right">
-                <div class="right-user-name">Caroline</div>
+                <div class="right-user-name">Caroline_F</div>
                 <div class="start-divider"></div>
-                <div class="right-item" onclick="abrirJanela('arquivos-window'); toggleStartMenu();">Documentos</div>
-                <div class="right-item" onclick="abrirJanela('email-window'); toggleStartMenu();">Correio (VilasMail)</div>
+                <button type="button" class="right-item" onclick="abrirJanela('arquivos-window'); toggleStartMenu(false);" data-i18n="APP_EXPLORER">Explorador de Arquivos</button>
+                <button type="button" class="right-item" onclick="abrirJanela('email-window'); toggleStartMenu(false);" data-i18n="APP_EMAIL">VilasMail</button>
                 <div class="start-divider"></div>
                 
-                <div class="right-item" onclick="abrirJanela('computador-window'); toggleStartMenu();">Computador</div>
-                <div class="right-item" onclick="abrirJanela('rede-window'); toggleStartMenu();">Rede / Firewall</div>
+                <button type="button" class="right-item" onclick="abrirJanela('computador-window'); toggleStartMenu(false);" data-i18n="APP_COMPUTER">Computador</button>
+                <button type="button" class="right-item" onclick="abrirJanela('rede-window'); toggleStartMenu(false);" data-i18n="APP_NETWORK">Monitor de Rede</button>
+                <button type="button" class="right-item" onclick="abrirJanela('camera-window'); toggleStartMenu(false);" data-i18n="APP_CAMERAS">Sistema de Câmeras</button>
                 
                 <div class="start-divider"></div>
-                <div class="right-item" onclick="abrirJanela('settings-window'); toggleStartMenu();">Painel de Controle</div>
-                <div class="right-item" onclick="abrirJanela('tutorial-note'); toggleStartMenu();">Instruções do Turno</div>
+                <button type="button" class="right-item" onclick="abrirJanela('settings-window'); toggleStartMenu(false);" data-i18n="APP_SETTINGS">Configurações</button>
+                <button type="button" class="right-item" onclick="abrirJanela('tutorial-note'); toggleStartMenu(false);" data-i18n="APP_TUTORIAL">Guia do Turno</button>
                 
                 <div class="power-controls">
-                    <button class="power-btn power-off" onclick="window.location.reload()" title="Reiniciar">⏻</button>
-                    <button class="power-btn lock" title="Bloquear">🔒</button>
-                    <button class="power-btn arrow-btn">▶</button>
+                    <button type="button" id="btn-power-restart" class="power-btn power-off" onclick="window.location.reload()" data-i18n-title="POWER_RESTART_TITLE" title="Reiniciar Turno">⏻</button>
+                    <button type="button" id="btn-power-lock" class="power-btn lock" onclick="UI.bloquearEstacao()" data-i18n-title="POWER_LOCK_TITLE" title="Bloquear Estação">🔒</button>
+                    <button type="button" id="btn-power-more" class="power-btn arrow-btn" data-i18n-title="POWER_MORE_TITLE" title="Mais Opções de Energia">▶</button>
+                </div>
+
+                <!-- SUBMENU DE OPÇÕES DE ENERGIA -->
+                <div id="power-submenu" class="power-submenu hidden" role="menu">
+                    <button type="button" onclick="fecharJanela('camera-window'); toggleStartMenu(false);" data-i18n="POWER_MENU_ECO">Modo Economia (Fechar Câmeras)</button>
+                    <button type="button" onclick="UI.bloquearEstacao();" data-i18n="POWER_MENU_LOCK">Bloquear Estação (Ctrl+Alt+L)</button>
+                    <button type="button" onclick="UI.mostrarNotificacao({ titulo: I18n.t('SYSTEM_NAME'), mensagem: 'Sessão de janelas limpa.', duracao: 3000 }); WindowManager.descartarSessaoAnterior(); toggleStartMenu(false);" data-i18n="POWER_MENU_CLEAN_SESSION">Limpar Sessão de Janelas Salvas</button>
+                    <button type="button" class="danger-item" onclick="window.location.reload()" data-i18n="POWER_MENU_RESTART">Reiniciar Turno Agora</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- CONTAINER DE NOTIFICAÇÕES DISCRETAS DA BANDEJA (TOASTS) -->
+    <div id="tray-notifications" class="tray-notifications" aria-live="polite"></div>
+
+    <!-- PAINEL FLUTUANTE DE DIAGNÓSTICO DE ENERGIA -->
+    <div id="power-flyout" class="power-flyout hidden" role="dialog" aria-labelledby="power-flyout-title">
+        <div class="power-flyout-header">
+            <strong id="power-flyout-title" data-i18n="POWER_PANEL_TITLE">Diagnóstico de Energia do Sistema</strong>
+            <button type="button" class="toast-close" onclick="togglePowerFlyout(event)" aria-label="Fechar">✕</button>
+        </div>
+        <div class="power-flyout-progress">
+            <div id="power-flyout-bar" class="power-flyout-fill fill-good" style="width: 100%;"></div>
+        </div>
+        <div class="power-flyout-rate-row">
+            <span data-i18n="POWER_RATE_LABEL">Ritmo de Consumo:</span>
+            <strong id="power-flyout-rate" class="rate-normal">Normal (-0,5% a cada 2s)</strong>
+        </div>
+        <ul class="power-breakdown-list">
+            <li>
+                <span data-i18n="POWER_BASE_DRAW">Sistema Base & Iluminação</span>
+                <span class="rate-normal" data-i18n="POWER_STATE_ACTIVE">Ativo (-0,5%)</span>
+            </li>
+            <li>
+                <span data-i18n="POWER_CAM_DRAW">Sistema de Câmeras (CFTV)</span>
+                <span id="power-flyout-cam-state" class="rate-normal" data-i18n="POWER_STATE_CAM_CLOSED">Fechado (0%)</span>
+            </li>
+            <li>
+                <span data-i18n="POWER_FIREWALL_DRAW">Pulso de Firewall (por uso)</span>
+                <span class="rate-warn" data-i18n="POWER_STATE_INSTANT">-5% por disparo</span>
+            </li>
+        </ul>
+        <button type="button" id="btn-power-close-cams" class="vista-btn full-width-btn" onclick="fecharJanela('camera-window')" data-i18n="POWER_SAVE_BTN" disabled>
+            Fechar Câmeras para Economizar Energia
+        </button>
+    </div>
+
+    <!-- BARRA DE TAREFAS AERO GLASS -->
     <footer id="taskbar">
-        <button id="start-orb" aria-label="Menu Iniciar">
+        <button type="button" id="start-orb" data-i18n-aria="START_ORB_LABEL" aria-label="Menu Iniciar" aria-expanded="false">
             <div class="start-logo"></div>
         </button>
 
-        <div id="open-windows"></div>
+        <div id="open-windows" role="toolbar" aria-label="Janelas Abertas"></div>
 
-        <div id="system-tray" style="display: flex; align-items: center;">
-            <div id="power-meter" title="Energia do Sistema" style="display: flex; align-items: center; gap: 5px; margin-right: 15px; color: #4aff4a; font-weight: bold;">
-                🔋 <span id="power-text">100%</span>
+        <div id="system-tray">
+            <button type="button" id="tray-sound-btn" class="tray-btn" onclick="AudioManager.toggleMute()" title="Áudio do Sistema">🔊</button>
+
+            <button type="button" id="power-meter" class="tray-power-btn power-good" onclick="togglePowerFlyout(event)" title="Clique para ver detalhes do consumo de energia">
+                <span aria-hidden="true">🔋</span>
+                <span id="power-text">100%</span>
+                <span id="power-load-bars" class="power-load-bars" aria-hidden="true">▮▯▯</span>
+            </button>
+
+            <div id="clock-widget" class="clock-widget" title="Relógio do Sistema">
+                <span id="clock-mode-badge" class="clock-mode-badge" data-i18n="CLOCK_MODE_SYSTEM">HORA LOCAL</span>
+                <span id="clock">12:00 AM</span>
             </div>
-            <span id="clock">12:00 AM</span>
         </div>
     </footer>
 

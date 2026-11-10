@@ -17,6 +17,19 @@ export const GameState = {
         document.dispatchEvent(evento);
     },
 
+    obterConsumoPorCiclo() {
+        return this.cameraAberta ? this.consumoBase + 1.0 : this.consumoBase;
+    },
+
+    emitirPowerUpdate() {
+        this.emitir('game:powerUpdate', {
+            energia: Math.ceil(this.energia),
+            energiaExata: this.energia,
+            consumoPorCiclo: this.obterConsumoPorCiclo(),
+            cameraAberta: this.cameraAberta
+        });
+    },
+
     iniciarNoite() {
         console.log("[GameState] A Noite começou.");
         this.noiteAtiva = true;
@@ -29,7 +42,7 @@ export const GameState = {
         clearInterval(this.intervaloIA);
 
         this.emitir('game:start');
-        this.emitir('game:powerUpdate', { energia: Math.ceil(this.energia) });
+        this.emitirPowerUpdate();
         this.emitir('game:timeUpdate', { hora: this.horaAtual });
         this.emitir('game:entityMove', { posicao: this.posicaoEntidade });
 
@@ -40,19 +53,19 @@ export const GameState = {
     },
 
     setCameraAberta(isOpen) {
-        this.cameraAberta = isOpen;
+        const mudou = this.cameraAberta !== Boolean(isOpen);
+        this.cameraAberta = Boolean(isOpen);
+        if (mudou) {
+            this.emitirPowerUpdate();
+        }
     },
 
     consumirEnergia() {
         if (!this.noiteAtiva) return;
 
-        let consumoAtual = this.consumoBase;
-        if (this.cameraAberta) {
-            consumoAtual += 1.0; // Dobra o gasto quando o monitor de câmeras está aberto
-        }
-
+        const consumoAtual = this.obterConsumoPorCiclo();
         this.energia = Math.max(0, this.energia - consumoAtual);
-        this.emitir('game:powerUpdate', { energia: Math.ceil(this.energia) });
+        this.emitirPowerUpdate();
 
         if (this.energia <= 0) {
             this.apagarTudo();
@@ -61,7 +74,7 @@ export const GameState = {
 
     avancarHora() {
         if (!this.noiteAtiva) return;
-        
+
         this.horaAtual++;
         this.emitir('game:timeUpdate', { hora: this.horaAtual });
         this.verificarEventos(this.horaAtual);
@@ -91,7 +104,7 @@ export const GameState = {
 
         if (this.energia <= 5) return false;
         this.energia = Math.max(0, this.energia - 5);
-        this.emitir('game:powerUpdate', { energia: Math.ceil(this.energia) });
+        this.emitirPowerUpdate();
 
         // Expulsa a entidade de volta para o Palco Principal (CAM 01)
         this.posicaoEntidade = 1;
@@ -104,17 +117,25 @@ export const GameState = {
             this.emitir('game:event', { tipo: 'cat_glitch' });
             this.emitir('game:newEmail', {
                 id: 'mail-2am',
+                horario: '02:00 AM',
                 remetente: 'TI - Suporte Interno',
-                assunto: 'URGENTE: Credenciais de Emergência',
-                corpo: 'Caroline,\n\nDetectamos tráfego anômalo vindo da Sala 03. Caso precise acessar a pasta Confidencial ou o Disco Z:, a chave de administrador temporária é: 1987.\n\nSe o Monitor de Rede acusar invasão crítica, execute o Pulso de Firewall imediatamente!'
+                remetente_en: 'IT - Internal Support',
+                assunto: 'URGENTE: Credenciais de Emergência (Z:)',
+                assunto_en: 'URGENT: Emergency Credentials (Z:)',
+                corpo: 'Caroline,\n\nDetectamos tráfego anômalo vindo da Sala 03. Caso precise acessar a pasta Confidencial ou o Disco Restrito (Z:), a chave de administrador temporária é: 1987.\n\nSe o Monitor de Rede acusar invasão crítica na CAM 03, execute o Pulso de Firewall imediatamente!',
+                corpo_en: 'Caroline,\n\nWe detected anomalous traffic coming from Room 03. If you need to access the Confidential folder or Restricted Drive (Z:), the temporary admin key is: 1987.\n\nIf the Network Monitor reports a critical breach on CAM 03, execute the Firewall Pulse immediately!'
             });
         }
         if (hora === 4) {
             this.emitir('game:newEmail', {
                 id: 'mail-4am',
+                horario: '04:00 AM',
                 remetente: '??? (Remetente Desconhecido)',
+                remetente_en: '??? (Unknown Sender)',
                 assunto: 'NÃO FECHE OS OLHOS',
-                corpo: 'Eles aprenderam a usar a rede local.\nO gato não é apenas um programa.\nMantenha a Sala 03 limpa até as 06:00.'
+                assunto_en: 'DO NOT CLOSE YOUR EYES',
+                corpo: 'Eles aprenderam a usar a rede local.\nO gato não é apenas um programa.\nMantenha a Sala 03 limpa até as 06:00 AM.',
+                corpo_en: 'They learned how to use the local subnet.\nThe cat is not just a program.\nKeep Room 03 clear until 06:00 AM.'
             });
         }
     },

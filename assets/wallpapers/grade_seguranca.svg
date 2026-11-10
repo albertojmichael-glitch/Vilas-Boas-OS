@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#081018"/>
+      <stop offset="50%" stop-color="#0d1b2a"/>
+      <stop offset="100%" stop-color="#050a0f"/>
+    </linearGradient>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#1b3b5c" stroke-width="1" stroke-opacity="0.35"/>
+    </pattern>
+    <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1d4e89" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#050a0f" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <rect width="1920" height="1080" fill="url(#grid)"/>
+  <rect width="1920" height="1080" fill="url(#centerGlow)"/>
+  <circle cx="960" cy="540" r="260" fill="none" stroke="#2c5d8f" stroke-opacity="0.3" stroke-width="2"/>
+  <circle cx="960" cy="540" r="190" fill="none" stroke="#3a7bd5" stroke-opacity="0.2" stroke-width="1.5" stroke-dasharray="12 8"/>
+  <text x="960" y="548" text-anchor="middle" fill="#4a8bc2" fill-opacity="0.25" font-family="Segoe UI, Tahoma, sans-serif" font-size="28" font-weight="bold" letter-spacing="6">VILAS BOAS SECURITY OS</text>
+</svg>
+
