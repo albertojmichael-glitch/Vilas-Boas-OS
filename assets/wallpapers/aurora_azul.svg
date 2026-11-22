@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1200" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a4a8f"/>
+      <stop offset=".55" stop-color="#0f62b4"/>
+      <stop offset="1" stop-color="#08386f"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".3" cy=".25" r=".7">
+      <stop offset="0" stop-color="#7fd3ff" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#7fd3ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx=".8" cy=".7" r=".6">
+      <stop offset="0" stop-color="#46e0c8" stop-opacity=".35"/>
+      <stop offset="1" stop-color="#46e0c8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+      <stop offset=".5" stop-color="#fff" stop-opacity=".35"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9fe7ff" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#2a8fd6" stop-opacity=".15"/>
+    </linearGradient>
+    <filter id="b" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="14"/></filter>
+    <filter id="b2"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+  <rect width="1920" height="1200" fill="url(#bg)"/>
+  <rect width="1920" height="1200" fill="url(#glow)"/>
+  <rect width="1920" height="1200" fill="url(#glow2)"/>
+  <g filter="url(#b)" opacity=".85">
+    <path d="M380 -50 L520 -50 L700 1250 L610 1250 Z" fill="url(#beam)"/>
+    <path d="M760 -50 L840 -50 L1010 1250 L960 1250 Z" fill="url(#beam)" opacity=".7"/>
+    <path d="M1250 -50 L1400 -50 L1180 1250 L1120 1250 Z" fill="url(#beam)" opacity=".6"/>
+    <path d="M1600 -50 L1700 -50 L1500 1250 L1440 1250 Z" fill="url(#beam)" opacity=".8"/>
+  </g>
+  <g filter="url(#b2)" opacity=".9">
+    <path d="M470 -50 L486 -50 L650 1250 L640 1250 Z" fill="#dff6ff" opacity=".5"/>
+    <path d="M1330 -50 L1340 -50 L1150 1250 L1142 1250 Z" fill="#dff6ff" opacity=".45"/>
+    <path d="M1660 -50 L1668 -50 L1475 1250 L1468 1250 Z" fill="#dff6ff" opacity=".4"/>
+  </g>
+  <path d="M-50 1010 Q960 960 1970 1010 L1970 1250 L-50 1250 Z" fill="url(#floor)"/>
+  <path d="M-50 1010 Q960 960 1970 1010" stroke="#e8fbff" stroke-opacity=".7" stroke-width="2" fill="none" filter="url(#b2)"/>
+  <ellipse cx="300" cy="1040" rx="420" ry="16" fill="#fff" opacity=".25" filter="url(#b)"/>
+</svg>

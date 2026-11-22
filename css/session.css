@@ -1,0 +1,147 @@
+/* ===== Boot, logon and power screens ===== */
+.session {
+    position: fixed; inset: 0; z-index: 50000;
+    background: #000; color: #fff; overflow: hidden;
+    transition: opacity .6s ease;
+}
+.session.fade-out { opacity: 0; pointer-events: none; }
+.session.black { background: #000; }
+
+/* --- Boot --- */
+.session.boot { display: flex; align-items: center; justify-content: center; cursor: none; }
+.boot-wrap { display: flex; flex-direction: column; align-items: center; gap: 60px; margin-top: -40px; }
+.boot-logo { animation: bootFade 1.2s ease-out both; }
+.boot-orb {
+    display: block; width: 130px; height: 130px;
+    background: url('../assets/icons/vista.png') center / contain no-repeat;
+    filter: drop-shadow(0 0 30px rgba(80,160,255,.45));
+    animation: orbBreathe 3s ease-in-out infinite;
+}
+@keyframes orbBreathe { 50% { filter: drop-shadow(0 0 45px rgba(110,190,255,.7)); } }
+@keyframes bootFade { from { opacity: 0; transform: scale(.94); } }
+.boot-bar {
+    width: 186px; height: 17px; border: 1px solid #5a5a5a; border-radius: 4px;
+    background: linear-gradient(#0c0c0c, #181818); position: relative; overflow: hidden;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.8), 0 0 0 1px #111;
+}
+.boot-glow {
+    position: absolute; top: 2px; bottom: 2px; left: 0; width: 46px;
+    display: flex; gap: 2px;
+    animation: bootRun 2.1s linear infinite;
+}
+.boot-glow::before, .boot-glow::after, .boot-bar::after { content: ''; }
+.boot-glow { background:
+    linear-gradient(90deg, transparent 0 2px, #1d7a23 2px 13px, transparent 13px 17px, #3aca35 17px 28px, transparent 28px 32px, #1d7a23 32px 43px, transparent 43px); }
+.boot-glow::before {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent 0 2px, rgba(255,255,255,.35) 2px 13px, transparent 13px 17px, rgba(255,255,255,.5) 17px 28px, transparent 28px 32px, rgba(255,255,255,.35) 32px 43px, transparent 43px);
+    -webkit-mask: linear-gradient(#000 0 45%, transparent 55%); mask: linear-gradient(#000 0 45%, transparent 55%);
+}
+@keyframes bootRun { from { transform: translateX(-50px); } to { transform: translateX(190px); } }
+.boot-copy { position: absolute; bottom: 30px; left: 0; right: 0; text-align: center; color: #8a8a8a; font-size: 12px; }
+.boot-skip { position: absolute; bottom: 30px; right: 30px; color: #3a3a3a; font-size: 11px; }
+
+/* --- Logon --- */
+.logon-bg {
+    position: absolute; inset: 0;
+    background:
+        radial-gradient(ellipse at 50% 42%, rgba(80,150,230,.35), transparent 60%),
+        url('../assets/wallpapers/aurora_azul.svg') center / cover no-repeat,
+        #0b3a6e;
+}
+.logon-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(0,20,50,.15), rgba(0,10,30,.35)); }
+.logon-center { position: absolute; inset: 0 0 80px; display: flex; align-items: center; justify-content: center; }
+.logon-tile {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    padding: 18px 26px 22px; border-radius: 8px; outline: none; min-width: 240px;
+    animation: tileIn .5s ease-out;
+}
+@keyframes tileIn { from { opacity: 0; transform: translateY(8px); } }
+.tile-frame {
+    width: 136px; height: 136px; padding: 16px; border-radius: 10px;
+    background: linear-gradient(160deg, rgba(255,255,255,.55), rgba(255,255,255,.12) 45%, rgba(255,255,255,.06) 55%, rgba(255,255,255,.3));
+    border: 1px solid rgba(255,255,255,.55);
+    box-shadow: 0 0 0 1px rgba(0,0,0,.35), 0 6px 18px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.8);
+    transition: box-shadow .25s, background .25s;
+}
+.tile-frame img { width: 100%; height: 100%; border-radius: 3px; display: block; box-shadow: 0 0 0 1px rgba(0,0,0,.45); }
+.logon-tile:not(.has-pw):hover .tile-frame, .logon-tile:not(.has-pw):focus-visible .tile-frame {
+    box-shadow: 0 0 0 1px rgba(0,0,0,.35), 0 0 24px rgba(140,210,255,.85), inset 0 1px 0 rgba(255,255,255,.9);
+    background: linear-gradient(160deg, rgba(255,255,255,.7), rgba(190,230,255,.3) 45%, rgba(150,210,255,.2) 55%, rgba(220,240,255,.5));
+}
+.tile-name { font-size: 22px; font-weight: 300; text-shadow: 0 1px 4px rgba(0,0,0,.8); margin-top: 6px; }
+.tile-sub { font-size: 13px; color: #d7e7f7; text-shadow: 0 1px 3px rgba(0,0,0,.8); margin-top: -4px; }
+.pw-row { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
+.pw-input {
+    width: 200px; height: 25px; padding: 2px 8px; border-radius: 2px;
+    border: 1px solid #6c88a9; background: #fff; color: #000; outline: none;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.25), 0 0 0 1px rgba(255,255,255,.2);
+}
+.pw-input::placeholder { color: #8a8a8a; font-style: italic; }
+.pw-go {
+    width: 27px; height: 27px; border-radius: 50%; border: 1px solid #0a2c56; padding: 0;
+    background: radial-gradient(circle at 50% 30%, #bfe4ff 0, #4b9be8 45%, #1559b0 70%, #2d7fd7 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 1px 3px rgba(0,0,0,.6); position: relative;
+}
+.pw-go:hover { filter: brightness(1.15) drop-shadow(0 0 6px rgba(130,200,255,.9)); }
+.pw-go i { position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='12'%3E%3Cpath d='M1 6h9M6 1.5L11 6 6 10.5' stroke='white' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center no-repeat; }
+.pw-hint { font-size: 12px; color: #e5f0fb; text-shadow: 0 1px 2px #000; max-width: 260px; text-align: center; }
+.logon-error { font-size: 14px; text-shadow: 0 1px 3px #000; margin: 10px 0 6px; }
+.logon-ok { min-width: 70px; }
+
+.logon-bottom {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 80px;
+    display: flex; align-items: center; justify-content: space-between; padding: 0 28px;
+    background: linear-gradient(rgba(0,0,0,0), rgba(0,10,30,.25));
+}
+.ease-btn { background: none; border: 0; padding: 4px; border-radius: 50%; }
+.ease-btn:hover { filter: drop-shadow(0 0 8px rgba(150,210,255,.9)); }
+.brand { display: flex; align-items: baseline; gap: 6px; color: #fff; text-shadow: 0 1px 6px rgba(0,0,0,.6); opacity: .92; }
+.brand-orb { width: 30px; height: 30px; align-self: center; background: url('../assets/icons/vista.png') center / contain no-repeat; margin-right: 4px; }
+.brand-name { font-size: 26px; font-weight: 300; letter-spacing: .5px; }
+.brand-os { font-size: 14px; font-weight: 600; }
+.brand-ed { font-size: 26px; font-weight: 300; font-style: italic; color: #cfe6ff; }
+.power-group { display: flex; align-items: center; }
+.logon-power {
+    width: 34px; height: 34px; border-radius: 50%; border: 1px solid #4b0b04; padding: 0; position: relative;
+    background: radial-gradient(circle at 50% 28%, #ffc7b8 0, #ef5a3d 40%, #b8240f 70%, #d9452a 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 1px 4px rgba(0,0,0,.6);
+}
+.logon-power:hover { filter: brightness(1.15) drop-shadow(0 0 8px rgba(255,150,120,.9)); }
+.logon-power i, .sm-pwr i, .power-on i {
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpath d='M5 3.6A5.6 5.6 0 1 0 11 3.6' stroke='white' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3Cpath d='M8 1v6' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center no-repeat;
+}
+.logon-power-arrow {
+    margin-left: 3px; width: 18px; height: 26px; border-radius: 3px; border: 1px solid rgba(0,0,0,.5); color: #fff; font-size: 10px; padding: 0;
+    background: linear-gradient(rgba(255,255,255,.35), rgba(255,255,255,.08) 50%, rgba(0,0,0,.1) 51%, rgba(255,255,255,.15));
+}
+.logon-power-arrow:hover { background: linear-gradient(rgba(255,255,255,.55), rgba(255,255,255,.2) 50%, rgba(0,0,0,0) 51%, rgba(255,255,255,.3)); }
+
+/* Busy spinner ("Bem-vindo") */
+.busy { display: flex; align-items: center; gap: 16px; font-size: 30px; font-weight: 300; text-shadow: 0 1px 8px rgba(0,0,0,.6); animation: tileIn .4s ease-out; }
+.spinner {
+    width: 34px; height: 34px; border-radius: 50%; display: inline-block;
+    background: conic-gradient(from 0deg, rgba(120,200,255,0) 0deg, rgba(120,200,255,.15) 90deg, #9ad8ff 300deg, #ffffff 360deg);
+    -webkit-mask: radial-gradient(circle, transparent 9px, #000 10px); mask: radial-gradient(circle, transparent 9px, #000 10px);
+    animation: spin 1s linear infinite;
+    filter: drop-shadow(0 0 4px rgba(120,200,255,.8));
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Power on / sleep */
+.session.off { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; }
+.power-on {
+    width: 64px; height: 64px; border-radius: 50%; border: 1px solid #222; position: relative;
+    background: radial-gradient(circle at 50% 30%, #3a3a3a, #111 70%);
+    box-shadow: 0 0 0 4px #0b0b0b, 0 0 18px rgba(90,170,255,.25);
+    transition: box-shadow .3s;
+}
+.power-on:hover { box-shadow: 0 0 0 4px #0b0b0b, 0 0 28px rgba(90,170,255,.7); }
+.power-on i { background-size: 30px; filter: drop-shadow(0 0 4px #4aa3ff); }
+.power-on-text { color: #6f6f6f; font-size: 13px; }
+.session.sleeping { animation: sleepFade .8s ease-in both; }
+@keyframes sleepFade { from { opacity: 0; } }
+
+/* Hide desktop chrome until logged in */
+body:not(.desktop-on) #taskbar, body:not(.desktop-on) #desk-icons, body:not(.desktop-on) .sidebar { visibility: hidden; }
